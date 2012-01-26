@@ -5,6 +5,29 @@
 \begin{document}
 \section*{Introduction}
 \paragraph*{}
+The embedded system we are designing is centered around performing position 
+estimation.  Given a closed room and a set of fixed wireless nodes at known
+locations, we are to determine the position of another mobile wireless node and
+report its position via the base station's LCD screen as well as a embedded web
+server running on FreeRTOS on the ARM development board.
+
+The success of the project will depend on a number of independent systems all
+working together.  These include the wireless network interfaces, $I^2C$
+communication for the train bus protocol, a working IP stack and web server, an
+LCD driver, a sensor located on the ARM board, 
+and a filesystem layer for logging data to SD card.  On top of all
+this are many assumptions that position estimation with only signal power
+and quality is feasible.
+
+In researching past experimentation with this, a pair of papers on position
+estimation were found that dealt with interior environments.  One of them
+is based on the Zigbee wireless network, which is very similar to the MiWi 
+system we will be using.  Also applicable were the wikipedia pages that give
+overviews of radio propagation.
+
+
+\section*{Techniques and Background for Radio Range Estimation}
+\paragraph*{}
 The main part of this project is position estimation using 2.4 GHz transceivers in an indoor environment.  The premise is that the wireless modules used can report their received signal strength, and that signal can be used to perform some position calculation.  According to datasheets for surface mount MiWi modules, their receive sensitivity ranges from -90 dBm to -35 dBm.  Given signal strength measurements from receivers fixed in known locations, there are several methods to attempt a position estimation.
 \paragraph*{}
 The most basic assumption to make for a position tracking system is using free space path loss (FSPL), a known radiated power level, and a measured received power to estimate the distance between a transmitter and receiver.  The FSPL equation is:
@@ -16,6 +39,32 @@ Given the FSPL, and a minimum transmit power of -36 dBm, the maximum expected ra
 An alternative method is to create an \textit{a priori} map of the received signal strengths as the transmitter in question is moved around the area of interest.  The Liu article describes this approach as Scene Analysis.  The locator algorithm would then use this \textit{a priori} knowledge of the environment to compute a best-match for the position of the transmitter.
 \paragraph*{}
 A more robust technique would use a combination of scene analysis, received signal strength estimation, and artificial intelligence techniques (such as a predictor-corrector algorithm) to attempt to smooth out position estimates.  Should the multipath and other interference prove too great for this system (as there are copious devices operating on 2.4 GHz), alternative methods will need to be investigated.
+
+\section*{Design Implementation Considerations}
+
+\paragraph*{}
+There are a multiple aspects which must be taken into consideration when designing a system for this purpose. The first is the positioning system which you want to implement, basically determining the resolution and coordinate systems in which you will work. The coarsest method is symbolic location, which expresses your location in terms of an area, or naturally recognizable locations. One example of this would be entering a room, and having your location being registered as being in the 'Office'. A second method would be that of relative location tracking, in this method the user's position would be tracked relative to the locations of known objects within the area, giving the position as a distance from each particular object. The third method is absolute location, this is where every object within a set reference area is given coordinates based on that area. It is similar to relative tracking, except that the grid is fixed and all objects of interest are measured relative to that. The last method is physical location, which is used to specify a point on a map, whether it is 2d or 3d. Generally this is paired with a coordinate system such as degrees/minutes/seconds, or various other systems used for measurement in a 3d plane.
+
+
+The second aspect which must be considered is that of the system's topology. This just determines the manner in which the mobile unit and fixed stations would identify each other and relay information. In the remote positioning system, the mobile unit is the transmitter, and the fixed units recieve information from the mobile unit and calculate distance at a master base station based on the information recieved. With self-positioning, the mobile unit is the reciever and master station, and recieves signals from the fixed transmitters and computes it locally to determine position. There are also variations of these two in which the data is sent to the opposing unit after being recieved for computation. In the case of remote positioning system, the fixed recievers would send their data back to the mobile station for computations and vice versa for self-positioning. In both cases the name for each system is simple the standard name with indirect prepended to it.
+
+
+The third aspect in a system is the physical hardware on which it will be run. This can vary widely and does not break down cleanly into a few categories. Some examples of the physical layer could be standard WiFi Access Points, or custom arrays of recievers. The design of the arrays is heavily dependent on the location in which it is deployed, so testing must be done to determine the most optimal configuration.
+
+\section*{Filesystems}
+To log data to disk, a standardized data format as well as standardized
+filesystem is necessary.  For data being logged, we've decided on the use of
+plain text files that store comma delimited fields.  This is very simple to
+implement and is considered something of a standard, making it easy to
+manipulate later on. Presumably, fields that would be stored would be a given
+location at a specific time, and sensor readings at that time.
+
+For the filesystem, there are many choices available.  Some of the easier to
+implement filesystems would be ext2 and one of the FAT varients.  The latter has
+benefit of being readable easily on both linux and windows.  FAT12 is often used
+on floppy disks, but to make some of the logic simpler, FAT16 is just as
+portable.  Furthermore, logic for writing new data to disk is somewhat simpler
+with FAT versus ext2.
 
 \nocite{*}
 \bibliography{description}{}
