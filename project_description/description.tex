@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{cite}
+
+\begin{document}
+\section*{Introduction}
+\paragraph*{}
+The main part of this project is position estimation using 2.4 GHz transceivers in an indoor environment.  The premise is that the wireless modules used can report their received signal strength, and that signal can be used to perform some position calculation.  According to datasheets for surface mount MiWi modules, their receive sensitivity ranges from -90 dBm to -35 dBm.  Given signal strength measurements from receivers fixed in known locations, there are several methods to attempt a position estimation.
+\paragraph*{}
+The most basic assumption to make for a position tracking system is using free space path loss (FSPL), a known radiated power level, and a measured received power to estimate the distance between a transmitter and receiver.  The FSPL equation is:
+\begin{equation}
+FSPL(dB) = 20\log_{10}(d) + 20\log_{10}(f) - 147.55
+\end{equation}
+Given the FSPL, and a minimum transmit power of -36 dBm, the maximum expected range is on the order of ten meters.  However, an indoor environment is subject to multipath.  The constructive and destructive interference of a multipath system with direct line of sight (LOS) between transmitter and receiver follows a \textit{Ricean} distribution.  Estimation of multipath with a Ricean fading function is nontrivial, and requires analysis of the radio environment, and significant computation (including Bessel functions).
+\paragraph*{}
+An alternative method is to create an \textit{a priori} map of the received signal strengths as the transmitter in question is moved around the area of interest.  The Liu article describes this approach as Scene Analysis.  The locator algorithm would then use this \textit{a priori} knowledge of the environment to compute a best-match for the position of the transmitter.
+\paragraph*{}
+A more robust technique would use a combination of scene analysis, received signal strength estimation, and artificial intelligence techniques (such as a predictor-corrector algorithm) to attempt to smooth out position estimates.  Should the multipath and other interference prove too great for this system (as there are copious devices operating on 2.4 GHz), alternative methods will need to be investigated.
+
+\nocite{*}
+\bibliography{description}{}
+\bibliographystyle{plain}
+
+\end{document}
