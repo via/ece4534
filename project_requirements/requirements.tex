@@ -1,16 +1,30 @@
 \documentclass{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
 \usepackage{graphicx}
 
 \begin{document}
 
 \section*{Hardware Requirements}
+\paragraph*{}
+The hardware portion of this project is divided into two portions, one set of nodes designed for reception and position estimation of a mobile signal, and one mobile node which will be responsible for broadcasting information gathered from the sensor. Each receiving node will consist of a MiWi device, an antenna, and possibly a microcontroller to handle sending of data. Each mobile node will connect to the primary ARM board, and transmit the data they received to it for further processing. The ARM board will be responsible for calculating the mobile unit's position, and logging the sensor data transmitted by it to an SD card attached to the device. It will also be responsible for displaying the sensor data on the attached LCD, as well as hosting the webserver which will provide an expanded view of the logged data. As a whole, the receiving segment will consist of at least 4 receiving antennas and the ARM board.
+
+On the transmitting unit's side, there will be one MiWi board responsible for sending the sensor data, and a microcontroller with a sensor which will provide the data to be transmitted. The sensor in this case will be a GPS Reciever, which will provide location data to be compared against the position calculated by the analysis of the signal.
 
 \section*{OS and Systems Software Requirements}
 
+\section*{Radio requirements}
+\paragraph*{}
+The ultimate goal of this project is to estimate position using a 2.4 GHz MiWi system.  Within the scope of this project are two viable methods by which position estimation can be performed.  The first of these is \textit{Received Signal Strength}.  Over a given sample period data would accumulate from each receiver node.  Whereupon, the ARM board will compute a certain confidence interval for transmitter range (using free space path loss assumptions, or some type of ricean fading distribution), the end result would be an overlap area for the most likely location of the transmitter.  The second method is a type of \textit{Space Analysis} where measurements are taken in a predetermined grid to establish the RF environment.  The computations required to establish position are much more complex and involve an equation that resembles:
+%\begin{equation}
+%MAX\left(\sum_{i=1}^{n}\int\left(N(\overline{P_{i,recv}},\sigma_{i,recv}^{2})N(\overline{P_{i,recorded}},\sigma_{i,recorded}^{2})\right)\right
+%\end{equation}
+\paragraph*{}
+After a position estimation algorithm is selected (or a decision to use both), the GPS data will be used to analyze the error in position estimation.  If this error proves reasonable, the position location algorithms can be applied to similar services in the same frequency range (or various environments can be analyzed for their error susceptability using this technique).
+
 \section*{Diagrams}
 \subsection*{Drillfield node placement}
-\includegraphics[width=0.8\textwidth]{node_placement}
+\includegraphics[width=0.6\textwidth]{node_placement}
 \subsection*{System Diagram}
-\includegraphics[width=0.8\textwidth]{system}
+\includegraphics[width=0.6\textwidth]{system}
 
 \end{document}
