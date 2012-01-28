@@ -38,10 +38,16 @@ The ultimate goal of this project is to estimate position using a 2.4 GHz MiWi s
 \paragraph*{}
 After a position estimation algorithm is selected (or a decision to use both), the GPS data will be used to analyze the error in position estimation.  If this error proves reasonable, the position location algorithms can be applied to similar services in the same frequency range (or various environments can be analyzed for their error susceptability using this technique).
 
+\section*{User Interface}
+\paragraph*{}
+The ARM board will receive data from the sensors on the MiWi board and write out all relevant values to a log file on an sdcard in comma-separated values (CSV) format. The data logged includes GPS coordinates, RSSI position data, clock/times, and other information to be determined that needs to be displayed. To display any data and calculations, we will utilize the LCD and provide a web page served through an ethernet connection available on the ARM board. Both methods of display are capable of navigation through user-input.
+
+The web interface and the on-board LCD will give users a way to view the data in a meaningful format. The web page interface will display data and calculated values in a tabular format. The page will be created on-demand when a user accesses it with data that the ARM board holds in its logs at those times. The UI on the LCD will display the data in a similar table format row by row. Interaction with the LCD should either bring up more options or display other data.
+
 \section*{Diagrams}
 \subsection*{Drillfield node placement}
-\includegraphics[width=0.6\textwidth]{node_placement}
+\includegraphics[width=0.5\textwidth]{node_placement}
 \subsection*{System Diagram}
-\includegraphics[width=0.6\textwidth]{system}
+\includegraphics[width=0.5\textwidth]{system}
 
 \end{document}
