@@ -11,13 +11,30 @@ The hardware portion of this project is divided into two portions, one set of no
 On the transmitting unit's side, there will be one MiWi board responsible for sending the sensor data, and a microcontroller with a sensor which will provide the data to be transmitted. The sensor in this case will be a GPS Reciever, which will provide location data to be compared against the position calculated by the analysis of the signal.
 
 \section*{OS and Systems Software Requirements}
+\paragraph*{}
+For the ARM based base station to function properly, a number of services from
+the operating system will be required.  To use the MiWi devices for distance
+measurement, we will need to directly access the controller to view the RSS of
+receive frames.
+
+In order to write log data to an SD card, we will need both a means to write raw
+blocks to the SD card as well as a filesystem to organize the data in a way that
+we can easily read/write with a portable computer. 
+
+To transfer data too and from the wireless nodes, we will need an $I^2C$ driver,
+since all of the nodes will be on such a bus.  Such a driver will need to
+implement master mode and be able to read data from any of the slave nodes.  To
+manage threads/contexts for all of the devices being operated, we will use
+FreeRTOS's lightweight threads, and the message passing interface that it
+implements.
 
 \section*{Radio requirements}
 \paragraph*{}
 The ultimate goal of this project is to estimate position using a 2.4 GHz MiWi system.  Within the scope of this project are two viable methods by which position estimation can be performed.  The first of these is \textit{Received Signal Strength}.  Over a given sample period data would accumulate from each receiver node.  Whereupon, the ARM board will compute a certain confidence interval for transmitter range (using free space path loss assumptions, or some type of ricean fading distribution), the end result would be an overlap area for the most likely location of the transmitter.  The second method is a type of \textit{Space Analysis} where measurements are taken in a predetermined grid to establish the RF environment.  The computations required to establish position are much more complex and involve an equation that resembles:
-%\begin{equation}
-%MAX\left(\sum_{i=1}^{n}\int\left(N(\overline{P_{i,recv}},\sigma_{i,recv}^{2})N(\overline{P_{i,recorded}},\sigma_{i,recorded}^{2})\right)\right
-%\end{equation}
+\begin{equation}
+ MAX\vert_{gridSpace = 
+1}^{lastGrid}\left(\sum_{i=1}^{n}\int\left(N(\overline{P_{i,recv}},\sigma_{i,recv}^{2})N(\overline{P_{i,recorded}},\sigma_{i,recorded}^{2})\right)\right)
+\end{equation}
 \paragraph*{}
 After a position estimation algorithm is selected (or a decision to use both), the GPS data will be used to analyze the error in position estimation.  If this error proves reasonable, the position location algorithms can be applied to similar services in the same frequency range (or various environments can be analyzed for their error susceptability using this technique).
 
