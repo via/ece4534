@@ -1,0 +1,34 @@
+Random notes regarding ARM board
+
+I2C
+. Create a struct containg a vtI2CStruct and a vtLCDStruct, and pass this struct into the function which does work. Then break this up into vtI2CStruct and vtLCDStruct objects and you will have the address of the I2C device and LCD information at the function's disposal.
+
+. Call vtI2CInit to initalize the I2C device
+
+. Modify vtI2CEnQ in vtI2C.h to suit our needs for sending information over I2C
+
+. vtI2CDeQ is used to get information from I2C, the vtI2CStruct parameter is most likely what contains the address
+
+. Line 230 of main.c for RTOSDemo to ? for some examples on how the I2C struct is populated, the devAddr is never set though (?).
+
+. Within vtI2c.h, it indicates that the vtI2CStruct should be initalized by vtI2CInit() and not modified by anything else.
+
+LCD
+. Might be 320x240 or 240x320, might not be
+. get address of LCD and things with initialize and use struct for things.
+
+. GLCD_PutPixel to draw pixels for points
+
+. See the GLCD c file for full function listings
+
+Milestone 1 Specifics
+
+. LCD has small state machine, first state draws a bitmap that has the axes and labels
+
+. Second state waits for messages in queue from I2C thread or whatever then takes that data and draws it into the graph area
+
+. Maybe have two parallel arrays, and a bool to switch between them depending on which is from current run of data for that period
+
+. On each receipt of a data point, write it into current active array, erase old pixel by reading its location from old array, then draw in new pixel for voltage level.
+
+. Not sure if the entire LCD will clear is a bitmap is drawn and then PutPixel is called, hopefully not
