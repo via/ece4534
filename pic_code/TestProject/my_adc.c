@@ -2,7 +2,6 @@
 #include "adc.h"
 #include "my_adc.h"
 
-char mybuf[500];
 
 void initADC()
 {

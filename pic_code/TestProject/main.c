@@ -12,6 +12,7 @@
 #include "timer1_thread.h"
 #include "timer0_thread.h"
 #include "my_adc.h"
+#include "i2c_logic.h"
 
 #pragma config WDT = OFF
 
@@ -86,7 +87,7 @@ void main (void)
 	IPR1bits.SSPIP = 1;
 
 	// configure the hardware i2c device as a slave
-	i2c_configure_slave(0x36);
+	i2c_configure_slave(I2C_ADDR);
 
 	// must specifically enable the I2C interrupts
 	PIE1bits.SSPIE = 1;
@@ -141,36 +142,15 @@ _endasm;
 				//	printf("\r\n");
 					// keep track of the first byte received for later use
 					last_reg_recvd = msgbuffer[0];
+          handle_i2c_write(msgbuffer);
 					break;
 				};
 				case MSGT_I2C_RQST: {
 				//	printf("I2C Slave Req reg: %d\r\n", last_reg_recvd);
 					// The last byte received is the "register" that is trying to be read
 					// The response is dependent on the register.
-					switch (last_reg_recvd) {
-						case 0xaa: {
-							length = 2;
-							msgbuffer[0] = 0x55;
-							msgbuffer[1] = 0xAA;
-							break;
-						}
-						case 0xa8: {
-							length = 1;
-							msgbuffer[0] = 0x3A;
-							break;
-						}					
-						case 0x89: {
-							length = 1;
-							msgbuffer[0] = 0xA3;
-							break;
-						}
-                        case 0x00: {
-                            length = 1;
-                            readADC(msgbuffer);
-                            break;
-                        }
-					}
-             		start_i2c_slave_reply(length,msgbuffer);
+          length = handle_i2c_read(last_reg_recvd, msgbuffer);
+          start_i2c_slave_reply(length,msgbuffer);
 					break;
 				};
 				default: {
