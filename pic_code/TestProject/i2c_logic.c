@@ -8,7 +8,7 @@ static unsigned char cur_stddev = CUR_STDDEV;
 static unsigned char cur_power = 0;
 
 
-unsigned int handle_i2c_read(unsigned char reg, unsigned char *buf) {
+signed char handle_i2c_read(unsigned char reg, unsigned char *buf) {
 
   switch(reg) {
     case 0x00: 
@@ -27,7 +27,7 @@ unsigned int handle_i2c_read(unsigned char reg, unsigned char *buf) {
 
 }
 
-void handle_i2c_write(unsigned char buf) {
+void handle_i2c_write(unsigned char *buf) {
 
   unsigned char reg = buf[0];
 

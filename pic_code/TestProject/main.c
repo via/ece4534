@@ -12,6 +12,7 @@
 #include "timer1_thread.h"
 #include "timer0_thread.h"
 #include "my_adc.h"
+#include "i2c_logic.h"
 
 #pragma config WDT = OFF
 
@@ -86,7 +87,7 @@ void main (void)
 	IPR1bits.SSPIP = 1;
 
 	// configure the hardware i2c device as a slave
-	i2c_configure_slave(0x36);
+	i2c_configure_slave(I2C_ADDR);
 
 	// must specifically enable the I2C interrupts
 	PIE1bits.SSPIE = 1;
