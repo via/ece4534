@@ -49,11 +49,12 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 
 	const uint8_t i2cZero[] = {0x00};
-
+	const uint8_t nmeaRead[] = {0x02};
+	const uint8_t nmeaRead2[] = {0x03};
 	uint8_t P0Read[2];
 	uint8_t P1Read[2];
 	uint8_t P2Read[2];
-	uint8_t tempBuf[2];
+	uint8_t tempBuf[35];
 	uint8_t *tempRead = tempBuf;
 	uint8_t rxLen, status;
 	// Get the parameters
@@ -117,8 +118,23 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		P2Read[0] = tempBuf[0];
 		P2Read[1] = tempBuf[1];	
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-		//change this section to do conversion to float, then etc
+		
+		//PIC 0
+		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
 
+		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		//handle conversion of received here
+		P0Read[0] = tempBuf[0];
+		P0Read[1] = tempBuf[1];	
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//change this section to do conversion to float, then etc
+		
 		// Do the accurate temperature calculation
 		/*
 		#if PRINTF_VERSION == 1
