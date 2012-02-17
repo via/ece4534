@@ -56,6 +56,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	uint8_t P2Read[2];
 	uint8_t tempBuf[35];
 	uint8_t *tempRead = tempBuf;
+	uint8_t *tempRead10 = tempBuf + 9;
 	uint8_t rxLen, status;
 	// Get the parameters
 	i2cTempStruct *param = (i2cTempStruct *) pvParameters;
@@ -119,7 +120,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		P2Read[1] = tempBuf[1];	
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 		
-		//PIC 0
+		//NMEA String reads
 		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
@@ -128,14 +129,9 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		
-		//handle conversion of received here
-		P0Read[0] = tempBuf[0];
-		P0Read[1] = tempBuf[1];	
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
-		//change this section to do conversion to float, then etc
-		
-		// Do the accurate temperature calculation
+		//Calculations and passing to LCD
 		/*
 		#if PRINTF_VERSION == 1
 		//printf("Temp %f F (%f C)\n",(32.0 + ((9.0/5.0)*temperature)), (temperature));
@@ -146,8 +142,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		
 		sprintf((char*)(lcdBuffer.buf),"%d", ADCReading);
 		#endif
-		
-		lcdBuffer.buf[0] = ADCReading;
+		*/
+		tempBuf[10]='\0';
+		strncpy(lcdBuffer.buf, tempBuf, 11);
+		//lcdBuffer.buf[0] = ADCReading;
 		if (lcdData != NULL) {
 			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
 			lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -155,7 +153,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}
-		*/
+		
 	}
 }
 

@@ -42,7 +42,7 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 }
 
 //#define LCD_STATE 1
-int LCD_STATE = 1;
+int LCD_STATE = 2;
 //#if LCD_STATE == 1
 // This include the file with the definition of the ARM bitmap
 #include "Bg_final.c"
@@ -159,25 +159,10 @@ else if (LCD_STATE == 2){
 		// Decide what color and then clear the line
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
-
-		rVoltage = msgBuffer.buf[0];
-		// show the text
-		rVoltage = rVoltage >> 1; //shift right one to scale to 127px height
-		rVoltage = rVoltage + 24; //vertical shift
-		//uncomment below if tracking array
-		//GLCD_PutPixel(ypos, tArray[ypos]);
-		//tArray[ypos] = rVoltage;
-		if (rVoltage <= 150 && rVoltage >= 0){
-			GLCD_PutPixel(ypos, rVoltage);
-		}
-		ypos--;
-		if (ypos <= 10) {
-			/* clear the LCD at the end of the screen */
-			//if using tracking array, comment this out
-			GLCD_ClearArea(White, 25, 35, 215, 285);
-			ypos = 280;
-			GLCD_SetWindow(25, 35, 215, 285);
-		}
+		
+		GLCD_ClearLn(0,1);
+		
+		GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
 	}
 else{
 	//	Bad setting

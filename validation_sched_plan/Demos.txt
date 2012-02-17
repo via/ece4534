@@ -1,0 +1,13 @@
+Milestone 2:
+
+Communication over I2C between the ARM and PIC boards. The ARM will request two bytes of data from each of the 3 PIC boards, and then do two 10 byte reads from PIC0. The two bytes of data each represent the RSSI data we will be receiving from the MiWi modules and doing calculations on. The 20 bytes total afterward represent an NMEA string from the GPS unit.
+
+Division of duties
+	Mitch: Demonstrating that the PIC and ARM are all connected on the same i2c bus.
+	Via: Demonstrating that the PIC is properly recieving the read requests and is responding to them.
+	Justin: Demonstrating that the ARM is sending the read requests, and is recieving data.
+	Andrew: Interpretation of the logic analyzer output to demonstrate the aforementioned three topics.
+	
+
+Milestone 3:
+
