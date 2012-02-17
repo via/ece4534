@@ -62,6 +62,11 @@ Validation: Custom content is displayed on the webpage
 Depends on: nothing
 Who: Andrew
 
+Task: Fancy Display
+Deadline: March 13
+Validation: The fancy display looks nice, and has spots for pertinent information to go
+Who: Andrew?
+
 Integration Task: Test Position Data to Web Server
 Deadline: March 9
 Validation: Changing position data is able to be displayed on the webpage (even if the 'changing' data is just hardcoded at this time)
@@ -84,6 +89,12 @@ Integration Task: Position Data to Filesystem
 Deadline: April 5
 Validation: GPSr position data, and calculated position is written to a flat text file
 Depends on: Filesystem, GPS data to ARM, position calculator + ARM, calibration sequence, board assembly
+Who: Everyone
+
+Integration Task: Position Data to Display
+Deadline: April 5
+Validation: GPSr position data, and calculated position is displayed on the 'fancy display'
+Depends on: Fancy display, GPS data to ARM, position calculator + ARM, calibration sequence, board assembly
 Who: Everyone
 
 Task: Calibration sequence
