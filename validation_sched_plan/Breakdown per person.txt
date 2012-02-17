@@ -1,0 +1,141 @@
+Breakdown of tasks by person
+
+Mitch (Board Design/MiWi communication/GPS communication):
+
+Task: Long distance I2C communications
+Deadline: March 6
+Validation: Successful reliable communications along 75'+ of cabling, verified via logic analyzer or PIC/ARM.
+Depends on: I2C communication
+
+Task: Position calculation algorithm
+Deadline: March 9
+Validation: Given reasonable RSSI input, the position calculator provides some reasonable position output
+
+Integration Task: Position Calculator + ARM
+Deadline: March 18
+Validation: Position calculator output is fed to ARM display and other interfaces
+Depends on: MiWi to MiWi comm
+
+Task: Adapt existing 18F2580 code to 18F45J10
+Deadline: Feb 28
+Validation: Using a bus sniffer, verify I2C read/write operations are successful to all 45J10 devices
+
+Task: MiWi to MiWi communications
+Deadline: March 16
+Validation: Sending predetermined bytestrings over MiWi with confirmed reception
+Depends on: PIC to MiWi comm
+
+Task: Node PCB Design
+Deadline: March 9
+Validation: It exists
+Depends on: long distance I2C
+
+
+Via (PIC Communications/Calculations):
+
+Task: UART communication with GPSr
+Deadline: March 1
+Validation: Using a bus sniffer, verify that NMEA data is travelling over the UART.  Then using a bus master device, request position data over I2C
+Depends on: 45J10 adaptation
+
+Task: Adapt existing 18F2580 code to 18F45J10
+Deadline: Feb 28
+Validation: Using a bus sniffer, verify I2C read/write operations are successful to all 45J10 devices
+
+Task: PIC to MiWi communication SPI
+Deadline: March 1
+Validation: Successful read & write to MiWi registers (e.g. set Tx power, then read to verify setting)
+Depends on: 45J10 adaptation
+
+Task: MiWi to MiWi communications
+Deadline: March 16
+Validation: Sending predetermined bytestrings over MiWi with confirmed reception
+Depends on: PIC to MiWi comm
+
+Integration Task: GPS data to ARM board
+Deadline: March 20
+Validation: GPS position is displayed on ARM
+Depends on: MiWi to MiWi, PIC to GPSr
+
+Task: Filesystem
+Deadline: March 13
+Validation: Successful text file creation on a computer-readable filesystem
+Depends on: nothing
+
+
+Justin (ARM Communication/Display/Calculations):
+
+Integration Task: GPS data to ARM board
+Deadline: March 20
+Validation: GPS position is displayed on ARM
+Depends on: MiWi to MiWi, PIC to GPSr
+
+Integration Task: Test Position Data to Web Server
+Deadline: March 9
+Validation: Changing position data is able to be displayed on the webpage (even if the 'changing' data is just hardcoded at this time)
+Depends on: nothing (could depend on GPS->ARM, but this needs to be tested and verified beforehand)
+
+Integration Task: Position Calculator + ARM
+Deadline: March 18
+Validation: Position calculator output is fed to ARM display and other interfaces
+Depends on: MiWi to MiWi comm
+
+Task: Fancy Display
+Deadline: March 13
+Validation: The fancy display looks nice, and has spots for pertinent information to go
+
+
+Andrew (ARM Webserver/Calibration):
+
+Task: Node PCB Design
+Deadline: March 9
+Validation: It exists
+Depends on: long distance I2C
+
+Task: Web Server
+Deadline: March 1
+Validation: Custom content is displayed on the webpage
+Depends on: nothing
+
+Integration Task: Test Position Data to Web Server
+Deadline: March 9
+Validation: Changing position data is able to be displayed on the webpage (even if the 'changing' data is just hardcoded at this time)
+Depends on: nothing (could depend on GPS->ARM, but this needs to be tested and verified beforehand)
+
+Task: Calibration sequence
+Deadline: March 27
+Validation: ARM Display or Web page displays GPS position of all three receiever nodes
+Depends on: GPS data to ARM, board assembly
+
+
+Everyone:
+
+Integration Task: Board Assembly
+Deadline: March 20
+Validation: It works
+Depends on: PCB Design
+
+Integration Task: Actual Position Data to Web Server
+Deadline: April 5
+Validation: GPSr position data, and calculated position is displayed on the webpage
+Depends on: GPS data to ARM, Test position data to web server, position calculator + ARM, calibration sequence, board assembly
+
+Integration Task: Position Data to Filesystem
+Deadline: April 5
+Validation: GPSr position data, and calculated position is written to a flat text file
+Depends on: Filesystem, GPS data to ARM, position calculator + ARM, calibration sequence, board assembly
+
+Integration Task: Position Data to Display
+Deadline: April 5
+Validation: GPSr position data, and calculated position is displayed on the 'fancy display'
+Depends on: Fancy display, GPS data to ARM, position calculator + ARM, calibration sequence, board assembly
+
+Task: Final Project Demonstration
+Deadline: April 24
+Validation: Project completed, demonstrated.
+
+Task: Final Report
+Deadline: May 3
+Validation: Report completed, submitted.
+
+
