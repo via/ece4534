@@ -1,0 +1,70 @@
+Notes and stuffs: Here's a list of tasks I could remember and write up for 
+the validation and schedule plan. Stuff in <text> need fixing or more details.
+
+Webserver [<member name>]
+    - Implementation: Modify index.shtml and serve it the way the demo does
+        OR utilize file system (to-be-implemented) to serve the web page.
+        - Task: Modify index.shtml as first method to serve page from 
+                FreeRTOS webserver demo implementation <insert target date>
+        - Task: Once filesystem implemented, determine if webserver skeleton
+                can serve pages through uIP <insert target date>
+    - Validation: Going to <IP Address> provides a web page which displays GPS
+        and position data
+      
+LCD for displaying data [<member name>]
+    - Implementation: Create format for displaying the GPS and position data
+        to the user.
+        - Task: Determine placement of data and how data is displayed <insert target date>
+        - Task: Once filesystem is complete, insure that data can be grabbed
+            from file for display <insert target date>
+        - Task: Finalize display layout and actual data display <insert target date>
+    - Validation: All GPS and calculated position data for a session should show
+        on the LCD and <data should refresh at set intervals>
+      
+<Position calculation task on ARM?>
+      
+Filesystem [<member name>]
+    - Implementation: FAT16 filesystem will be implemented on ARM board for
+        log files and <possibly serve web page>
+        - Task: <Implement FAT16 on ARM> <insert target date>
+    - Validation: GPS data or calculated position data will be written to file
+        to be stored on sdcard using the implemented filesystem.
+        
+Mobile Unit GPS Management [<member name>]
+    - Implementation: <Make set of messages/commands that the ARM will be able 
+        to send to the GPS unit through PIC0>
+        - Task: Make mobile unit with MiWi and GPS receiver <insert target date>
+        - Task: Make <communication method/messages/command> between mobile unit 
+            and ARM board <insert target date>
+        - Task: Make ARM capable of sending commands to GPSr through PIC0 
+            <insert target date>
+    - Validation: Use the ARM to send the GPS command of <command>, the GPS 
+        should <action> and the <data shows change due to action?>
+        
+<Wireless communication with MiWi boards?>
+        
+Daughterboard Design [<member name>]
+    - Implementation: <Create schematic for board's design and then create teh
+        board.>
+    - Validation: <The board exists.> [2012/02/28]
+        
+I2C [<member name>]
+    - Implementation: PIC <--> ARM [2012/02/21]
+    - Validation: [00:16] Justin: hm
+                  [00:16] Justin: validation for i2c
+                  [00:16] Justin: logic analyzer
+                  
+<Other tasks that I forgot because I'm tired>
+
+<Other tasks that need to be determined>
+                  
+¯\(°_o)/¯ [Dizzeh]
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
