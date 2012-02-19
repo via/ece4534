@@ -93,6 +93,8 @@ You should read the note above.
 // Define whether to use USB task
 #define USE_USB 0
 
+#define USE_CALC 1
+
 #include "partest.h"
 
 // Include file for MTJ's LCD & i2cTemp tasks
@@ -100,6 +102,7 @@ You should read the note above.
 #include "lcdTask.h"
 #include "i2cTemp.h"
 #include "vtI2C.h"
+#include "calcTask.h"
 
 /* syscalls initialization -- *must* occur first */
 #include "syscalls.h"
@@ -124,6 +127,7 @@ tick hook). */
 #define mainI2CTEMP_TASK_PRIORITY			( tskIDLE_PRIORITY)
 #define mainUSB_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainI2CMONITOR_TASK_PRIORITY		( tskIDLE_PRIORITY)
+#define mainCALC_TASK_PRIORITY		( tskIDLE_PRIORITY)
 
 /* The WEB server has a larger stack as it utilises stack hungry string
 handling library calls. */
@@ -173,6 +177,10 @@ static i2cTempStruct DeviceParams;
 static vtLCDStruct vtLCDdata;
 #endif
 
+#if USE_CALC == 1
+static vtCalcStruct vtCalcdata;
+#endif
+
 /*-----------------------------------------------------------*/
 
 int main( void )
@@ -194,6 +202,10 @@ int main( void )
 	// MTJ: My LCD demonstration task
 	#if USE_LCD == 1
 	vStartLCDTask( mainLCD_TASK_PRIORITY,&vtLCDdata);
+	#endif
+	
+	#if USE_CALC == 1
+	vStartCalcTask( mainCALC_TASK_PRIORITY,&vtCalcdata);
 	#endif
 
 	// i2c initialization
