@@ -121,3 +121,39 @@ Build target 'WebServerELF'
 compiling calcTask.c...
 linking...
 ".\ObjectFiles\RTOSDemo.elf" - 0 Error(s), 0 Warning(s).
+Build target 'WebServerELF'
+compiling main.c...
+MainFiles/i2cTemp.h(9): error: expected specifier-qualifier-list before 'vtCalcStruct'
+MainFiles/main.c: In function 'main':
+MainFiles/main.c(227): error: 'i2cTempStruct' has no member named 'calcData'
+MainFiles/main.c(227): error: 'vtCalcData' undeclared (first use in this function)
+MainFiles/main.c(227): error: note: each undeclared identifier is reported only once for each function it appears in
+compiling i2cTemp.c...
+MainFiles/i2cTemp.h(9): error: expected specifier-qualifier-list before 'vtCalcStruct'
+MainFiles/i2cTemp.c: In function 'vi2cTempUpdateTask':
+MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 1 of 'strncpy' differ in signedness
+c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'char *' but argument is of type 'uint8_t *'
+MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 2 of 'strncpy' differ in signedness
+c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'const char *' but argument is of type 'uint8_t *'
+MainFiles/i2cTemp.c(59): warning: unused variable 'tempRead10'
+MainFiles/i2cTemp.c(53): warning: unused variable 'nmeaRead2'
+Target not created
+Build target 'WebServerELF'
+compiling main.c...
+MainFiles/main.c: In function 'main':
+MainFiles/main.c(227): error: 'vtCalcData' undeclared (first use in this function)
+MainFiles/main.c(227): error: note: each undeclared identifier is reported only once for each function it appears in
+compiling i2cTemp.c...
+MainFiles/i2cTemp.c: In function 'vi2cTempUpdateTask':
+MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 1 of 'strncpy' differ in signedness
+c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'char *' but argument is of type 'uint8_t *'
+MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 2 of 'strncpy' differ in signedness
+c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'const char *' but argument is of type 'uint8_t *'
+MainFiles/i2cTemp.c(59): warning: unused variable 'tempRead10'
+MainFiles/i2cTemp.c(53): warning: unused variable 'nmeaRead2'
+MainFiles/i2cTemp.c(60): warning: 'rxLen' may be used uninitialized in this function
+Target not created
+Build target 'WebServerELF'
+compiling main.c...
+linking...
+".\ObjectFiles\RTOSDemo.elf" - 0 Error(s), 0 Warning(s).

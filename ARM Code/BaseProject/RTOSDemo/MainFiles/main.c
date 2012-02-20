@@ -127,7 +127,7 @@ tick hook). */
 #define mainI2CTEMP_TASK_PRIORITY			( tskIDLE_PRIORITY)
 #define mainUSB_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainI2CMONITOR_TASK_PRIORITY		( tskIDLE_PRIORITY)
-#define mainCALC_TASK_PRIORITY		( tskIDLE_PRIORITY)
+#define mainCALC_TASK_PRIORITY				( tskIDLE_PRIORITY)
 
 /* The WEB server has a larger stack as it utilises stack hungry string
 handling library calls. */
@@ -222,6 +222,11 @@ int main( void )
 	DeviceParams.lcdData = &vtLCDdata;
 	#else
 	DeviceParams.lcdData = NULL;
+	#endif
+	#if USE_CALC == 1
+	DeviceParams.calcData = &vtCalcdata;
+	#else
+	DeviceParams.calcData = NULL;
 	#endif
 	vStarti2cTempTask(mainI2CTEMP_TASK_PRIORITY,&DeviceParams);
 	#endif
