@@ -8,6 +8,7 @@
 
 /* include files. */
 #include "vtUtilities.h"
+#include "calcTask.h"
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 #if PRINTF_VERSION==1
@@ -24,7 +25,7 @@ static portTASK_FUNCTION_PROTO( vCalcUpdateTask, pvParameters );
 
 /*-----------------------------------------------------------*/
 
-void vStartCalcTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
+void vStartCalcTask( unsigned portBASE_TYPE uxPriority,vtCalcStruct *ptr )
 {
 
 	// Create the queue that will be used to talk to the LCD
@@ -62,7 +63,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
 
-		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
+		if (xQueueReceive(calcPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		//Log that we are processing a message
