@@ -112,6 +112,7 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 {
 	portTickType xUpdateRate, xLastUpdateTime;
 	uint8_t rVoltage = 0;
+	uint8_t counter = 0;
 	unsigned int ypos = 280; //change later to reflect initial drawing position
 	//uncomment next line if we want to do tracking array
 	//uint8_t tArray[281] = {0};
@@ -160,9 +161,15 @@ else if (LCD_STATE == 2){
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
 		
-		GLCD_ClearLn(0,1);
-		
-		GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+		//GLCD_ClearLn(counter,1);
+		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
+
+		if (counter >= 2){
+			counter = 0;
+		}
+		else {
+			counter++;
+		}
 	}
 else{
 	//	Bad setting

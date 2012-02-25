@@ -4,7 +4,7 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Github\ece4534\ARM Code\BaseProject\RTOSDemo\RTOSDemo.uvproj
-Project File Date:  02/15/2012
+Project File Date:  02/20/2012
 
 <h2>Output:</h2>
 Build target 'WebServerELF'
@@ -17,45 +17,36 @@ compiling vtUtilities.c...
 compiling ParTest.c...
 compiling LCDtask.c...
 MainFiles/LCDtask.c: In function 'vLCDUpdateTask':
-MainFiles/LCDtask.c(147): warning: implicit declaration of function 'GLCD_SetWindow'
-MainFiles/LCDtask.c(115): warning: unused variable 'ypos'
+MainFiles/LCDtask.c(148): warning: implicit declaration of function 'GLCD_SetWindow'
+MainFiles/LCDtask.c(116): warning: unused variable 'ypos'
 MainFiles/LCDtask.c(114): warning: unused variable 'rVoltage'
 MainFiles/LCDtask.c: At top level:
 MainFiles/LCDtask.c(59): warning: 'hsl2rgb' defined but not used
 compiling i2cTemp.c...
 MainFiles/i2cTemp.c: In function 'vi2cTempUpdateTask':
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 1 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 2 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'const char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(59): warning: unused variable 'tempRead10'
-MainFiles/i2cTemp.c(53): warning: unused variable 'nmeaRead2'
-MainFiles/i2cTemp.c(60): warning: 'rxLen' may be used uninitialized in this function
+MainFiles/i2cTemp.c(61): warning: unused variable 'tempRead10'
+MainFiles/i2cTemp.c(55): warning: unused variable 'testWrite'
+MainFiles/i2cTemp.c(54): warning: unused variable 'nmeaRead2'
+MainFiles/i2cTemp.c(62): warning: 'rxLen' may be used uninitialized in this function
 compiling Bg_final.c...
 compiling calcTask.c...
-MainFiles/calcTask.c(27): error: expected declaration specifiers or '...' before 'vtLCDStruct'
-MainFiles/calcTask.c: In function 'vStartCalcTask':
-MainFiles/calcTask.c(31): error: 'ptr' undeclared (first use in this function)
-MainFiles/calcTask.c(31): error: note: each undeclared identifier is reported only once for each function it appears in
-MainFiles/calcTask.c(31): warning: implicit declaration of function 'xQueueCreate'
-MainFiles/calcTask.c(31): error: 'vtCalcQLen' undeclared (first use in this function)
-MainFiles/calcTask.c(31): error: 'vtCalcMsg' undeclared (first use in this function)
-MainFiles/calcTask.c: In function 'vCalcUpdateTask':
-MainFiles/calcTask.c(45): error: 'vtCalcMsg' undeclared (first use in this function)
-MainFiles/calcTask.c(45): error: expected ';' before 'msgBuffer'
-MainFiles/calcTask.c(46): error: 'vtCalcStruct' undeclared (first use in this function)
-MainFiles/calcTask.c(46): error: 'calcPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(46): error: expected expression before ')' token
-MainFiles/calcTask.c(65): warning: implicit declaration of function 'xQueueReceive'
-MainFiles/calcTask.c(65): error: 'lcdPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(65): error: 'msgBuffer' undeclared (first use in this function)
 compiling syscalls.c...
 compiling system_LPC17xx.c...
 compiling USB_CDC.c...
+compiling usbcontrol.c...
 compiling usbhw_lpc.c...
+compiling usbinit.c...
+compiling usbstdreq.c...
 compiling emac.c...
+compiling httpd.c...
+compiling httpd-cgi.c...
+compiling httpd-fs.c...
+compiling http-strings.c...
 compiling uIP_Task.c...
+compiling psock.c...
 compiling timer.c...
+compiling uip_arp.c...
+compiling uip.c...
 compiling vtSSP.c...
 compiling GLCD_SPI_LPC1700.c...
 ../vtCode/vtLCD/GLCD_SPI_LPC1700.c: In function 'GLCD_ClearArea':
@@ -77,83 +68,9 @@ compiling lpc17xx_ssp.c...
 ../NXPDrivers/source/lpc17xx_ssp.c(344): warning: 'rdata16' may be used uninitialized in this function
 ../NXPDrivers/source/lpc17xx_ssp.c(345): warning: 'wdata16' may be used uninitialized in this function
 compiling vtI2C.c...
-Target not created
-Build target 'WebServerELF'
-compiling main.c...
-compiling calcTask.c...
-MainFiles/calcTask.c(27): error: expected declaration specifiers or '...' before 'vtLCDStruct'
-MainFiles/calcTask.c: In function 'vStartCalcTask':
-MainFiles/calcTask.c(31): error: 'ptr' undeclared (first use in this function)
-MainFiles/calcTask.c(31): error: note: each undeclared identifier is reported only once for each function it appears in
-MainFiles/calcTask.c(31): warning: implicit declaration of function 'xQueueCreate'
-MainFiles/calcTask.c(31): error: 'vtCalcQLen' undeclared (first use in this function)
-MainFiles/calcTask.c(31): error: 'vtCalcMsg' undeclared (first use in this function)
-MainFiles/calcTask.c: In function 'vCalcUpdateTask':
-MainFiles/calcTask.c(45): error: 'vtCalcMsg' undeclared (first use in this function)
-MainFiles/calcTask.c(45): error: expected ';' before 'msgBuffer'
-MainFiles/calcTask.c(46): error: 'vtCalcStruct' undeclared (first use in this function)
-MainFiles/calcTask.c(46): error: 'calcPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(46): error: expected expression before ')' token
-MainFiles/calcTask.c(65): warning: implicit declaration of function 'xQueueReceive'
-MainFiles/calcTask.c(65): error: 'lcdPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(65): error: 'msgBuffer' undeclared (first use in this function)
-Target not created
-Build target 'WebServerELF'
-compiling calcTask.c...
-MainFiles/calcTask.c(28): error: expected declaration specifiers or '...' before 'vtLCDStruct'
-MainFiles/calcTask.c(28): error: conflicting types for 'vStartCalcTask'
-MainFiles/calcTask.h(18): error: note: previous declaration of 'vStartCalcTask' was here
-MainFiles/calcTask.c: In function 'vStartCalcTask':
-MainFiles/calcTask.c(32): error: 'ptr' undeclared (first use in this function)
-MainFiles/calcTask.c(32): error: note: each undeclared identifier is reported only once for each function it appears in
-MainFiles/calcTask.c: In function 'vCalcUpdateTask':
-MainFiles/calcTask.c(66): error: 'lcdPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(47): warning: unused variable 'calcPtr'
-Target not created
-Build target 'WebServerELF'
-compiling calcTask.c...
-MainFiles/calcTask.c: In function 'vCalcUpdateTask':
-MainFiles/calcTask.c(66): error: 'lcdPtr' undeclared (first use in this function)
-MainFiles/calcTask.c(66): error: note: each undeclared identifier is reported only once for each function it appears in
-MainFiles/calcTask.c(47): warning: unused variable 'calcPtr'
-Target not created
-Build target 'WebServerELF'
-compiling calcTask.c...
 linking...
-".\ObjectFiles\RTOSDemo.elf" - 0 Error(s), 0 Warning(s).
-Build target 'WebServerELF'
-compiling main.c...
-MainFiles/i2cTemp.h(9): error: expected specifier-qualifier-list before 'vtCalcStruct'
-MainFiles/main.c: In function 'main':
-MainFiles/main.c(227): error: 'i2cTempStruct' has no member named 'calcData'
-MainFiles/main.c(227): error: 'vtCalcData' undeclared (first use in this function)
-MainFiles/main.c(227): error: note: each undeclared identifier is reported only once for each function it appears in
-compiling i2cTemp.c...
-MainFiles/i2cTemp.h(9): error: expected specifier-qualifier-list before 'vtCalcStruct'
-MainFiles/i2cTemp.c: In function 'vi2cTempUpdateTask':
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 1 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 2 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'const char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(59): warning: unused variable 'tempRead10'
-MainFiles/i2cTemp.c(53): warning: unused variable 'nmeaRead2'
-Target not created
-Build target 'WebServerELF'
-compiling main.c...
-MainFiles/main.c: In function 'main':
-MainFiles/main.c(227): error: 'vtCalcData' undeclared (first use in this function)
-MainFiles/main.c(227): error: note: each undeclared identifier is reported only once for each function it appears in
-compiling i2cTemp.c...
-MainFiles/i2cTemp.c: In function 'vi2cTempUpdateTask':
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 1 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(147): warning: pointer targets in passing argument 2 of 'strncpy' differ in signedness
-c:\program files\codesourcery\sourcery g++ lite\bin\../lib/gcc/arm-none-eabi/4.5.2/../../../../arm-none-eabi/include/string.h:37:8: note: expected 'const char *' but argument is of type 'uint8_t *'
-MainFiles/i2cTemp.c(59): warning: unused variable 'tempRead10'
-MainFiles/i2cTemp.c(53): warning: unused variable 'nmeaRead2'
-MainFiles/i2cTemp.c(60): warning: 'rxLen' may be used uninitialized in this function
-Target not created
-Build target 'WebServerELF'
-compiling main.c...
-linking...
-".\ObjectFiles\RTOSDemo.elf" - 0 Error(s), 0 Warning(s).
+".\ObjectFiles\RTOSDemo.elf" - 0 Error(s), 16 Warning(s).
+Load "C:\\Github\\ece4534\\ARM Code\\BaseProject\\RTOSDemo\\ObjectFiles\\RTOSDemo.ELF" 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.

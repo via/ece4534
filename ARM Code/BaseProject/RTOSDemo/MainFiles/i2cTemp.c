@@ -48,9 +48,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 {
 	portTickType xUpdateRate, xLastUpdateTime;
 
-	const uint8_t i2cZero[] = {0x00};
+	const uint8_t readReg0[] = {0x00};
+	const uint8_t readReg1[] = {0x01};
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
+	const uint8_t testWrite[] = {0x01, 0xA5};
 	uint8_t P0Read[2];
 	uint8_t P1Read[2];
 	uint8_t P2Read[2];
@@ -79,7 +81,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
 		
 		//PIC 0
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(i2cZero),i2cZero,2) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,2) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
@@ -93,7 +95,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 		
 		//PIC 1
-		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(i2cZero),i2cZero,2) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(readReg0),readReg0,2) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
@@ -107,7 +109,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
 		//PIC 2
-		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(i2cZero),i2cZero,2) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg0),readReg0,2) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
@@ -119,8 +121,65 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		P2Read[0] = tempBuf[0];
 		P2Read[1] = tempBuf[1];	
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+		/*
+		//Write to reg1
+		if (vtI2CEnQ(devPtr,0x00,0x1d,2,testWrite,0) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		*/
+		 if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg1),readReg1,1) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		 
+		//NMEA String read 1
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
 		
-		//NMEA String reads
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//Calculations and passing to LCD
+		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
+		//lcdBuffer.buf[0] = ADCReading;
+		if (lcdData != NULL) {
+			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
+			lcdBuffer.length = strlen((const char*)(lcdBuffer.buf))+1;
+			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+				VT_HANDLE_FATAL_ERROR(0);
+			}
+		}
+
+		//NMEA String read 2
+		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//Calculations and passing to LCD
+		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
+		//lcdBuffer.buf[0] = ADCReading;
+		if (lcdData != NULL) {
+			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
+			lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+				VT_HANDLE_FATAL_ERROR(0);
+			}
+		}
+
+		//NMEA String read 3
 		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
@@ -132,19 +191,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
 		//Calculations and passing to LCD
-		/*
-		#if PRINTF_VERSION == 1
-		//printf("Temp %f F (%f C)\n",(32.0 + ((9.0/5.0)*temperature)), (temperature));
-		sprintf((char*)(lcdBuffer.buf),"%f", ADCReading);
-		#else
-		// we do not have full printf (so no %f) and therefore need to print out integers
-		//printf("Temp %d F (%d C)\n",lrint(32.0 + ((9.0/5.0)*temperature)), lrint(temperature));
-		
-		sprintf((char*)(lcdBuffer.buf),"%d", ADCReading);
-		#endif
-		*/
-		tempBuf[10]='\0';
-		strncpy(lcdBuffer.buf, tempBuf, 11);
+		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
 		//lcdBuffer.buf[0] = ADCReading;
 		if (lcdData != NULL) {
 			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
