@@ -10,6 +10,7 @@ AutoSaveProject=1
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/19inch.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/40xx.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/41xx.lbr"
+UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/4534_Node_Board.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/45xx.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/74ac-logic.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/74ttl-din.lbr"
@@ -334,16 +335,15 @@ UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/xilinx-xc9.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/xilinx-xcv.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/zetex.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/zilog.lbr"
-UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/4534_Node_Board.lbr"
 UsedLibrary="4534_I2C2.lbr"
 UsedLibrary="4534_Node_Board.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="1035 166 1634 565"
+Loc="642 161 1241 560"
 State=2
 Number=0
 
 [Desktop]
-Screen="1916 1001"
+Screen="1258 691"
 Window="Win_1"

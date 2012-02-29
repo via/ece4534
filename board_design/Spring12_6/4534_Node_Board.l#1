@@ -409,19 +409,22 @@
 <text x="52.0954" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">TYPE</text>
 </symbol>
 <symbol name="MRF24J40MA-1">
-<rectangle x1="-35.56" y1="-25.4" x2="5.08" y2="22.86" layer="94"/>
-<pin name="P$1" x="-35.56" y="20.32" length="middle" rot="R180"/>
-<pin name="P$2" x="-35.56" y="12.7" length="middle" rot="R180"/>
-<pin name="P$3" x="-35.56" y="5.08" length="middle" rot="R180"/>
-<pin name="P$4" x="-35.56" y="-2.54" length="middle" rot="R180"/>
-<pin name="P$5" x="-35.56" y="-10.16" length="middle" rot="R180"/>
-<pin name="P$6" x="-35.56" y="-17.78" length="middle" rot="R180"/>
-<pin name="P$7" x="5.08" y="-17.78" length="middle"/>
-<pin name="P$8" x="5.08" y="-10.16" length="middle"/>
-<pin name="P$9" x="5.08" y="-2.54" length="middle"/>
-<pin name="P$10" x="5.08" y="5.08" length="middle"/>
-<pin name="P$11" x="5.08" y="12.7" length="middle"/>
-<pin name="P$12" x="5.08" y="20.32" length="middle"/>
+<wire x1="-35.56" y1="25.4" x2="-35.56" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="-35.56" y1="-22.86" x2="5.08" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-22.86" x2="5.08" y2="25.4" width="0.254" layer="94"/>
+<pin name="GND" x="-40.64" y="20.32" length="middle"/>
+<pin name="~RESET" x="-40.64" y="12.7" length="middle"/>
+<pin name="WAKE" x="-40.64" y="5.08" length="middle"/>
+<pin name="INT" x="-40.64" y="-2.54" length="middle"/>
+<pin name="SDI" x="-40.64" y="-10.16" length="middle"/>
+<pin name="SCK" x="-40.64" y="-17.78" length="middle"/>
+<pin name="GND12" x="10.16" y="20.32" length="middle" rot="R180"/>
+<pin name="GND11" x="10.16" y="12.7" length="middle" rot="R180"/>
+<pin name="VIN" x="10.16" y="5.08" length="middle" rot="R180"/>
+<pin name="NC" x="10.16" y="-2.54" length="middle" rot="R180"/>
+<pin name="~CS" x="10.16" y="-10.16" length="middle" rot="R180"/>
+<pin name="SDO" x="10.16" y="-17.78" length="middle" rot="R180"/>
+<wire x1="-35.56" y1="25.4" x2="5.08" y2="25.4" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -486,18 +489,18 @@
 <devices>
 <device name="" package="PCB12">
 <connects>
-<connect gate="A" pin="P$1" pad="1"/>
-<connect gate="A" pin="P$10" pad="10"/>
-<connect gate="A" pin="P$11" pad="11"/>
-<connect gate="A" pin="P$12" pad="12"/>
-<connect gate="A" pin="P$2" pad="2"/>
-<connect gate="A" pin="P$3" pad="3"/>
-<connect gate="A" pin="P$4" pad="4"/>
-<connect gate="A" pin="P$5" pad="5"/>
-<connect gate="A" pin="P$6" pad="6"/>
-<connect gate="A" pin="P$7" pad="7"/>
-<connect gate="A" pin="P$8" pad="8"/>
-<connect gate="A" pin="P$9" pad="9"/>
+<connect gate="A" pin="GND" pad="1"/>
+<connect gate="A" pin="GND11" pad="11"/>
+<connect gate="A" pin="GND12" pad="12"/>
+<connect gate="A" pin="INT" pad="4"/>
+<connect gate="A" pin="NC" pad="9"/>
+<connect gate="A" pin="SCK" pad="6"/>
+<connect gate="A" pin="SDI" pad="5"/>
+<connect gate="A" pin="SDO" pad="7"/>
+<connect gate="A" pin="VIN" pad="10"/>
+<connect gate="A" pin="WAKE" pad="3"/>
+<connect gate="A" pin="~CS" pad="8"/>
+<connect gate="A" pin="~RESET" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>

@@ -408,24 +408,6 @@
 <text x="50.5206" y="9.1186" size="2.0828" layer="95" ratio="6" rot="SR0">REFDES</text>
 <text x="52.0954" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">TYPE</text>
 </symbol>
-<symbol name="MRF24J40MA-1">
-<wire x1="-35.56" y1="25.4" x2="-35.56" y2="-22.86" width="0.254" layer="94"/>
-<wire x1="-35.56" y1="-22.86" x2="5.08" y2="-22.86" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-22.86" x2="5.08" y2="25.4" width="0.254" layer="94"/>
-<pin name="GND" x="-40.64" y="20.32" length="middle"/>
-<pin name="~RESET" x="-40.64" y="12.7" length="middle"/>
-<pin name="WAKE" x="-40.64" y="5.08" length="middle"/>
-<pin name="INT" x="-40.64" y="-2.54" length="middle"/>
-<pin name="SDI" x="-40.64" y="-10.16" length="middle"/>
-<pin name="SCK" x="-40.64" y="-17.78" length="middle"/>
-<pin name="GND12" x="10.16" y="20.32" length="middle" rot="R180"/>
-<pin name="GND11" x="10.16" y="12.7" length="middle" rot="R180"/>
-<pin name="VIN" x="10.16" y="5.08" length="middle" rot="R180"/>
-<pin name="NC" x="10.16" y="-2.54" length="middle" rot="R180"/>
-<pin name="~CS" x="10.16" y="-10.16" length="middle" rot="R180"/>
-<pin name="SDO" x="10.16" y="-17.78" length="middle" rot="R180"/>
-<wire x1="-35.56" y1="25.4" x2="5.08" y2="25.4" width="0.254" layer="94"/>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="PIC18F45J10-X/P">
@@ -484,7 +466,6 @@
 </deviceset>
 <deviceset name="MRF24J40MA">
 <gates>
-<gate name="A" symbol="MRF24J40MA-1" x="15.24" y="2.54"/>
 </gates>
 <devices>
 <device name="">
