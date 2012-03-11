@@ -3,33 +3,37 @@
 void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
                         utm_coordinate* output_coordinate )
 {
+    /*See http://www.uwgb.edu/dutchs/UsefulData/UTMFormulas.htm
+     *for the explanation
+     *
+     */
     //Constants defined
-    const float equatorial = 6378137;
-    const float polar = 6356752.3142;
-    const float flattening = 1/298.257223563;
-    const float pi = 3.14159265359;
-    const float k0 = 0.9996;
-    const float e = 0.0818191909334;
-    const float e_squared = 0.006694380005;
-    const float A = 6367449.14594;
-    const float B = -16038.5083688;
-    const float C = 16.83222008030;
-    const float D = -0.0218007663577;
-    const float e_prime_squared = 0.00673949675732;
-    const float n = 0.00167922038994;
-    const float long0 = 1.41371669412;
+    const double equatorial = 6378137;
+    const double polar = 6356752.3142;
+    const double flattening = 1/298.257223563;
+    const double pi = 3.14159265359;
+    const double k0 = 0.9996;
+    const double e = 0.0818191909334;
+    const double e_squared = 0.006694380005;
+    const double A = 6367449.14594;
+    const double B = -16038.5083688;
+    const double C = 16.83222008030;
+    const double D = -0.0218007663577;
+    const double e_prime_squared = 0.00673949675732;
+    const double n = 0.00167922038994;
+    const double long0 = 1.41371669412;
 
     //Convert to radians
-    float latitude = input_coordinate->latDegrees + input_coordinate->latMinutes/(float)60 + input_coordinate->latSeconds/(float)3600;
-    float longitude = input_coordinate->lonDegrees + input_coordinate->lonMinutes/(float)60 + input_coordinate->lonSeconds/(float)3600;
+    double latitude = input_coordinate->latDegrees + input_coordinate->latMinutes/(double)60 + input_coordinate->latSeconds/(double)3600;
+    double longitude = input_coordinate->lonDegrees + input_coordinate->lonMinutes/(double)60 + input_coordinate->lonSeconds/(double)3600;
 
-    float lat_rads = latitude*pi/(float)180;
-    float lon_rads = longitude*pi/(float)180;
+    double lat_rads = latitude*pi/(double)180;
+    double lon_rads = longitude*pi/(double)180;
 
     //Calculate final constants
-    float rho = equatorial*(1-e_squared)/pow((1-e_squared*pow(sin(lat_rads),(float)2)),1.5);
-    float nu = equatorial/pow((1-e_squared*pow(sin(lat_rads),(float)2)),0.5);
-    float p = lon_rads - long0;
+    double rho = equatorial*(1-e_squared)/pow((1-e_squared*pow(sin(lat_rads),(double)2)),1.5);
+    double nu = equatorial/pow((1-e_squared*pow(sin(lat_rads),(double)2)),0.5);
+    double p = lon_rads - long0;
 
     //Determine the Meridional Arc
     M = A*lat_rads + B*sin(2*lat_rads) + C*sin(4*lat_rads) + D*sin(6*lat_rads);
@@ -42,3 +46,28 @@ void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
     return;
 }
 
+
+double distance_to_transmitter( const double power_received, const double power_transmitted, const double receive_gain, const double transmit_gain, const double frequency )
+{
+    const double pi = 3.14159265359;
+    double lambda = 299792458/frequency;
+    //Friis transmission equation
+    double distance = pow(10,(power_received - power_transmitted - receive_gain - transmit_gain)/20)*4*pi/lambda;
+    return 1/distance;
+}
+
+void location_gradient_descent( const utm_coordinate** receiver_positions, const double* distance_data, utm_coordinate* current_position, const double stepsize )
+{
+    double x_dev = 0.0;
+    double y_dev = 0.0;
+
+    for(int i = 0;i < 3;i++)
+    {
+        K = sqrt( pow(current_position->eastings - receiver_positions[i]->eastings,2) + pow(current_position->northings - receiver_positions[i]->northings,2) );
+        x_dev += (distance_data[i]-K)*(-1/(2*K))(-2*current_position->eastings+2*receiver_positions[i]->eastings);
+        y_dev += (distance_data[i]-K)*(-1/(2*K))(-2*current_position->northings+2*receiver_positions[i]->northings);
+    }
+
+    current_position->northings += 2*y_dev*stepsize;
+    current_position->eastings += 2*x_dev*stepsize;
+}
