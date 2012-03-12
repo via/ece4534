@@ -36,7 +36,7 @@ void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
     double p = lon_rads - long0;
 
     //Determine the Meridional Arc
-    M = A*lat_rads + B*sin(2*lat_rads) + C*sin(4*lat_rads) + D*sin(6*lat_rads);
+    double M = A*lat_rads + B*sin(2*lat_rads) + C*sin(4*lat_rads) + D*sin(6*lat_rads);
 
     //Calculate northings and eastings
     output_coordinate->northings = M*k0 + k0*nu*sin(2*lat_rads)/4*pow(p,2) + (k0*nu*sin(lat_rads)*pow(cos(lat_rads),3)/24)*(5-pow(tan(lat_rads),2)+9*e_prime_squared*pow(cos(lat_rads),2)+4*pow(e_prime_squared,2)*pow(cos(lat_rads),4))*pow(p,4);
@@ -60,12 +60,13 @@ void location_gradient_descent( const utm_coordinate** receiver_positions, const
 {
     double x_dev = 0.0;
     double y_dev = 0.0;
-
-    for(int i = 0;i < 3;i++)
+    double K = 0.0;
+    int i = 0;
+    for(i;i < 3;i++)
     {
         K = sqrt( pow(current_position->eastings - receiver_positions[i]->eastings,2) + pow(current_position->northings - receiver_positions[i]->northings,2) );
-        x_dev += (distance_data[i]-K)*(-1/(2*K))(-2*current_position->eastings+2*receiver_positions[i]->eastings);
-        y_dev += (distance_data[i]-K)*(-1/(2*K))(-2*current_position->northings+2*receiver_positions[i]->northings);
+        x_dev += (distance_data[i]-K)*(-1/(2*K))*(-2*current_position->eastings+2*receiver_positions[i]->eastings);
+        y_dev += (distance_data[i]-K)*(-1/(2*K))*(-2*current_position->northings+2*receiver_positions[i]->northings);
     }
 
     current_position->northings += 2*y_dev*stepsize;
