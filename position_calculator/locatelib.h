@@ -9,17 +9,19 @@
 
 #include <math.h>
 
-struct dms_coordinate{
-    int     latDegrees,
-    int     latMinutes,
-    double  latSeconds,
-    int     lonDegrees,
-    int     lonMinutes,
-    double  lonSeconds};
+typedef struct {
+    int     latDegrees;
+    int     latMinutes;
+    double  latSeconds;
+    int     lonDegrees;
+    int     lonMinutes;
+    double  lonSeconds;
+} dms_coordinate;
 
-struct utm_coordinate{
-    double  eastings,
-    double  northings};
+typedef struct {
+    double  eastings;
+    double  northings;
+} utm_coordinate;
 
 
 /*convertDMS_to_UTM
@@ -57,4 +59,6 @@ double distance_to_transmitter( const double power_received, \
 void location_gradient_descent( const utm_coordinate** receiver_positions, \
                                 const double* distance_data, \
                                 utm_coordinate* current_position, \
-                                const double stepsize = 0.1 );
+                                const double stepsize );
+
+#endif
