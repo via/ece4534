@@ -23,6 +23,11 @@ typedef struct {
     double  northings;
 } utm_coordinate;
 
+/*convert_rssi_to_db
+ *
+ *Convert's the Microchip MiWi RSSI 8-bit value to dBW
+ */
+double convert_rssi_to_db( uint8_t* rssi_value );
 
 /*convertDMS_to_UTM
  *
