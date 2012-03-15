@@ -458,7 +458,6 @@
 <wire x1="7.62" y1="2.54" x2="7.62" y2="-15.494" width="0.127" layer="21"/>
 <wire x1="7.62" y1="-15.494" x2="-12.7" y2="-15.494" width="0.127" layer="21"/>
 <text x="-6.858" y="-14.478" size="1.27" layer="21">HEATSINK</text>
-<hole x="-2.54" y="-3.175" drill="3.2"/>
 <wire x1="7.62" y1="2.54" x2="-12.7" y2="2.54" width="0.127" layer="21"/>
 <wire x1="-12.7" y1="2.54" x2="-12.7" y2="-15.494" width="0.127" layer="21"/>
 <rectangle x1="-12.7" y1="-15.494" x2="7.62" y2="2.54" layer="39"/>
@@ -468,12 +467,8 @@
 <wire x1="27.305" y1="11.43" x2="27.305" y2="-26.67" width="0.127" layer="22"/>
 <wire x1="27.305" y1="-26.67" x2="-25.4" y2="-26.67" width="0.127" layer="22"/>
 <text x="-6.35" y="7.62" size="1.27" layer="22" rot="MR180">3xAAA Battery</text>
-<hole x="0.635" y="-19.685" drill="3.2"/>
-<hole x="0.635" y="4.445" drill="3.2"/>
-<hole x="24.3586" y="-7.0104" drill="1.1"/>
-<hole x="24.3586" y="-19.7358" drill="1.1"/>
-<pad name="P$1" x="24.384" y="-7.0104" drill="1.1" diameter="3.81" shape="octagon"/>
-<pad name="P$2" x="24.3586" y="-19.7358" drill="1.1" diameter="2.1844" shape="octagon"/>
+<pad name="P$1" x="24.384" y="-7.0104" drill="2.2" diameter="3.81"/>
+<pad name="P$2" x="24.3586" y="-19.7358" drill="2.2" diameter="3.81"/>
 <rectangle x1="-2.54" y1="1.27" x2="3.81" y2="7.62" layer="41"/>
 <rectangle x1="-2.54" y1="-22.86" x2="3.81" y2="-16.51" layer="41"/>
 <text x="20.32" y="-20.32" size="1.27" layer="22" rot="MR90">+</text>
@@ -481,6 +476,8 @@
 <text x="20.32" y="-6.35" size="1.27" layer="21">-</text>
 <text x="20.32" y="-20.32" size="1.27" layer="21">+</text>
 <wire x1="-25.4" y1="11.43" x2="-25.4" y2="-26.67" width="0.127" layer="22"/>
+<hole x="0.635" y="4.445" drill="3.2"/>
+<hole x="0.635" y="-19.685" drill="3.2"/>
 </package>
 </packages>
 <symbols>
@@ -3342,6 +3339,9 @@ Source: 008-0260-0_E.pdf</description>
 <text x="-66.04" y="30.48" size="1.778" layer="91">Current Test Port</text>
 <text x="-172.72" y="38.1" size="1.778" layer="91">Dual Headers to support NODE0</text>
 <text x="53.34" y="93.98" size="1.778" layer="91">5V Regulator 2A Max</text>
+<text x="-27.94" y="17.78" size="1.778" layer="91">On Battery: 1-3 2-4 Jumpered</text>
+<text x="-27.94" y="15.24" size="1.778" layer="91">On External: 5-3 6-4 Jumpered</text>
+<text x="-27.94" y="12.7" size="1.778" layer="91">On I2C: 5-3 6-4 Jumpered</text>
 </plain>
 <instances>
 <instance part="U$1" gate="A" x="-127" y="129.54"/>
@@ -4206,6 +4206,7 @@ Source: 008-0260-0_E.pdf</description>
 <segment>
 <pinref part="SV4" gate="1" pin="4"/>
 <wire x1="-147.32" y1="88.9" x2="-127" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="A" pin="RC2/CCP1/P1A"/>
 </segment>
 </net>
 <net name="PICKIT-AUX" class="0">

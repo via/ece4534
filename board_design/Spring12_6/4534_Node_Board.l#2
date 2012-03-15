@@ -428,18 +428,15 @@
 <hole x="0.635" y="4.445" drill="3.2"/>
 <hole x="24.3586" y="-7.0104" drill="1.1"/>
 <hole x="24.3586" y="-19.7358" drill="1.1"/>
-<pad name="P$1" x="24.384" y="-7.0104" drill="1.1" diameter="3.81" shape="octagon"/>
-<pad name="P$2" x="24.3586" y="-19.7358" drill="1.1" diameter="2.1844" shape="octagon"/>
+<pad name="P$1" x="24.384" y="-7.0104" drill="2.2" diameter="3.81"/>
+<pad name="P$2" x="24.3586" y="-19.7358" drill="2.2" diameter="3.81"/>
 <rectangle x1="-2.54" y1="1.27" x2="3.81" y2="7.62" layer="41"/>
 <rectangle x1="-2.54" y1="-22.86" x2="3.81" y2="-16.51" layer="41"/>
 <text x="20.32" y="-20.32" size="1.27" layer="22" rot="MR90">+</text>
-<text x="22.86" y="-6.35" size="1.27" layer="22" rot="MR0">-</text>
-<text x="22.86" y="-8.89" size="1.27" layer="21">-</text>
+<text x="20.32" y="-6.35" size="1.27" layer="22" rot="MR0">-</text>
+<text x="20.32" y="-6.35" size="1.27" layer="21">-</text>
 <text x="20.32" y="-20.32" size="1.27" layer="21">+</text>
 <wire x1="-25.4" y1="11.43" x2="-25.4" y2="-26.67" width="0.127" layer="22"/>
-<rectangle x1="-25.4" y1="-26.67" x2="21.59" y2="11.43" layer="43"/>
-<rectangle x1="21.59" y1="-5.08" x2="26.67" y2="11.43" layer="43"/>
-<rectangle x1="21.59" y1="-17.78" x2="26.67" y2="-8.89" layer="43"/>
 </package>
 <package name="EVQ-11U05R">
 <circle x="-1" y="1" radius="2.915475" width="0.127" layer="21"/>
