@@ -162,14 +162,8 @@ else if (LCD_STATE == 2){
 		GLCD_SetBackColor(White);
 		
 		//GLCD_ClearLn(counter,1);
-		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
+		GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
 
-		if (counter >= 2){
-			counter = 0;
-		}
-		else {
-			counter++;
-		}
 	}
 else{
 	//	Bad setting

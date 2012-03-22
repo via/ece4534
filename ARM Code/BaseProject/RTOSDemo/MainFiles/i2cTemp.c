@@ -57,6 +57,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	uint8_t P1Read[2];
 	uint8_t P2Read[2];
 	uint8_t tempBuf[35];
+	uint8_t temp = 0;
 	uint8_t *tempRead = tempBuf;
 	uint8_t *tempRead10 = tempBuf + 9;
 	uint8_t rxLen, status;
@@ -79,7 +80,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	{
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
-		
+		/*
 		//PIC 0
 		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,2) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -121,12 +122,12 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		P2Read[0] = tempBuf[0];
 		P2Read[1] = tempBuf[1];	
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-		/*
+		
 		//Write to reg1
 		if (vtI2CEnQ(devPtr,0x00,0x1d,2,testWrite,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
-		*/
+		
 		 if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg1),readReg1,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
@@ -189,10 +190,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
+		*/
 		//Calculations and passing to calc
-		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
-		//calcBuffer.buf[0] = ADCReading;
+		//strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
+		calcBuffer.buf[0] = temp;
+		temp = temp + 1;
 		if (calcData != NULL) {
 			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 			calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;

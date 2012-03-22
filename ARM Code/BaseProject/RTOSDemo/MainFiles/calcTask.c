@@ -71,8 +71,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		}
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
-
+		
+		sprintf((char*)(lcdBuffer.buf),"Current Number is: %u", (int) msgBuffer[0]);
 		//Do Stuff here, msgBuffer.buf for message contents
+		
+		lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+				VT_HANDLE_FATAL_ERROR(0);
+			}
 	}
 }
 
