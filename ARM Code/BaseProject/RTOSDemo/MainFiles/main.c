@@ -202,6 +202,7 @@ int main( void )
 	// MTJ: My LCD demonstration task
 	#if USE_LCD == 1
 	vStartLCDTask( mainLCD_TASK_PRIORITY,&vtLCDdata);
+	vtCalcdata.lcdData = &vtLCDdata;
 	#endif
 	
 	#if USE_CALC == 1
