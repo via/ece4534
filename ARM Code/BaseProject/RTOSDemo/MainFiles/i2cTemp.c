@@ -43,6 +43,8 @@ void vStarti2cTempTask( unsigned portBASE_TYPE uxPriority, i2cTempStruct *params
 	}
 }
 
+int i2c_State = 1;
+
 // This is the actual task that is run
 static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 {
@@ -53,13 +55,16 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
 	const uint8_t testWrite[] = {0x01, 0xA5};
+	const uint8_t testData1[] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
+	const uint8_t testData2[] = {}; //insert nmea stuff here
+	uint8_t moreData = 0;
+	uint8_t numCal[2] = { 0 }; //one entry for each pic, 1 if calibrated
 	uint8_t P0Read[2];
 	uint8_t P1Read[2];
 	uint8_t P2Read[2];
-	uint8_t tempBuf[35];
-	uint8_t temp = 0;
+	uint8_t nmeaString[60];
+	uint8_t tempBuf[15];
 	uint8_t *tempRead = tempBuf;
-	uint8_t *tempRead10 = tempBuf + 9;
 	uint8_t rxLen, status;
 	// Get the parameters
 	i2cTempStruct *param = (i2cTempStruct *) pvParameters;
@@ -91,8 +96,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		
 		//handle conversion of received here
-		P0Read[0] = tempBuf[0];
-		P0Read[1] = tempBuf[1];	
+		strncpy((char *)P0Read, (const char *) tempBuf, 2);
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 		
 		//PIC 1
@@ -105,8 +109,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		
 		//handle conversion of received here
-		P1Read[0] = tempBuf[0];
-		P1Read[1] = tempBuf[1];	
+		strncpy((char *)P1Read, (const char *) tempBuf, 2);
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
 		//PIC 2
@@ -119,8 +122,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		
 		//handle conversion of received here
-		P2Read[0] = tempBuf[0];
-		P2Read[1] = tempBuf[1];	
+		strncpy((char *)P2Read, (const char *) tempBuf, 2);
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 		
 		//Write to reg1
@@ -136,70 +138,79 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		 
-		//NMEA String read 1
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
-		//Calculations and passing to calc
-		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
-		//calcBuffer.buf[0] = ADCReading;
-		if (cacalcata != NULL) {
-			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-			calcBuffer.length = strlen((const char*)(calcBuffer.buf))+1;
-			if (xQueueSend(cacalcata->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+		while (moreData == 1) {
+			//NMEA String read 1
+			if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
 				VT_HANDLE_FATAL_ERROR(0);
 			}
-		}
 
-		//NMEA String read 2
-		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
-		//Calculations and passing to calc
-		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
-		//calcBuffer.buf[0] = ADCReading;
-		if (calcData != NULL) {
-			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-			calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
-			if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+			if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
 				VT_HANDLE_FATAL_ERROR(0);
 			}
-		}
-
-		//NMEA String read 3
-		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
 		
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+			vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+			//Calculations and passing to calc
+			strncat((char *) nmeaString, (const char *) tempBuf, 10);
+			if (strlen(tempBuf) < 10)
+				moreData = 0;
+		}
 		*/
-		//Calculations and passing to calc
-		//strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
-		calcBuffer.buf[0] = temp;
-		temp = temp + 1;
-		if (calcData != NULL) {
-			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-			calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
-			if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
-				VT_HANDLE_FATAL_ERROR(0);
+		if (i2c_State == 1){
+			calcBuffer.buf[0] = 12;
+			calcBuffer.buf[1] = 11;
+			if (P0Read[0] > 250 && P0Read[0] > P1Read[0] && P0Read[0] > P2Read[0] && numCal[0] == 0){
+				//close to pic0
+				calcBuffer.buf[2] = 0;
+				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				if (calcData != NULL) {
+					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+					if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+						VT_HANDLE_FATAL_ERROR(0);
+					}
+				}
+				numCal[0] = 1;
+			}
+			else if (P1Read[0] > 250 && P1Read[0] > P0Read[0] && P1Read[0] > P2Read[0] && numCal[1] == 0){
+				//close to pic1
+				calcBuffer.buf[2] = 1;
+				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				if (calcData != NULL) {
+					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+					if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+						VT_HANDLE_FATAL_ERROR(0);
+					}
+				}
+				numCal[1] = 1;
+			}
+			else if (P2Read[0] > 250 && P2Read[0] > P1Read[0] && P2Read[0] > P1Read[0] && numCal[2] == 0){
+				//close to pic2
+				calcBuffer.buf[2] = 2;
+				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				if (calcData != NULL) {
+					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+					if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+						VT_HANDLE_FATAL_ERROR(0);
+					}
+				}
+				numCal[2] = 1;
+			}
+			if (numCal[0] == 1 && numCal[1] == 1 && numCal[2] == 1){
+				i2c_state = 2;
+			}
+		}
+		else if (i2c_State == 2){
+			strncpy((char *)calcBuffer.buf, (const char *) testData1, 6);
+			strcat((char *)calcBuffer.buf, (const char *) testData2, (sizeof(testData2) / 8));
+			if (calcData != NULL) {
+				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+				if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
 			}
 		}
 		
