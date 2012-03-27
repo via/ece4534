@@ -138,23 +138,19 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		 
-		while (moreData == 1) {
-			//NMEA String read 1
-			if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,10) != pdTRUE) {
-				VT_HANDLE_FATAL_ERROR(0);
-			}
-
-			if (vtI2CDeQ(devPtr,10,tempRead,&rxLen,&status) != pdTRUE) {
-				VT_HANDLE_FATAL_ERROR(0);
-			}
-		
-			vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
-			//Calculations and passing to calc
-			strncat((char *) nmeaString, (const char *) tempBuf, 10);
-			if (strlen(tempBuf) < 10)
-				moreData = 0;
+		//NMEA String read 1
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,6) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
 		}
+
+		if (vtI2CDeQ(devPtr,6,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//Calculations and passing to calc
+		strncpy((char *) nmeaString, (const char *) tempBuf, 6);
 		*/
 		if (i2c_State == 1){
 			calcBuffer.buf[0] = 12;
