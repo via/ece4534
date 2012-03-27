@@ -10,6 +10,7 @@
 #include "vtUtilities.h"
 #include "calcTask.h"
 #include "lcdTask.h"
+#include "locatelib.h"
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 #if PRINTF_VERSION==1
@@ -48,6 +49,23 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtCalcStruct *calcPtr = (vtCalcStruct *) pvParameters;
 	vtLCDStruct *lcdData = calcPtr->lcdData;
 	vtLCDMsg lcdBuffer;
+	
+	calcState = 1;
+	uint8_t picCal[2] = { 0 }; //determine which pics are calibrated
+	
+	//Location calculation related
+	double picDBW[2] = { 0.0 };
+	double picDist[2] = { 0.0 };
+	utm_coordinate picCords[2];
+	dms_coordinate dmsCord;
+	utm_coordinate utmNmea; //utm for nmea string
+	utm_coordinate utmTx; //utm for transmitter
+	
+	const double pwr_tx = 0.0; //constant for power transmitted
+	const double rc_gain = 0.0; //constant for recieve gain
+	const double tx_gain = 0.0; //constant for transmit gain
+	const double freq = 0.0; //const for frequency
+	const double stepSize = 1.0;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;
@@ -72,13 +90,51 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		
-		sprintf((char*)(lcdBuffer.buf),"Current Number is: %u", (int)msgBuffer.buf[0]);
-		//Do Stuff here, msgBuffer.buf for message contents
-		
-		lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-				VT_HANDLE_FATAL_ERROR(0);
+		if (calcState == 1){
+			if (msgBuffer.buf[0] == 12 && msgBuffer.buf[1] == 11){
+				//convert the parsed stuff to dms_coordinate struct
+				//here
+				convertDMS_to_UTM( dmsCord, picCords[msgBuffer.buf[2]] );
+				picCal[msgBuffer.buf[2]] = 1;
 			}
+			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1)
+				calcState = 2;
+			
+			sprintf((char*)(lcdBuffer.buf),"Calibrating");
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+		}
+		else if (calcState == 2){
+			//convert PIC rssi to dBW
+			picDBW[0] = convert_rssi_to_db( msgBuffer.buf[0] );
+			picDBW[1] = convert_rssi_to_db( msgBuffer.buf[2] );
+			picDBW[2] = convert_rssi_to_db( msgBuffer.buf[4] );
+			
+			//Take the nmea data and put it into dmsCord here
+			
+			//Convert to UTM to do ?? with it
+			convertDMS_to_UTM( dmsCord, utmNmea );
+			
+			//Get distances to each transmitter
+			picDist[0] = distance_to_transmitter( picDBW[0], pwr_tx, rc_gain, tx_gain, freq );
+			picDist[1] = distance_to_transmitter( picDBW[1], pwr_tx, rc_gain, tx_gain, freq );
+			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
+			
+			//Calculate estimated position
+			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
+			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx.eastings, utmTx.northings);
+			//Do Stuff here, msgBuffer.buf for message contents
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+		}
 	}
 }
 
