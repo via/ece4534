@@ -9,17 +9,17 @@
 
 #include <math.h>
 
-typedef struct {
+struct dms_coordinate {
     int     latDegrees;
     double  latMinutes;
     int     lonDegrees;
     double  lonMinutes;
-} dms_coordinate;
+};
 
-typedef struct {
+struct utm_coordinate{
     double  eastings;
     double  northings;
-} utm_coordinate;
+};
 
 /*convert_rssi_to_db
  *
@@ -34,8 +34,8 @@ double convert_rssi_to_db( uint8_t* rssi_value );
  *
  *This uses the NAD82 datum
  */
-void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
-                        utm_coordinate* output_coordinate);
+void convertDMS_to_UTM( struct dms_coordinate* input_coordinate, \
+                        struct utm_coordinate* output_coordinate);
 
 
 /*distance_to_transmitter
@@ -59,9 +59,9 @@ double distance_to_transmitter( const double power_received, \
  *It is possible to write the algorithm for an N-receiver system, but
  *for now it only uses three receivers.
  */
-void location_gradient_descent( const utm_coordinate** receiver_positions, \
+void location_gradient_descent( const struct utm_coordinate** receiver_positions, \
                                 const double* distance_data, \
-                                utm_coordinate* current_position, \
+                                struct utm_coordinate* current_position, \
                                 const double stepsize );
 
 #endif
