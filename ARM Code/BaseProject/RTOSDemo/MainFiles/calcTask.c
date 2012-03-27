@@ -56,7 +56,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	//Location calculation related
 	double picDBW[2] = { 0.0 };
 	double picDist[2] = { 0.0 };
-	utm_coordinate *picCords[2];
+	utm_coordinate * const picCords[2];
 	dms_coordinate *dmsCord;
 	utm_coordinate *utmNmea; //utm for nmea string
 	utm_coordinate *utmTx; //utm for transmitter
@@ -139,8 +139,8 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
 			
 			//Calculate estimated position
-			location_gradient_descent( (const struct utm_coordinate **) picCords, picDist, utmTx, stepSize ); 
-			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx.eastings, utmTx.northings);
+			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
+			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
 			//Do Stuff here, msgBuffer.buf for message contents
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
