@@ -43,8 +43,6 @@ void vStarti2cTempTask( unsigned portBASE_TYPE uxPriority, i2cTempStruct *params
 	}
 }
 
-int i2c_State = 1;
-
 // This is the actual task that is run
 static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 {
@@ -56,13 +54,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead2[] = {0x03};
 	const uint8_t testWrite[] = {0x01, 0xA5};
 	const uint8_t testData1[] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
-	const uint8_t testData2[] = {}; //insert nmea stuff here
-	uint8_t moreData = 0;
+	const uint8_t testData2[] = {0x30, 0x1B, 0x7E, 0x0B, 0x79, 0x18}; //48deg 07.038 N, 11deg 31.000 E
+	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
 	uint8_t numCal[2] = { 0 }; //one entry for each pic, 1 if calibrated
-	uint8_t P0Read[2];
-	uint8_t P1Read[2];
-	uint8_t P2Read[2];
-	uint8_t nmeaString[60];
+	uint8_t P0Read[2] = { 0 };
+	uint8_t P1Read[2] = { 0 };
+	uint8_t P2Read[2] = { 0 };
+	uint8_t nmeaString[10];
 	uint8_t tempBuf[15];
 	uint8_t *tempRead = tempBuf;
 	uint8_t rxLen, status;
@@ -80,6 +78,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	/* We need to initialise xLastUpdateTime prior to the first call to vTaskDelayUntil(). */
 	xLastUpdateTime = xTaskGetTickCount();
 	
+	strncpy((char *)nmeaString, (const char *) testData2, 6);
 	// Like all good tasks, this should never exit
 	for(;;)
 	{
@@ -200,7 +199,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		else if (i2c_State == 2){
 			strncpy((char *)calcBuffer.buf, (const char *) testData1, 6);
-			strcat((char *)calcBuffer.buf, (const char *) testData2, (sizeof(testData2) / 8));
+			strncat((char *)calcBuffer.buf, (const char *) testData2, 6);
 			if (calcData != NULL) {
 				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
