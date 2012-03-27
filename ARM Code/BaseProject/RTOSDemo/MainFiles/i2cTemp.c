@@ -194,7 +194,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				numCal[2] = 1;
 			}
 			if (numCal[0] == 1 && numCal[1] == 1 && numCal[2] == 1){
-				i2c_state = 2;
+				i2c_State = 2;
 			}
 		}
 		else if (i2c_State == 2){

@@ -50,16 +50,16 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtLCDStruct *lcdData = calcPtr->lcdData;
 	vtLCDMsg lcdBuffer;
 	
-	calcState = 1;
+	uint8_t calcState = 1;
 	uint8_t picCal[2] = { 0 }; //determine which pics are calibrated
 	
 	//Location calculation related
 	double picDBW[2] = { 0.0 };
 	double picDist[2] = { 0.0 };
-	utm_coordinate picCords[2];
-	dms_coordinate dmsCord;
-	utm_coordinate utmNmea; //utm for nmea string
-	utm_coordinate utmTx; //utm for transmitter
+	utm_coordinate *picCords[2];
+	dms_coordinate *dmsCord;
+	utm_coordinate *utmNmea; //utm for nmea string
+	utm_coordinate *utmTx; //utm for transmitter
 	
 	const double pwr_tx = 0.0; //constant for power transmitted
 	const double rc_gain = 0.0; //constant for recieve gain
@@ -92,14 +92,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		if (calcState == 1){
 			if (msgBuffer.buf[0] == 12 && msgBuffer.buf[1] == 11){
 				//convert the parsed stuff to dms_coordinate struct
-				dmsCord.latDegrees = (int8_t) msgBuffer.buf[3];
-				dmsCord.latMinutes = (double) msgBuffer.buf[4];
-				dmsCord.latMinutes = dmsCord.latMinutes << 4;
-				dmsCord.latMinutes = dmsCord.latMinutes + (double) msgBuffer.buf[5];
-				dmsCord.lonDegrees = (int8_t) msgBuffer.buf[6];
-				dmsCord.lonMinutes = (double) msgBuffer.buf[7];
-				dmsCord.lonMinutes = dmsCord.latMinutes << 4;
-				dmsCord.lonMinutes = dmsCord.latMinutes + (double) msgBuffer.buf[8];
+				dmsCord->latDegrees = (int8_t) msgBuffer.buf[3];
+				dmsCord->latMinutes = (double) msgBuffer.buf[4];
+				dmsCord->latMinutes = dmsCord->latMinutes * 256;
+				dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[5];
+				dmsCord->lonDegrees = (int8_t) msgBuffer.buf[6];
+				dmsCord->lonMinutes = (double) msgBuffer.buf[7];
+				dmsCord->lonMinutes = dmsCord->latMinutes * 256;
+				dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
 				convertDMS_to_UTM( dmsCord, picCords[msgBuffer.buf[2]] );
 				picCal[msgBuffer.buf[2]] = 1;
 			}
@@ -121,14 +121,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDBW[2] = convert_rssi_to_db( msgBuffer.buf[4] );
 			
 			//Take the nmea data and put it into dmsCord here
-			dmsCord.latDegrees = (int) msgBuffer.buf[6];
-			dmsCord.latMinutes = (double) msgBuffer.buf[7];
-			dmsCord.latMinutes = dmsCord.latMinutes << 4;
-			dmsCord.latMinutes = dmsCord.latMinutes + (double) msgBuffer.buf[10];
-			dmsCord.lonDegrees = (int) msgBuffer.buf[11];
-			dmsCord.lonMinutes = (double) msgBuffer.buf[12];
-			dmsCord.lonMinutes = dmsCord.latMinutes << 4;
-			dmsCord.lonMinutes = dmsCord.latMinutes + (double) msgBuffer.buf[13];
+			dmsCord->latDegrees = (int) msgBuffer.buf[6];
+			dmsCord->latMinutes = (double) msgBuffer.buf[7];
+			dmsCord->latMinutes = dmsCord->latMinutes << 4;
+			dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[10];
+			dmsCord->lonDegrees = (int) msgBuffer.buf[11];
+			dmsCord->lonMinutes = (double) msgBuffer.buf[12];
+			dmsCord->lonMinutes = dmsCord->latMinutes << 4;
+			dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[13];
 			
 			//Convert to UTM to do ?? with it
 			convertDMS_to_UTM( dmsCord, utmNmea );
