@@ -56,7 +56,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	//Location calculation related
 	double picDBW[2] = { 0.0 };
 	double picDist[2] = { 0.0 };
-	utm_coordinate * const picCords[2];
+	utm_coordinate *(picCords[2]);
 	dms_coordinate *dmsCord;
 	utm_coordinate *utmNmea; //utm for nmea string
 	utm_coordinate *utmTx; //utm for transmitter
