@@ -56,10 +56,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	//Location calculation related
 	double picDBW[2] = { 0.0 };
 	double picDist[2] = { 0.0 };
-	utm_coordinate *(picCords[2]);
-	dms_coordinate *dmsCord;
-	utm_coordinate *utmNmea; //utm for nmea string
-	utm_coordinate *utmTx; //utm for transmitter
+	struct utm_coordinate *picCords[2];
+	struct dms_coordinate *dmsCord;
+	struct utm_coordinate *utmNmea; //utm for nmea string
+	struct utm_coordinate *utmTx; //utm for transmitter
 	
 	const double pwr_tx = 0.0; //constant for power transmitted
 	const double rc_gain = 0.0; //constant for recieve gain
