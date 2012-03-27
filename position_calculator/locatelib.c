@@ -8,8 +8,8 @@ double convert_rssi_to_db( uint8_t* rssi_value )
     return value*(double)55/255 - 120;
 }
 
-void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
-                        utm_coordinate* output_coordinate )
+void convertDMS_to_UTM( struct dms_coordinate* input_coordinate, \
+                        struct utm_coordinate* output_coordinate )
 {
     /*See http://www.uwgb.edu/dutchs/UsefulData/UTMFormulas.htm
      *for the explanation
@@ -64,7 +64,7 @@ double distance_to_transmitter( const double power_received, const double power_
     return 1/distance;
 }
 
-void location_gradient_descent( const utm_coordinate** receiver_positions, const double* distance_data, utm_coordinate* current_position, const double stepsize )
+void location_gradient_descent( const struct utm_coordinate** receiver_positions, const double* distance_data, struct utm_coordinate* current_position, const double stepsize )
 {
     double x_dev = 0.0;
     double y_dev = 0.0;
