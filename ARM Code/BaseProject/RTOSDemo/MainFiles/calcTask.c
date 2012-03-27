@@ -116,18 +116,18 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		}
 		else if (calcState == 2){
 			//convert PIC rssi to dBW
-			picDBW[0] = convert_rssi_to_db( msgBuffer.buf[0] );
-			picDBW[1] = convert_rssi_to_db( msgBuffer.buf[2] );
-			picDBW[2] = convert_rssi_to_db( msgBuffer.buf[4] );
+			picDBW[0] = convert_rssi_to_db( msgBuffer.buf );
+			picDBW[1] = convert_rssi_to_db( msgBuffer.buf+2 );
+			picDBW[2] = convert_rssi_to_db( msgBuffer.buf+4 );
 			
 			//Take the nmea data and put it into dmsCord here
 			dmsCord->latDegrees = (int) msgBuffer.buf[6];
 			dmsCord->latMinutes = (double) msgBuffer.buf[7];
-			dmsCord->latMinutes = dmsCord->latMinutes << 4;
+			dmsCord->latMinutes = dmsCord->latMinutes * 256;
 			dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[10];
 			dmsCord->lonDegrees = (int) msgBuffer.buf[11];
 			dmsCord->lonMinutes = (double) msgBuffer.buf[12];
-			dmsCord->lonMinutes = dmsCord->latMinutes << 4;
+			dmsCord->lonMinutes = dmsCord->latMinutes * 256;
 			dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[13];
 			
 			//Convert to UTM to do ?? with it
@@ -139,7 +139,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
 			
 			//Calculate estimated position
-			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
+			location_gradient_descent( (const struct utm_coordinate **) picCords, picDist, utmTx, stepSize ); 
 			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx.eastings, utmTx.northings);
 			//Do Stuff here, msgBuffer.buf for message contents
 			if (lcdData != NULL) {
