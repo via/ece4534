@@ -32,8 +32,8 @@ void convertDMS_to_UTM( dms_coordinate* input_coordinate, \
     const double long0 = 1.41371669412;
 
     //Convert to radians
-    double latitude = input_coordinate->latDegrees + input_coordinate->latMinutes/(double)60 + input_coordinate->latSeconds/(double)3600;
-    double longitude = input_coordinate->lonDegrees + input_coordinate->lonMinutes/(double)60 + input_coordinate->lonSeconds/(double)3600;
+    double latitude = input_coordinate->latDegrees + input_coordinate->latMinutes/(double)60;
+    double longitude = input_coordinate->lonDegrees + input_coordinate->lonMinutes/(double)60;
 
     double lat_rads = latitude*pi/(double)180;
     double lon_rads = longitude*pi/(double)180;

@@ -11,11 +11,9 @@
 
 typedef struct {
     int     latDegrees;
-    int     latMinutes;
-    double  latSeconds;
+    double  latMinutes;
     int     lonDegrees;
-    int     lonMinutes;
-    double  lonSeconds;
+    double  lonMinutes;
 } dms_coordinate;
 
 typedef struct {
