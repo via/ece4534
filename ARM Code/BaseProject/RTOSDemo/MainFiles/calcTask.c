@@ -9,6 +9,7 @@
 /* include files. */
 #include "vtUtilities.h"
 #include "calcTask.h"
+#include "lcdTask.h"
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 #if PRINTF_VERSION==1
@@ -45,6 +46,8 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtCalcMsg msgBuffer;
 	vtCalcStruct *calcPtr = (vtCalcStruct *) pvParameters;
+	vtLCDStruct *lcdData = calcPtr->lcdData;
+	vtLCDMsg lcdBuffer;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;

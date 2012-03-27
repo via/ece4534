@@ -12,13 +12,13 @@
 /* include files. */
 #include "vtUtilities.h"
 #include "vtI2C.h"
-#include "LCDtask.h"
+#include "calcTask.h"
 #include "i2cTemp.h"
 
 
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
-//   for some of the LCD operations
+//   for some of the calc operations
 #if PRINTF_VERSION==1
 #define i2cSTACK_SIZE		8*configMINIMAL_STACK_SIZE
 #else
@@ -64,9 +64,9 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	i2cTempStruct *param = (i2cTempStruct *) pvParameters;
 	// Get the I2C device pointer
 	vtI2CStruct *devPtr = param->dev;
-	// Get the LCD information pointer
-	vtLCDStruct *lcdData = param->lcdData;
-	vtLCDMsg lcdBuffer;
+	// Get the calc information pointer
+	vtCalcStruct *calcData = param->calcData;
+	vtCalcMsg calcBuffer;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = i2cREAD_RATE_BASE / portTICK_RATE_MS;
@@ -146,13 +146,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
-		//Calculations and passing to LCD
-		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
-		//lcdBuffer.buf[0] = ADCReading;
-		if (lcdData != NULL) {
-			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
-			lcdBuffer.length = strlen((const char*)(lcdBuffer.buf))+1;
-			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+		//Calculations and passing to calc
+		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
+		//calcBuffer.buf[0] = ADCReading;
+		if (cacalcata != NULL) {
+			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+			calcBuffer.length = strlen((const char*)(calcBuffer.buf))+1;
+			if (xQueueSend(cacalcata->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}
@@ -168,13 +168,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
-		//Calculations and passing to LCD
-		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
-		//lcdBuffer.buf[0] = ADCReading;
-		if (lcdData != NULL) {
-			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
-			lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+		//Calculations and passing to calc
+		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
+		//calcBuffer.buf[0] = ADCReading;
+		if (calcData != NULL) {
+			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+			calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+			if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}
@@ -190,13 +190,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 
-		//Calculations and passing to LCD
-		strncpy((char *)lcdBuffer.buf, (const char *) tempBuf, 10);
-		//lcdBuffer.buf[0] = ADCReading;
-		if (lcdData != NULL) {
-			// Send a message to the LCD task for it to print (and the LCD task must be configured to receive this message)
-			lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-			if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+		//Calculations and passing to calc
+		strncpy((char *)calcBuffer.buf, (const char *) tempBuf, 10);
+		//calcBuffer.buf[0] = ADCReading;
+		if (calcData != NULL) {
+			// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+			calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+			if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}

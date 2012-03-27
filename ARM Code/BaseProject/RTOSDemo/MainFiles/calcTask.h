@@ -3,7 +3,8 @@
 #include "queue.h"
 // Define a data structure that is used to pass parameters to this task
 typedef struct __vtCalcStruct {
-	xQueueHandle inQ;					   	// Queue used to send messages from other tasks to the LCD task to print
+	xQueueHandle inQ;					   	// Queue used to send messages from other tasks to the Calc task
+	vtLCDStruct *lcdData;
 } vtCalcStruct;
 
 #define vtCalcQLen 5
