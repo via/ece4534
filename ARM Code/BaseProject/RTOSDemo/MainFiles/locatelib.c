@@ -1,7 +1,7 @@
 #include "locatelib.h"
 
-double convert_rssi_to_db( uint8_t* rssi_value )
-{
+double convert_rssi_to_db( uint8_t* rssi_value ){
+
     //convert to a 16+ bit integer (so we don't mess up signed arithmetic)
     int  value = 0x00FF & (*rssi_value);
     //-90 dBm = 0x00 -> -120 dBW = 0x00
@@ -64,14 +64,14 @@ double distance_to_transmitter( const double power_received, const double power_
     return 1/distance;
 }
 
-void location_gradient_descent( const struct utm_coordinate** receiver_positions, const double* distance_data, struct utm_coordinate* current_position, const double stepsize )
+void location_gradient_descent( struct utm_coordinate** receiver_positions, const double* distance_data, struct utm_coordinate* current_position, const double stepsize )
 {
     double x_dev = 0.0;
     double y_dev = 0.0;
     double K = 0.0;
     int i = 0;
-    for(i;i < 3;i++)
-    {
+    for(i = 0;i < 3;i++)
+	{
         K = sqrt( pow(current_position->eastings - receiver_positions[i]->eastings,2) + pow(current_position->northings - receiver_positions[i]->northings,2) );
         x_dev += (distance_data[i]-K)*(-1/(2*K))*(-2*current_position->eastings+2*receiver_positions[i]->eastings);
         y_dev += (distance_data[i]-K)*(-1/(2*K))*(-2*current_position->northings+2*receiver_positions[i]->northings);

@@ -33,4 +33,5 @@ ObjectFiles/calctask.o: MainFiles/calcTask.c \
  ../FreeRTOS/Source/include/task.h ../FreeRTOS/Source/include/list.h \
  ../vtCode/vtUtilities.h ../NXPDrivers/include/lpc_types.h \
  C:/Keil/ARM/INC/NXP/LPC17xx/lpc17xx.h MainFiles/calcTask.h \
- ../FreeRTOS/Source/include/queue.h
+ ../FreeRTOS/Source/include/queue.h MainFiles/lcdTask.h \
+ MainFiles/locatelib.h

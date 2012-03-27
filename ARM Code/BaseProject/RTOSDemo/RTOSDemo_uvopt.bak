@@ -297,7 +297,7 @@
       <Focus>0</Focus>
       <ColumnNumber>85</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>200</TopLine>
+      <TopLine>211</TopLine>
       <CurrentLine>217</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/main.c</PathWithFileName>
@@ -339,7 +339,7 @@
       <Focus>0</Focus>
       <ColumnNumber>38</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>154</TopLine>
+      <TopLine>168</TopLine>
       <CurrentLine>174</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/LCDtask.c</PathWithFileName>
@@ -351,10 +351,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>3</ColumnNumber>
+      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>121</TopLine>
-      <CurrentLine>127</CurrentLine>
+      <TopLine>123</TopLine>
+      <CurrentLine>129</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/i2cTemp.c</PathWithFileName>
       <FilenameWithoutPath>i2cTemp.c</FilenameWithoutPath>
@@ -810,9 +810,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\RTOSDemo\MAINFILES\LCDTASK.H</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>1</CurrentLine>
+    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTLCD\GLCD.H</PathWithFilename>
+    <TopLine>49</TopLine>
+    <CurrentLine>49</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -836,9 +836,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTLCD\GLCD.H</PathWithFilename>
-    <TopLine>49</TopLine>
-    <CurrentLine>49</CurrentLine>
+    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\RTOSDemo\MAINFILES\LCDTASK.H</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>1</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -870,20 +870,20 @@
       <Documents>
         <Doc>
           <Name>.\MainFiles/i2cTemp.c</Name>
-          <ColumnNumber>3</ColumnNumber>
-          <TopLine>121</TopLine>
-          <CurrentLine>127</CurrentLine>
+          <ColumnNumber>4</ColumnNumber>
+          <TopLine>123</TopLine>
+          <CurrentLine>129</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/main.c</Name>
           <ColumnNumber>85</ColumnNumber>
-          <TopLine>200</TopLine>
+          <TopLine>211</TopLine>
           <CurrentLine>217</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/LCDtask.c</Name>
           <ColumnNumber>38</ColumnNumber>
-          <TopLine>154</TopLine>
+          <TopLine>168</TopLine>
           <CurrentLine>174</CurrentLine>
         </Doc>
         <Doc>

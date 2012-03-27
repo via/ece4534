@@ -8,15 +8,18 @@
  */
 
 #include <math.h>
+#include <stdint.h>
 
-struct dms_coordinate {
+struct dms_coordinate
+{
     int     latDegrees;
     double  latMinutes;
     int     lonDegrees;
     double  lonMinutes;
 };
 
-struct utm_coordinate{
+struct utm_coordinate
+{
     double  eastings;
     double  northings;
 };
@@ -59,7 +62,7 @@ double distance_to_transmitter( const double power_received, \
  *It is possible to write the algorithm for an N-receiver system, but
  *for now it only uses three receivers.
  */
-void location_gradient_descent( const struct utm_coordinate** receiver_positions, \
+void location_gradient_descent( struct utm_coordinate** receiver_positions, \
                                 const double* distance_data, \
                                 struct utm_coordinate* current_position, \
                                 const double stepsize );

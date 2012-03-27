@@ -56,7 +56,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	//Location calculation related
 	double picDBW[2] = { 0.0 };
 	double picDist[2] = { 0.0 };
-	struct utm_coordinate *picCords[2];
+	struct utm_coordinate *(picCords[2]);
 	struct dms_coordinate *dmsCord;
 	struct utm_coordinate *utmNmea; //utm for nmea string
 	struct utm_coordinate *utmTx; //utm for transmitter
@@ -66,6 +66,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	const double tx_gain = 0.0; //constant for transmit gain
 	const double freq = 0.0; //const for frequency
 	const double stepSize = 1.0;
+
+	//section for hardcoded PIC coordinates
+	picCords[0]->eastings = 50;
+	picCords[0]->northings = 50;
+	picCords[1]->eastings = 71.2;
+	picCords[1]->northings = 71.2;
+	picCords[2]->eastings = 28.8;
+	picCords[2]->northings = 71.2;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;

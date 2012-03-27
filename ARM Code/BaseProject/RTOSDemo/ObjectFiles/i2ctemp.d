@@ -38,6 +38,6 @@ ObjectFiles/i2ctemp.o: MainFiles/i2cTemp.c \
  ../vtCode/vtUtilities.h ../NXPDrivers/include/lpc_types.h \
  C:/Keil/ARM/INC/NXP/LPC17xx/lpc17xx.h ../vtCode/vtI2C/vtI2C.h \
  ../NXPDrivers/include/lpc17xx_i2c.h ../NXPDrivers/include/lpc_types.h \
- ../FreeRTOS/Source/include/projDefs.h MainFiles/LCDtask.h \
- ../FreeRTOS/Source/include/queue.h MainFiles/i2cTemp.h \
- MainFiles/lcdTask.h MainFiles/calcTask.h
+ ../FreeRTOS/Source/include/projDefs.h MainFiles/calcTask.h \
+ ../FreeRTOS/Source/include/queue.h MainFiles/lcdTask.h \
+ MainFiles/i2cTemp.h

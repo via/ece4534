@@ -53,7 +53,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
 	const uint8_t testWrite[] = {0x01, 0xA5};
-	const uint8_t testData1[] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
+	const uint8_t testData1[] = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
 	const uint8_t testData2[] = {0x30, 0x1B, 0x7E, 0x0B, 0x79, 0x18}; //48deg 07.038 N, 11deg 31.000 E
 	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
 	uint8_t numCal[2] = { 0 }; //one entry for each pic, 1 if calibrated
