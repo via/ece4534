@@ -20,7 +20,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 200 )
+#define taskRUN_RATE	( ( portTickType ) 100 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vCalcUpdateTask, pvParameters );
