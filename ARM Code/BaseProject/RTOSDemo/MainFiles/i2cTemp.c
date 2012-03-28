@@ -26,7 +26,7 @@
 #endif
 
 // Set the task up to run every second (need to modify this to poll more often from the adc)
-#define i2cREAD_RATE_BASE	( ( portTickType ) 1000)
+#define i2cREAD_RATE_BASE	( ( portTickType ) 100)
 
 /* The i2cTemp task. */
 static portTASK_FUNCTION_PROTO( vi2cTempUpdateTask, pvParameters );
@@ -55,7 +55,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t testWrite[] = {0x01, 0xA5};
 	const uint8_t testData1[] = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
 	const uint8_t testData2[] = {0x30, 0x1B, 0x7E, 0x0B, 0x79, 0x18}; //48deg 07.038 N, 11deg 31.000 E
-	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
+	int i2c_State = 2; //set to 1 normally, 2 for m4
 	uint8_t numCal[2] = { 0 }; //one entry for each pic, 1 if calibrated
 	uint8_t P0Read[2] = { 0 };
 	uint8_t P1Read[2] = { 0 };
@@ -78,7 +78,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	/* We need to initialise xLastUpdateTime prior to the first call to vTaskDelayUntil(). */
 	xLastUpdateTime = xTaskGetTickCount();
 	
-	strncpy((char *)nmeaString, (const char *) testData2, 6);
 	// Like all good tasks, this should never exit
 	for(;;)
 	{

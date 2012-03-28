@@ -50,7 +50,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtLCDStruct *lcdData = calcPtr->lcdData;
 	vtLCDMsg lcdBuffer;
 	
-	uint8_t calcState = 1;
+	int calcState = 3;
 	uint8_t picCal[2] = { 0 }; //determine which pics are calibrated
 	
 	//Location calculation related
@@ -111,8 +111,9 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				convertDMS_to_UTM( dmsCord, picCords[msgBuffer.buf[2]] );
 				picCal[msgBuffer.buf[2]] = 1;
 			}
-			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1)
+			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1){
 				calcState = 2;
+			}
 			
 			sprintf((char*)(lcdBuffer.buf),"Calibrating");
 			if (lcdData != NULL) {
@@ -149,6 +150,16 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			//Calculate estimated position
 			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
 			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
+			//Do Stuff here, msgBuffer.buf for message contents
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+		}
+		else if (calcState == 3){
+			sprintf((char*)(lcdBuffer.buf),"test");
 			//Do Stuff here, msgBuffer.buf for message contents
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;

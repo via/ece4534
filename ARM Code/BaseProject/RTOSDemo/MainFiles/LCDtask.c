@@ -45,7 +45,7 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 int LCD_STATE = 2;
 //#if LCD_STATE == 1
 // This include the file with the definition of the ARM bitmap
-#include "Bg_final.c"
+//#include "Bg_final.c"
 //#endif
 
 // Convert from HSL colormap to RGB values in this weird colormap
