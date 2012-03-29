@@ -263,7 +263,7 @@
               <MiscControls></MiscControls>
               <Define>ROM_MODE,CONFIGURE_USB,FULL_SPEED,PACK_STRUCT_END="__attribute((packed))",ALIGN_STRUCT_END="__attribute((align(4))"</Define>
               <Undefine></Undefine>
-              <IncludePath>.\..\SystemFiles;.\..\NXPDrivers\include;.\..\FreeRTOS\Source\portable\GCC\ARM_CM3;.\..\FreeRTOS\Source\include;.\..\vtCode;.\..\vtCode\vtLCD;.\..\vtCode\vtI2C;.\..\FreeRTOS\Demo\Common\ethernet\uIP\uip-1.0\uip;.\..\FreeRTOS\Demo\Common\include;.\MainFiles;.\..\FreeRTOS\Demo\CORTEX_LPC1768_GCC_Rowley\webserver;.\..\FreeRTOS\Demo\CORTEX_LPC1768_GCC_Rowley\LPCUSB;.\..\LPCUSB;.\..\FreeRTOS\Source\portable\MemMang;.</IncludePath>
+              <IncludePath>.\..\SystemFiles;.\..\NXPDrivers\include;.\..\FreeRTOS\Source\portable\GCC\ARM_CM3;.\..\FreeRTOS\Source\include;.\..\vtCode;.\..\vtCode\vtLCD;.\..\vtCode\vtI2C;.\..\FreeRTOS\Demo\Common\ethernet\uIP\uip-1.0\uip;.\..\FreeRTOS\Demo\Common\include;.\MainFiles;.\..\FreeRTOS\Demo\CORTEX_LPC1768_GCC_Rowley\webserver;.\..\FreeRTOS\Demo\CORTEX_LPC1768_GCC_Rowley\LPCUSB;.\..\LPCUSB;.\..\FreeRTOS\Source\portable\MemMang;.;..\..\src</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -347,14 +347,19 @@
               <FilePath>.\MainFiles/i2cTemp.c</FilePath>
             </File>
             <File>
-              <FileName>Bg_final.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../vtCode/vtLCD/Bg_final.c</FilePath>
-            </File>
-            <File>
               <FileName>calcTask.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MainFiles/calcTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>fileTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainFiles\fileTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>locatelib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainFiles\locatelib.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -549,6 +554,36 @@
               <FileName>vtI2C.c</FileName>
               <FileType>1</FileType>
               <FilePath>../vtCode/vtI2C/vtI2C.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpc17xx_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\lpc17xx_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpc17xx_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\lpc17xx_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpc17xx_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\src\lpc17xx_uart.c</FilePath>
             </File>
           </Files>
         </Group>

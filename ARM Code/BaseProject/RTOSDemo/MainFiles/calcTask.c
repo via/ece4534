@@ -20,7 +20,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 100 )
+#define taskRUN_RATE	( ( portTickType ) 1000 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vCalcUpdateTask, pvParameters );
@@ -50,30 +50,37 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtLCDStruct *lcdData = calcPtr->lcdData;
 	vtLCDMsg lcdBuffer;
 	
-	int calcState = 3;
-	uint8_t picCal[2] = { 0 }; //determine which pics are calibrated
+	uint8_t calcState = 2;
+	uint8_t picCal[3] = { 0 }; //determine which pics are calibrated
 	
 	//Location calculation related
-	double picDBW[2] = { 0.0 };
-	double picDist[2] = { 0.0 };
-	struct utm_coordinate *(picCords[2]);
+	double picDBW[3] = { 0.0 };
+	double picDist[3] = { 0.0 };
+	struct utm_coordinate * picCords[3];
+	int j = 0;
+	for(; j < 3; j++){
+		if((picCords[j] = malloc(sizeof(struct utm_coordinate))) == NULL){
+		 	// ERROR
+		}
+	}
 	struct dms_coordinate *dmsCord;
+	if((dmsCord = malloc(sizeof(struct dms_coordinate))) == NULL){
+	 	// ERROR
+	}
 	struct utm_coordinate *utmNmea; //utm for nmea string
+	if((utmNmea = malloc(sizeof(struct utm_coordinate))) == NULL){
+	 	// ERROR
+	}
 	struct utm_coordinate *utmTx; //utm for transmitter
+	if((utmTx = malloc(sizeof(struct utm_coordinate))) == NULL){
+	 	// ERROR
+	}
 	
 	const double pwr_tx = 0.0; //constant for power transmitted
 	const double rc_gain = 0.0; //constant for recieve gain
 	const double tx_gain = 0.0; //constant for transmit gain
 	const double freq = 0.0; //const for frequency
-	const double stepSize = 1.0;
-
-	//section for hardcoded PIC coordinates
-	picCords[0]->eastings = 50;
-	picCords[0]->northings = 50;
-	picCords[1]->eastings = 71.2;
-	picCords[1]->northings = 71.2;
-	picCords[2]->eastings = 28.8;
-	picCords[2]->northings = 71.2;
+	static const double stepSize = 1.0;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;
@@ -97,9 +104,11 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		}
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
+
 		if (calcState == 1){
 			if (msgBuffer.buf[0] == 12 && msgBuffer.buf[1] == 11){
 				//convert the parsed stuff to dms_coordinate struct
+				
 				dmsCord->latDegrees = (int8_t) msgBuffer.buf[3];
 				dmsCord->latMinutes = (double) msgBuffer.buf[4];
 				dmsCord->latMinutes = dmsCord->latMinutes * 256;
@@ -110,10 +119,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
 				convertDMS_to_UTM( dmsCord, picCords[msgBuffer.buf[2]] );
 				picCal[msgBuffer.buf[2]] = 1;
+				
 			}
-			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1){
+			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1)
 				calcState = 2;
-			}
 			
 			sprintf((char*)(lcdBuffer.buf),"Calibrating");
 			if (lcdData != NULL) {
@@ -125,16 +134,20 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		}
 		else if (calcState == 2){
 			//convert PIC rssi to dBW
+			
 			picDBW[0] = convert_rssi_to_db( msgBuffer.buf );
 			picDBW[1] = convert_rssi_to_db( msgBuffer.buf+2 );
 			picDBW[2] = convert_rssi_to_db( msgBuffer.buf+4 );
 			
 			//Take the nmea data and put it into dmsCord here
 			dmsCord->latDegrees = (int) msgBuffer.buf[6];
+			
 			dmsCord->latMinutes = (double) msgBuffer.buf[7];
 			dmsCord->latMinutes = dmsCord->latMinutes * 256;
 			dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[10];
+			
 			dmsCord->lonDegrees = (int) msgBuffer.buf[11];
+			
 			dmsCord->lonMinutes = (double) msgBuffer.buf[12];
 			dmsCord->lonMinutes = dmsCord->latMinutes * 256;
 			dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[13];
@@ -150,16 +163,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			//Calculate estimated position
 			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
 			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
-			//Do Stuff here, msgBuffer.buf for message contents
-			if (lcdData != NULL) {
-				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-					VT_HANDLE_FATAL_ERROR(0);
-				}
-			}
-		}
-		else if (calcState == 3){
-			sprintf((char*)(lcdBuffer.buf),"test");
+			//sprintf((char*)(lcdBuffer.buf), "THIS WORKS");
 			//Do Stuff here, msgBuffer.buf for message contents
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;

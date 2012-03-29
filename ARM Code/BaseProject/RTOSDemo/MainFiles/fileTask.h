@@ -1,7 +1,7 @@
 #ifndef FILE_TASK_H
 #define FILE_TASK_H
 #include "queue.h"
-#include "lcdtask.h"
+#include "lcdTask.h"
 // Define a data structure that is used to pass parameters to this task
 typedef struct __vtFileStruct {
 	xQueueHandle inQ;					   	// Queue used to send messages from other tasks to the LCD task to print

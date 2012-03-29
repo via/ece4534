@@ -353,7 +353,7 @@
       <Focus>0</Focus>
       <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>123</TopLine>
+      <TopLine>121</TopLine>
       <CurrentLine>129</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/i2cTemp.c</PathWithFileName>
@@ -871,7 +871,7 @@
         <Doc>
           <Name>.\MainFiles/i2cTemp.c</Name>
           <ColumnNumber>4</ColumnNumber>
-          <TopLine>123</TopLine>
+          <TopLine>121</TopLine>
           <CurrentLine>129</CurrentLine>
         </Doc>
         <Doc>

@@ -1,11 +1,16 @@
 #include "locatelib.h"
 
-double convert_rssi_to_db( uint8_t* rssi_value ){
+#define MILESTONE 0
 
+double convert_rssi_to_db( uint8_t* rssi_value ){
+	#if MILESTONE == 1
     //convert to a 16+ bit integer (so we don't mess up signed arithmetic)
     int  value = 0x00FF & (*rssi_value);
     //-90 dBm = 0x00 -> -120 dBW = 0x00
     return value*(double)55/255 - 120;
+	#else
+	return 0;
+	#endif
 }
 
 void convertDMS_to_UTM( struct dms_coordinate* input_coordinate, \
@@ -16,6 +21,7 @@ void convertDMS_to_UTM( struct dms_coordinate* input_coordinate, \
      *
      */
     //Constants defined
+	#if MILESTONE == 1
     const double equatorial = 6378137;
     const double polar = 6356752.3142;
     const double flattening = 1/298.257223563;
@@ -50,22 +56,30 @@ void convertDMS_to_UTM( struct dms_coordinate* input_coordinate, \
     output_coordinate->northings = M*k0 + k0*nu*sin(2*lat_rads)/4*pow(p,2) + (k0*nu*sin(lat_rads)*pow(cos(lat_rads),3)/24)*(5-pow(tan(lat_rads),2)+9*e_prime_squared*pow(cos(lat_rads),2)+4*pow(e_prime_squared,2)*pow(cos(lat_rads),4))*pow(p,4);
 
     output_coordinate->eastings = k0*nu*cos(lat_rads)*p + (k0*nu*pow(cos(lat_rads),3)/6)*(1 - pow(tan(lat_rads),2) + e_prime_squared*pow(cos(lat_rads),2))*pow(p,3);
-
+	#else
+	output_coordinate->northings = 0;
+	output_coordinate->eastings = 0;
+	#endif
     return;
 }
 
 
 double distance_to_transmitter( const double power_received, const double power_transmitted, const double receive_gain, const double transmit_gain, const double frequency )
 {
+	#if MILESTONE == 1
     const double pi = 3.14159265359;
     double lambda = 299792458/frequency;
     //Friis transmission equation
     double distance = pow(10,(power_received - power_transmitted - receive_gain - transmit_gain)/20)*4*pi/lambda;
     return 1/distance;
+	#else
+	return 0;
+	#endif
 }
 
 void location_gradient_descent( struct utm_coordinate** receiver_positions, const double* distance_data, struct utm_coordinate* current_position, const double stepsize )
-{
+{		  
+	#if MILESTONE == 1
     double x_dev = 0.0;
     double y_dev = 0.0;
     double K = 0.0;
@@ -79,4 +93,8 @@ void location_gradient_descent( struct utm_coordinate** receiver_positions, cons
 
     current_position->northings += 2*y_dev*stepsize;
     current_position->eastings += 2*x_dev*stepsize;
+	#else
+	current_position->northings = 0;
+	current_position->eastings = 0;
+	#endif
 }
