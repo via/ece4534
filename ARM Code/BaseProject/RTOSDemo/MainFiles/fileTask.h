@@ -1,6 +1,6 @@
 #ifndef FILE_TASK_H
 #define FILE_TASK_H
-#include "queue.h"
+//#include "queue.h"
 #include "lcdTask.h"
 // Define a data structure that is used to pass parameters to this task
 typedef struct __vtFileStruct {

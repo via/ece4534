@@ -5,6 +5,7 @@
 /* Scheduler include files. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 
 /* include files. */
 #include "vtUtilities.h"
@@ -12,6 +13,7 @@
 #include "lcdtask.h"
 #include "diskio.h"
 #include "ff.h"
+#include "webdata.h"
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -45,6 +47,7 @@ void vStartFileTask( unsigned portBASE_TYPE uxPriority,vtFileStruct *ptr )
 
 static FATFS fatfs;  // Filesystem object
 static FIL fil;   	 // File object
+static uint8_t data_buf[256] = {0};
 
 static portTASK_FUNCTION( vFileTask, pvParameters )
 {
@@ -57,7 +60,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 
     static BYTE buf[64];
     BYTE Message[] = "Test message\n" ; // message's content
-    TCHAR *FilePath = "0:message.txt" ; // file path
+    TCHAR *FilePath = "0:data.txt" ; // file path
 	
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;
@@ -73,22 +76,19 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	// === MOUNT ===
 	f_mount(0, &fatfs);  /* Register volume work area (never fails) */
 	
-	// Infinite task loop should probably go here later
-	FRESULT rc; 
-    rc = F_Write(Message, sizeof(Message) - 1, FilePath, 1);
-    rc = F_Read(buf, sizeof(buf), FilePath);
-	
-	sprintf((char*)(lcdBuffer.buf), buf);
-	lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
-	if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
-		VT_HANDLE_FATAL_ERROR(0);
-	}
-
 	// === UMOUNT ===
-    f_mount(0, NULL);/* Unregister work area prior to discard it */
+    //f_mount(0, NULL);/* Unregister work area prior to discard it */
 	
     //------------------------------------
     // Like all good tasks, this should never exit
+	
+	// Temp, remove later on
+	sprintf((char*)msgBuffer.buf, "Data 1\t37.2\t-80.3\n");
+	msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
+	if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
+		VT_HANDLE_FATAL_ERROR(0);
+	}
+	int j = 1;
 	for(;;)
 	{	
 		/* Ask the RTOS to delay reschduling this task for the specified time */
@@ -99,7 +99,34 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		}
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
-		// Do Stuff Here
+
+		if(msgBuffer.buf[0] == 'D'){
+			FRESULT rc; 
+			rc = F_Write(msgBuffer.buf, sizeof(msgBuffer.buf) - 1, FilePath, 1);
+			rc = F_Read(buf, sizeof(buf), FilePath);
+			strncat((char*)data_buf, (char*)msgBuffer.buf, strlen((char*)msgBuffer.buf));
+		}
+		else{
+			// Do nothing
+			/*
+			sprintf((char*)(lcdBuffer.buf), "Nope");
+			lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
+			if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
+				VT_HANDLE_FATAL_ERROR(0);
+			}
+			*/
+		}
+		if(j){
+			sprintf((char*)msgBuffer.buf, "Data 2\t37.0\t-80.0\n");
+			j--;
+		}
+		else{
+			sprintf((char*)msgBuffer.buf, "Nope");
+		}
+		msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
+		if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
+			VT_HANDLE_FATAL_ERROR(0);
+		}
 	}
     //vTaskDelete(NULL);
 } 
@@ -107,8 +134,6 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 FRESULT F_Write(BYTE Message[], UINT msg_size, TCHAR *filepath, int append){
 	FRESULT rc;
 	UINT bw = 0;
-	
-	
 	
 	// === Write test ===
     rc = f_open(&fil, filepath, FA_WRITE | FA_OPEN_ALWAYS);
@@ -168,7 +193,9 @@ FRESULT F_Read(BYTE Buf[], UINT buf_size, TCHAR *filepath){
 	return rc;
 }
 
-
+void prep_data(void *buf){
+	strncpy((char*)buf, (char*) data_buf, sizeof(data_buf));
+}
 
 
 
