@@ -351,6 +351,11 @@
               <FileType>1</FileType>
               <FilePath>../vtCode/vtLCD/Bg_final.c</FilePath>
             </File>
+            <File>
+              <FileName>calcTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainFiles/calcTask.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

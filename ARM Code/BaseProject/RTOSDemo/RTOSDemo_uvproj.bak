@@ -433,56 +433,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Common Demo Tasks</GroupName>
-          <Files>
-            <File>
-              <FileName>BlockQ.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/BlockQ.c</FilePath>
-            </File>
-            <File>
-              <FileName>blocktim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/blocktim.c</FilePath>
-            </File>
-            <File>
-              <FileName>flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>GenQTest.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/GenQTest.c</FilePath>
-            </File>
-            <File>
-              <FileName>integer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/integer.c</FilePath>
-            </File>
-            <File>
-              <FileName>PollQ.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/PollQ.c</FilePath>
-            </File>
-            <File>
-              <FileName>QPeek.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/QPeek.c</FilePath>
-            </File>
-            <File>
-              <FileName>recmutex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/recmutex.c</FilePath>
-            </File>
-            <File>
-              <FileName>semtest.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../FreeRTOS/Demo/Common/Minimal/semtest.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>webserver</GroupName>
           <Files>
             <File>
