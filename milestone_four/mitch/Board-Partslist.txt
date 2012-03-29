@@ -1,0 +1,44 @@
+Part     Value            Device           Package      Library         Sheet
+
+BATT0    2479-BATTERY     2479-BATTERY     2479-BATTERY 4534_Node_Board 1
+C0       0.33uF           C2.5-5           C2.5-5       4534_I2C2       1
+C1       0.1uF            C2.5-5           C2.5-5       4534_I2C2       1
+C2       9pF              C2.5-5           C2.5-5       4534_I2C2       1
+C3       9pF              C2.5-5           C2.5-5       4534_I2C2       1
+C4       220pF            C2.5-5           C2.5-5       4534_I2C2       1
+C5       220pF            C2.5-5           C2.5-5       4534_I2C2       1
+C6       10uF             C2.5-5           C2.5-5       4534_I2C2       1
+C7       10uF             C2.5-5           C2.5-5       4534_I2C2       1
+D0       1N5817P          1N5817P          1N5817       4534_I2C2       1
+D1       1N5817P          1N5817P          1N5817       4534_I2C2       1
+DB0      LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+DB1      LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+DB2      LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+DB3      LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+GPS-LED  LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+IC0      PCA9600SO8       PCA9600SO8       SO08         4534_I2C2       1
+J0                        MA20-1           MA20-1       con-lstb        1
+J1                        MA20-1           MA20-1       con-lstb        1
+J2       DEBUG            2510-6002        2510-6002    4534_I2C2       1
+J3       PICKIT           PINHD-1X6/90     1X06/90      pinhead         1
+J4       I2C BUS          MA07-1           MA07-1       4534_I2C2       1
+J5       I2C BUS          MA07-1           MA07-1       4534_I2C2       1
+J6       GPSR             PINHD-1X6/90     1X06/90      pinhead         1
+J7       1751248          1751248          1751248      con-phoenix-350 1
+J8       PWR CNTL         MA03-2           MA03-2       con-lstb        1
+J9       CURRENT          MA02-1           MA02-1       4534_I2C2       1
+PIC0     PIC18F45J10-I/P  PIC18F45J10-I/P  DIL40        4534            1
+PWR-LED  LED-SMD-1206     LED-SMD-1206     LED1206      4534_I2C2       1
+Q1       20MHz            CRYSTALHC49U-V   HC49U-V      crystal         1
+R0       1k               R-1/4W           R-1/4W       4534_I2C2       1
+R1       1k               R-1/4W           R-1/4W       4534_I2C2       1
+R2       330              R-1/4W           R-1/4W       4534_I2C2       1
+R3       330              R-1/4W           R-1/4W       4534_I2C2       1
+REG0     MCP1725-XXXXX/SN MCP1725-XXXXX/SN SOIC8-N_MC   4534_Node_Board 1
+REG1     L78S05CV         78XXL            78XXL        v-reg           1
+RF0      MRF24J40MA       MRF24J40MA       PCB12        4534_Node_Board 1
+SW0      SW-PB-MOM        SW-PB-MOM        SW-MOM-PB    4534            1
+SW1      76SC03T          DIL6             DIL06        ic-package      1
+U$18     VIA              VIA              VIA          4534_I2C2       1
+U$19     VIA              VIA              VIA          4534_I2C2       1
+U$20     VIA              VIA              VIA          4534_I2C2       1
