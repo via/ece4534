@@ -52,15 +52,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t readReg1[] = {0x01};
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
-	const uint8_t testWrite[] = {0x01, 0xA5};
-	const uint8_t testData1[] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01};
-	const uint8_t testData2[] = {0x30, 0x1B, 0x7E, 0x0B, 0x79, 0x18}; //48deg 07.038 N, 11deg 31.000 E
 	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
-	uint8_t numCal[2] = { 0 }; //one entry for each pic, 1 if calibrated
+	uint8_t numCal[3] = { 0 }; //one entry for each pic, 1 if calibrated
 	uint8_t P0Read[2] = { 0 };
 	uint8_t P1Read[2] = { 0 };
 	uint8_t P2Read[2] = { 0 };
-	uint8_t nmeaString[10];
+	uint8_t rssiString[6];
+	uint8_t nmeaString[6];
 	uint8_t tempBuf[15];
 	uint8_t *tempRead = tempBuf;
 	uint8_t rxLen, status;
@@ -136,9 +134,25 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
-		 
+		*/
+		//Milestone 4 stuff
+		
 		//NMEA String read 1
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,6) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,6) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,6,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//Calculations and passing to calc
+		strncpy((char *) rssiString, (const char *) tempBuf, 6);
+				 
+		//NMEA String read 1
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg1),readReg1,6) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
@@ -150,7 +164,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 
 		//Calculations and passing to calc
 		strncpy((char *) nmeaString, (const char *) tempBuf, 6);
-		*/
+
 		if (i2c_State == 1){
 			calcBuffer.buf[1] = 12;
 			calcBuffer.buf[2] = 11;
@@ -198,9 +212,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 		}
 		else if (i2c_State == 2){
-			strncpy((char *)calcBuffer.buf, (const char *) testData1, 6);
-			//strncat((char *)calcBuffer.buf, (const char *) testData2, 6);
-			strncpy((char*) calcBuffer.buf + 6, (const char*) testData2, 6);
+			strncpy((char *)calcBuffer.buf, (const char *) rssiString, 6);
+			strncpy((char*) calcBuffer.buf + 6, (const char*) nmeaString, 6);
 			if (calcData != NULL) {
 				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;

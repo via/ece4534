@@ -114,6 +114,9 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
 
+	//counter for line display
+	uint8_t counter = 0;
+
 	/* Initialize the LCD */
 	GLCD_Init();
 	GLCD_Clear(White);
@@ -153,8 +156,14 @@ else if (LCD_STATE == 2){
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
 
-		GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
 
+		if (counter <= 3){
+			counter++;	
+		}
+		else {
+			counter = 0;
+		}
 	}
 else{
 	//	Bad setting
