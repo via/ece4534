@@ -1,0 +1,1275 @@
+MPLINK 4.40, Linker
+Linker Map File - Created Thu Mar 29 11:22:01 2012
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+               _entry_scn       code   0x000000    program   0x000006
+       .code__user_putc.o       code   0x000006    program   0x000002
+               highVector       code   0x000008    program   0x000006
+          .code_adcbusy.o       code   0x00000e    program   0x00000a
+               lowhVector       code   0x000018    program   0x000006
+                   .cinit    romdata   0x00001e    program   0x00004a
+             .code_MiWi.o       code   0x000068    program   0x0024b6
+         .code_MRF24J40.o       code   0x00251e    program   0x001408
+         .code_vfprintf.o       code   0x003926    program   0x000816
+           .code_my_i2c.o       code   0x00413c    program   0x0006ca
+         .code_messages.o       code   0x004806    program   0x0004fc
+             .code_main.o       code   0x004d02    program   0x00030a
+                     PROG       code   0x00500c    program   0x00021a
+                   STRING       code   0x005226    program   0x00014a
+          .code_my_miwi.o       code   0x005370    program   0x000124
+             .stringtable    romdata   0x005494    program   0x00011a
+      .code_uart_thread.o       code   0x0055ae    program   0x0000e4
+          .code_my_uart.o       code   0x005692    program   0x0000d6
+    .code_timer1_thread.o       code   0x005768    program   0x0000d0
+        .code_i2c_logic.o       code   0x005838    program   0x0000c2
+  .code_user_interrupts.o       code   0x0058fa    program   0x0000a8
+               _cinit_scn       code   0x0059a2    program   0x00009e
+       .code_interrupts.o       code   0x005a40    program   0x00009c
+            .code_uopen.o       code   0x005adc    program   0x000082
+       .code_SymbolTime.o       code   0x005b5e    program   0x00007c
+           .code_my_adc.o       code   0x005bda    program   0x000070
+             .code_putc.o       code   0x005c4a    program   0x000066
+           .code_printf.o       code   0x005cb0    program   0x000064
+          .code_adcopen.o       code   0x005d14    program   0x000064
+    .code_timer0_thread.o       code   0x005d78    program   0x00004c
+           .code_t1open.o       code   0x005dc4    program   0x000040
+            .code_uread.o       code   0x005e04    program   0x00003e
+          .romdata_MiWi.o    romdata   0x005e42    program   0x00003c
+           .code_t0open.o       code   0x005e7e    program   0x000036
+             .code_MSPI.o       code   0x005eb4    program   0x000032
+          .code_t1write.o       code   0x005ee6    program   0x000030
+           .code_t1read.o       code   0x005f16    program   0x000030
+          .code_t0write.o       code   0x005f46    program   0x000030
+         .code_adcsetch.o       code   0x005f76    program   0x000030
+           .code_uwrite.o       code   0x005fa6    program   0x00002e
+                    CTYPE       code   0x005fd4    program   0x000024
+              D1KTCYXCODE       code   0x005ff8    program   0x000020
+                    .code       code   0x006018    program   0x000020
+                    STDIO       code   0x006038    program   0x00001c
+             _startup_scn       code   0x006054    program   0x00001a
+          .code_adcread.o       code   0x00606e    program   0x000018
+              D10TCYXCODE       code   0x006086    program   0x000016
+      .romdata_vfprintf.o    romdata   0x00609c    program   0x000011
+          .romdata_main.o    romdata   0x0060ad    program   0x00000d
+         .code_adcclose.o       code   0x0060ba    program   0x000006
+          .code_adcconv.o       code   0x0060c0    program   0x000004
+           .code___init.o       code   0x0060c4    program   0x000002
+    .romdata__user_putc.o    romdata   0x0060c6    program   0x000000
+         .idata_uopen.o_i    romdata   0x0060c6    program   0x000000
+         .romdata_uopen.o    romdata   0x0060c6    program   0x000000
+        .romdata_t1open.o    romdata   0x0060c6    program   0x000000
+        .romdata_t0open.o    romdata   0x0060c6    program   0x000000
+          .romdata_putc.o    romdata   0x0060c6    program   0x000000
+       .romdata_adcread.o    romdata   0x0060c6    program   0x000000
+      .idata_vfprintf.o_i    romdata   0x0060c6    program   0x000000
+        .romdata_t1read.o    romdata   0x0060c6    program   0x000000
+         .idata_uread.o_i    romdata   0x0060c6    program   0x000000
+        .romdata_stdout.o    romdata   0x0060c6    program   0x000000
+         .romdata_uread.o    romdata   0x0060c6    program   0x000000
+      .romdata_adcsetch.o    romdata   0x0060c6    program   0x000000
+        .romdata_printf.o    romdata   0x0060c6    program   0x000000
+         .idata_udefs.o_i    romdata   0x0060c6    program   0x000000
+         .romdata_udefs.o    romdata   0x0060c6    program   0x000000
+       .romdata_t0write.o    romdata   0x0060c6    program   0x000000
+        .romdata___init.o    romdata   0x0060c6    program   0x000000
+       .romdata_t1write.o    romdata   0x0060c6    program   0x000000
+        .idata_uwrite.o_i    romdata   0x0060c6    program   0x000000
+        .romdata_uwrite.o    romdata   0x0060c6    program   0x000000
+        .romdata_my_adc.o    romdata   0x0060c6    program   0x000000
+        .romdata_my_i2c.o    romdata   0x0060c6    program   0x000000
+     .romdata_i2c_logic.o    romdata   0x0060c6    program   0x000000
+ .romdata_timer0_thread.o    romdata   0x0060c6    program   0x000000
+      .romdata_MRF24J40.o    romdata   0x0060c6    program   0x000000
+ .romdata_timer1_thread.o    romdata   0x0060c6    program   0x000000
+          .romdata_MSPI.o    romdata   0x0060c6    program   0x000000
+   .romdata_uart_thread.o    romdata   0x0060c6    program   0x000000
+    .romdata_SymbolTime.o    romdata   0x0060c6    program   0x000000
+   .idata_uart_thread.o_i    romdata   0x0060c6    program   0x000002
+       .romdata_my_uart.o    romdata   0x0060c6    program   0x000000
+       .romdata_my_miwi.o    romdata   0x0060c6    program   0x000000
+.romdata_user_interrupts.o    romdata   0x0060c6    program   0x000000
+       .romdata_adcbusy.o    romdata   0x0060c6    program   0x000000
+.idata_user_interrupts.o_i    romdata   0x0060c6    program   0x000000
+      .romdata_adcclose.o    romdata   0x0060c6    program   0x000000
+    .romdata_interrupts.o    romdata   0x0060c6    program   0x000000
+       .romdata_adcconv.o    romdata   0x0060c6    program   0x000000
+      .romdata_messages.o    romdata   0x0060c6    program   0x000000
+       .romdata_c018i_e.o    romdata   0x0060c6    program   0x000000
+       .romdata_adcopen.o    romdata   0x0060c6    program   0x000000
+ .idata_timer1_thread.o_i    romdata   0x0060c8    program   0x000002
+        .idata_stdout.o_i    romdata   0x0060ca    program   0x000002
+ .idata_timer0_thread.o_i    romdata   0x0060ca    program   0x000000
+       .idata_t1write.o_i    romdata   0x0060ca    program   0x000000
+       .idata_t0write.o_i    romdata   0x0060ca    program   0x000000
+        .idata_t1open.o_i    romdata   0x0060ca    program   0x000000
+        .idata_t0open.o_i    romdata   0x0060ca    program   0x000000
+        .idata_t1read.o_i    romdata   0x0060ca    program   0x000000
+        .idata_printf.o_i    romdata   0x0060cc    program   0x000000
+       .idata_my_uart.o_i    romdata   0x0060cc    program   0x000000
+    .idata_interrupts.o_i    romdata   0x0060cc    program   0x000000
+       .idata_my_miwi.o_i    romdata   0x0060cc    program   0x000000
+      .idata_messages.o_i    romdata   0x0060cc    program   0x000000
+          .idata_putc.o_i    romdata   0x0060cc    program   0x000000
+          .idata_main.o_i    romdata   0x0060cc    program   0x000000
+        .idata_my_i2c.o_i    romdata   0x0060cc    program   0x000000
+     .idata_i2c_logic.o_i    romdata   0x0060cc    program   0x000003
+        .idata_my_adc.o_i    romdata   0x0060cc    program   0x000000
+    .idata__user_putc.o_i    romdata   0x0060cf    program   0x000000
+       .idata_adcopen.o_i    romdata   0x0060cf    program   0x000000
+       .idata_adcconv.o_i    romdata   0x0060cf    program   0x000000
+       .idata_c018i_e.o_i    romdata   0x0060cf    program   0x000000
+      .idata_adcclose.o_i    romdata   0x0060cf    program   0x000000
+       .idata_adcbusy.o_i    romdata   0x0060cf    program   0x000000
+       .idata_adcread.o_i    romdata   0x0060cf    program   0x000000
+        .idata___init.o_i    romdata   0x0060cf    program   0x000000
+    .idata_SymbolTime.o_i    romdata   0x0060cf    program   0x000000
+      .idata_adcsetch.o_i    romdata   0x0060cf    program   0x000000
+          .idata_MiWi.o_i    romdata   0x0060cf    program   0x00000d
+          .idata_MSPI.o_i    romdata   0x0060dc    program   0x000000
+      .idata_MRF24J40.o_i    romdata   0x0060dc    program   0x000003
+           .code_stdout.o       code   0x0060e0    program   0x000000
+          .code_c018i_e.o       code   0x0060e0    program   0x000000
+            .code_udefs.o       code   0x0060e0    program   0x000000
+    .config_300001_main.o    romdata   0x300001    program   0x000001
+    .config_300003_main.o    romdata   0x300003    program   0x000001
+    .config_300006_main.o    romdata   0x300006    program   0x000001
+                msgqueue4      udata   0x000000       data   0x000037
+     .udata_uart_thread.o      udata   0x000080       data   0x000065
+         .udata_c018i_e.o      udata   0x0000e5       data   0x00000a
+        .udata_MRF24J40.o      udata   0x0000ef       data   0x00000a
+                MATH_DATA      udata   0x0000f9       data   0x000004
+       .idata_i2c_logic.o      idata   0x0000fd       data   0x000003
+              MAC_RX_BUFF      udata   0x000100       data   0x000100
+            .udata_MiWi.o      udata   0x000200       data   0x00009e
+                msgqueue3      udata   0x00029e       data   0x000036
+            BIGvariables1      udata   0x000300       data   0x000082
+               TRX_BUFFER      udata   0x000382       data   0x00006e
+            .idata_MiWi.o      idata   0x0003f0       data   0x00000d
+        .idata_MRF24J40.o      idata   0x0003fd       data   0x000003
+                msgqueue2      udata   0x000400       data   0x000036
+                msgqueue1      udata   0x000436       data   0x000036
+                   .stack      udata   0x000e00       data   0x000100
+   .udata_timer1_thread.o      udata   0x000f00       data   0x000065
+                 .tmpdata      udata   0x000f65       data   0x000008
+              HighISR_tmp      udata   0x000f6d       data   0x000004
+         .udata_my_uart.o      udata   0x000f71       data   0x000002
+          .udata_my_i2c.o      udata   0x000f73       data   0x000002
+      .udata_SymbolTime.o      udata   0x000f75       data   0x000002
+     .idata_uart_thread.o      idata   0x000f77       data   0x000002
+   .idata_timer1_thread.o      idata   0x000f79       data   0x000002
+          .idata_stdout.o      idata   0x000f7b       data   0x000002
+                DELAYDAT1      udata   0x000f7d       data   0x000001
+           .udata_udefs.o      udata   0x000f7e       data   0x000001
+         .idata_t0write.o      idata   0x000f7f       data   0x000000
+         .udata_t0write.o      udata   0x000f7f       data   0x000000
+           .idata_udefs.o      idata   0x000f7f       data   0x000000
+        .idata_adcsetch.o      idata   0x000f7f       data   0x000000
+        .udata_adcsetch.o      udata   0x000f7f       data   0x000000
+           .idata_uread.o      idata   0x000f7f       data   0x000000
+           .udata_uread.o      udata   0x000f7f       data   0x000000
+          .idata_t1read.o      idata   0x000f7f       data   0x000000
+          .udata_t1read.o      udata   0x000f7f       data   0x000000
+         .idata_adcread.o      idata   0x000f7f       data   0x000000
+         .udata_adcread.o      udata   0x000f7f       data   0x000000
+           .udata_uopen.o      udata   0x000f7f       data   0x000000
+           .idata_uopen.o      idata   0x000f7f       data   0x000000
+         .udata_t1write.o      udata   0x000f7f       data   0x000000
+         .idata_t1write.o      idata   0x000f7f       data   0x000000
+          .udata_uwrite.o      udata   0x000f7f       data   0x000000
+          .idata_uwrite.o      idata   0x000f7f       data   0x000000
+         .idata_c018i_e.o      idata   0x000f7f       data   0x000000
+          .udata___init.o      udata   0x000f7f       data   0x000000
+          .idata___init.o      idata   0x000f7f       data   0x000000
+          .udata_printf.o      udata   0x000f7f       data   0x000000
+          .idata_printf.o      idata   0x000f7f       data   0x000000
+          .udata_stdout.o      udata   0x000f7f       data   0x000000
+        .udata_vfprintf.o      udata   0x000f7f       data   0x000000
+        .idata_vfprintf.o      idata   0x000f7f       data   0x000000
+            .udata_putc.o      udata   0x000f7f       data   0x000000
+            .idata_putc.o      idata   0x000f7f       data   0x000000
+      .udata__user_putc.o      udata   0x000f7f       data   0x000000
+      .idata__user_putc.o      idata   0x000f7f       data   0x000000
+         .idata_my_uart.o      idata   0x000f7f       data   0x000000
+   .udata_timer0_thread.o      udata   0x000f7f       data   0x000000
+   .idata_timer0_thread.o      idata   0x000f7f       data   0x000000
+          .idata_my_i2c.o      idata   0x000f7f       data   0x000000
+          .udata_my_adc.o      udata   0x000f7f       data   0x000000
+          .idata_my_adc.o      idata   0x000f7f       data   0x000000
+       .udata_i2c_logic.o      udata   0x000f7f       data   0x000000
+ .idata_user_interrupts.o      idata   0x000f7f       data   0x000000
+ .udata_user_interrupts.o      udata   0x000f7f       data   0x000000
+      .idata_interrupts.o      idata   0x000f7f       data   0x000000
+      .udata_interrupts.o      udata   0x000f7f       data   0x000000
+        .idata_messages.o      idata   0x000f7f       data   0x000000
+        .udata_messages.o      udata   0x000f7f       data   0x000000
+            .idata_main.o      idata   0x000f7f       data   0x000000
+            .udata_main.o      udata   0x000f7f       data   0x000000
+            .udata_MSPI.o      udata   0x000f7f       data   0x000000
+          .idata_t1open.o      idata   0x000f7f       data   0x000000
+          .udata_t1open.o      udata   0x000f7f       data   0x000000
+          .idata_t0open.o      idata   0x000f7f       data   0x000000
+          .udata_t0open.o      udata   0x000f7f       data   0x000000
+         .idata_adcopen.o      idata   0x000f7f       data   0x000000
+         .udata_adcopen.o      udata   0x000f7f       data   0x000000
+         .idata_adcconv.o      idata   0x000f7f       data   0x000000
+         .udata_adcconv.o      udata   0x000f7f       data   0x000000
+        .idata_adcclose.o      idata   0x000f7f       data   0x000000
+        .udata_adcclose.o      udata   0x000f7f       data   0x000000
+         .idata_adcbusy.o      idata   0x000f7f       data   0x000000
+         .udata_adcbusy.o      udata   0x000f7f       data   0x000000
+         .idata_my_miwi.o      idata   0x000f7f       data   0x000000
+         .udata_my_miwi.o      udata   0x000f7f       data   0x000000
+      .idata_SymbolTime.o      idata   0x000f7f       data   0x000000
+            .idata_MSPI.o      idata   0x000f7f       data   0x000000
+            SFR_UNBANKED0      udata   0x000f80       data   0x000080
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x0060de      
+                            0x300001    0x300001      
+                            0x300003    0x300003      
+                            0x300006    0x300006      
+            24802 out of 66584 program addresses used, program memory utilization is 37%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+    AddNodeToNetworkTable   0x0012c2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          BroadcastJitter   0x00006c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  BusyADC   0x00000e    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcbusy.c
+                 CloseADC   0x0060ba    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcclose.c
+               ConvertADC   0x0060c0    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcconv.c
+                    D10_1   0x006096    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+                     D10x   0x00608e    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+                    D1K_1   0x006006    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+                     D1Kx   0x006004    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+              Delay10TCYx   0x006086    program     extern C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+              Delay1KTCYx   0x005ff8    program     extern C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+        DiscoverNodeByEUI   0x000f18    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           DumpConnection   0x000d7e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     FromMainHigh_recvmsg   0x004ba0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+     FromMainHigh_sendmsg   0x004b72    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+      FromMainLow_recvmsg   0x004b40    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+      FromMainLow_sendmsg   0x004b12    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                  HighISR   0x00369c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+               HighVector   0x000008    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+             InitMRF24J40   0x0026aa    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+          InitSymbolTimer   0x005b5e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+                LowVector   0x000018    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                 MacroNop   0x000068    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    MiApp_BroadcastPacket   0x001b0c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_ConnectionMode   0x0014fc    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_DiscardMessage   0x001b04    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+MiApp_EstablishConnection   0x0016f8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_MessageAvailable   0x001af4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+       MiApp_ProtocolInit   0x001402    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_RemoveConnection   0x0022a2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_SearchConnection   0x001532    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         MiApp_SetChannel   0x0014d0    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    MiApp_StartConnection   0x002280    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_UnicastAddress   0x001dd4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+  MiApp_UnicastConnection   0x001b96    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+      MiMAC_DiscardPacket   0x0030c8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+               MiMAC_Init   0x003646    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+     MiMAC_ReceivedPacket   0x002862    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         MiMAC_SendPacket   0x0030e8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+      MiMAC_SetAltAddress   0x0035c6    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         MiMAC_SetChannel   0x0034e2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+           MiMAC_SetPower   0x00353c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                MiWiTasks   0x00012c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+             MiWi_TickGet   0x005b72    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+                  OpenADC   0x005d14    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcopen.c
+               OpenSocket   0x0010c8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               OpenTimer0   0x005e7e    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t0open.c
+               OpenTimer1   0x005dc4    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1open.c
+                OpenUSART   0x005adc    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uopen.c
+        PHYGetLongRAMAddr   0x002624    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       PHYGetShortRAMAddr   0x0025e4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+        PHYSetLongRAMAddr   0x00251e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       PHYSetShortRAMAddr   0x0025a2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         PredefinedPacket   0x0060ad    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                  RESTORE   0x0050d2    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                  RESTORE   0x005176    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                  RESTORE   0x00504e    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+              RETQUOTIENT   0x0050ca    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+              RETQUOTIENT   0x005166    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                  ReadADC   0x00606e    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcread.c
+               ReadTimer1   0x005f16    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1read.c
+                ReadUSART   0x005e04    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uread.c
+                 SETUPSTK   0x00500c    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 SETUPSTK   0x0050e0    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                 SETUPSTK   0x005068    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                   SPIGet   0x005edc    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MSPI.c
+                   SPIPut   0x005eb4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MSPI.c
+                 ScanTime   0x005e42    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     SearchForLongAddress   0x001208    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    SearchForShortAddress   0x001166    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+            SendMACPacket   0x000c86    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               SetChanADC   0x005f76    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcsetch.c
+              SleepIfOkay   0x004c54    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+       ToMainHigh_recvmsg   0x004ae0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+       ToMainHigh_sendmsg   0x004ab2    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+        ToMainLow_recvmsg   0x004a80    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+        ToMainLow_sendmsg   0x004a52    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+     UserInterruptHandler   0x005ac6    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+              WriteTimer0   0x005f46    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t0write.c
+              WriteTimer1   0x005ee6    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1write.c
+               WriteUSART   0x005fa6    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uwrite.c
+                   _2jEnd   0x00535a    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+              _4jContinue   0x00525a    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+              _4jContinue   0x0052e2    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                   _5jEnd   0x005264    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                   _5jEnd   0x0052ec    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+        _D10TCYXCODE_000A   0x006090    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x006092    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x006094    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D1KTCYXCODE_0012   0x00600a    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0018   0x006010    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+       ___return_lbl00000   0x000004    program     static                          
+       ___return_lbl00000   0x00006a    program     static                          
+       ___return_lbl00001   0x00606c    program     static                          
+       ___return_lbl00002   0x005a3e    program     static                          
+       ___return_lbl00019   0x004c0c    program     static                          
+       ___return_lbl00156   0x00000c    program     static                          
+       ___return_lbl00157   0x00001c    program     static                          
+               __config_0   0x300001    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __config_1   0x300003    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __config_2   0x300006    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+                 __div08u   0x005024    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 __div16u   0x005080    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+                 __div32u   0x0050f8    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+                   __init   0x0060c4    program     extern C:\MCC18\v3_39\src\extended\stdclib\__init.c
+                 __mod08u   0x00502a    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 __mod16u   0x005086    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+                 __mod32u   0x0050fe    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+                  __mul32   0x005184    program     extern C:\MCC18\v3_39\src\extended\math\mul32.asm
+                   __pa_0   0x003fe8    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_1   0x003ff6    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_10   0x004084    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_11   0x004094    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_12   0x0040a4    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_13   0x0040b2    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_14   0x0040d0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_15   0x0040da    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_16   0x0040e0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_17   0x0040f0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_18   0x0040fc    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_19   0x00410a    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_2   0x004006    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_20   0x004114    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_21   0x00411e    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_22   0x004128    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_23   0x004136    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_3   0x004012    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_4   0x004026    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_5   0x004038    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_6   0x004048    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_7   0x00405a    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_8   0x004066    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_9   0x004078    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+               __string_0   0x00555f    program     static C:\Users\via\Desktop\TestProject-F4620\timer0_thread.c
+               __string_0   0x005556    program     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+               __string_0   0x005572    program     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+               __string_0   0x005547    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_0   0x00558c    program     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+               __string_1   0x005552    program     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+               __string_1   0x00553a    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_1   0x00557c    program     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+               __string_2   0x005527    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_3   0x00551f    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_4   0x0054f1    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_5   0x0054ed    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_6   0x0054c1    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_7   0x005494    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+              __tmplbl_36   0x000b52    program     static                          
+              __tmplbl_37   0x000c7e    program     static                          
+              __tmplbl_41   0x000b48    program     static                          
+              __tmplbl_42   0x000b48    program     static                          
+              __tmplbl_45   0x000b48    program     static                          
+              __tmplbl_46   0x000b48    program     static                          
+            __zero_memory   0x006018    program     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                _do_cinit   0x0059a2    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+            _early08uexit   0x00502e    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+            _early16uexit   0x00508a    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+            _early32uexit   0x005102    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+                   _entry   0x000000    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                   _false   0x005146    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                 _startup   0x006054    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+              _usart_putc   0x006038    program     extern C:\MCC18\v3_39\src\pmc_common\USART\_usartpc.asm
+               _user_putc   0x000006    program     extern C:\MCC18\v3_39\src\extended\stdclib\_user_putc.c
+    block_on_To_msgqueues   0x004cb0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                check_msg   0x004c0e    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                compare_l   0x00602e    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                copy_loop   0x005a14    program     static                          
+            copy_one_byte   0x005a1a    program     static                          
+                divmod08u   0x005030    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                divmod16u   0x00508c    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                divmod32u   0x005104    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                     done   0x005a3e    program     static                          
+             done_copying   0x005a28    program     static                          
+        enable_interrupts   0x005a40    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  endloop   0x005046    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                  endloop   0x0050b2    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+         enter_sleep_mode   0x004c08    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+     findNextNetworkEntry   0x000d36    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          handle_i2c_read   0x005838    program     extern C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+         handle_i2c_write   0x0058c6    program     extern C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+       handle_miwi_packet   0x00543c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+             handle_start   0x004244    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+     i2c_configure_master   0x00413c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+      i2c_configure_slave   0x0047d8    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_int_handler   0x0042fe    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_master_recv   0x004160    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_master_send   0x00414e    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+              in_high_int   0x005a48    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+               in_low_int   0x005a88    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  in_main   0x005aa0    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  initADC   0x005bda    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                 initMiwi   0x005370    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+                 init_i2c   0x004774    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+               init_queue   0x004806    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+              init_queues   0x004bd2    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+      init_timer1_lthread   0x005768    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+           init_uart_recv   0x00573c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+            isSameAddress   0x0013b8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  isdigit   0x005fd4    program     extern C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+                     jEnd   0x005324    program     static C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                     jEnd   0x00535c    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                     jEnd   0x00526a    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                     jEnd   0x0052ac    program     static C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                     jEnd   0x0052f8    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                    jLoop   0x0052a2    program     static C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                    jLoop   0x005344    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                    jLoop   0x00531a    program     static C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                    jLoop   0x00524e    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                    jLoop   0x0052d6    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                   jMatch   0x005ff4    program     static C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+                 jNoMatch   0x005ff6    program     static C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+                     loop   0x005112    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                     loop   0x005096    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                     loop   0x006062    program     static                          
+                     loop   0x005038    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                     loop   0x006048    program     static C:\MCC18\v3_39\src\pmc_common\USART\_usartpc.asm
+                   loop_h   0x006026    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   loop_l   0x006030    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+           low_int_active   0x005a68    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                     main   0x004d1e    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                   memcpy   0x005226    program     extern C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                   printf   0x005cb0    program     extern C:\MCC18\v3_39\src\extended\stdclib\printf.c
+                     putc   0x005c4a    program     extern C:\MCC18\v3_39\src\extended\stdclib\putc.c
+                    putch   0x004d02    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                  readADC   0x005c02    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                 recv_msg   0x00494c    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                 s_digits   0x00609c    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+            s_put_n_chars   0x003926    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                 send_msg   0x004864    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+              send_report   0x00539e    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+               set_tx_buf   0x005786    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+    start_i2c_slave_reply   0x004172    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+                  stopADC   0x005c46    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+            strcpypgm2ram   0x00527c    program     extern C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                   strlen   0x00530a    program     extern C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                strlenpgm   0x005326    program     extern C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                  strncpy   0x0052ae    program     extern C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                     test   0x0059bc    program     static                          
+       timer0_int_handler   0x0058fa    program     extern C:\Users\via\Desktop\TestProject-F4620\user_interrupts.c
+           timer0_lthread   0x005d78    program     extern C:\Users\via\Desktop\TestProject-F4620\timer0_thread.c
+       timer1_int_handler   0x005964    program     extern C:\Users\via\Desktop\TestProject-F4620\user_interrupts.c
+           timer1_lthread   0x0057be    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+             uart_lthread   0x0055ae    program     extern C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+    uart_recv_int_handler   0x005692    program     extern C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+                 vfprintf   0x003958    program     extern C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+               zero_block   0x006026    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON0   0x000fc2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON0bits   0x000fc2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON1   0x000fc1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON1bits   0x000fc1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON2   0x000fc0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON2bits   0x000fc0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    ADRES   0x000fc3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADRESH   0x000fc4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADRESL   0x000fc3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+      AcknowledgementAddr   0x000259       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+       AcknowledgementSeq   0x0003fb       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    ActiveScanResultIndex   0x00020b       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+        ActiveScanResults   0x00020c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  BAUDCON   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              BAUDCONbits   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  BAUDCTL   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              BAUDCTLbits   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      BSR   0x000fe0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                BankIndex   0x0003fd       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         BroadcastRecords   0x00027e       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  CCP1CON   0x000fbd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              CCP1CONbits   0x000fbd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  CCP2CON   0x000fba       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              CCP2CONbits   0x000fba       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CCPR1   0x000fbe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR1H   0x000fbf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR1L   0x000fbe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CCPR2   0x000fbb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR2H   0x000fbc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR2L   0x000fbb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CMCON   0x000fb4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                CMCONbits   0x000fb4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CVRCON   0x000fb5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               CVRCONbits   0x000fb5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 ConnMode   0x0003f9       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          ConnectionTable   0x000300       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                     DDRA   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRAbits   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRB   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRBbits   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRC   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRCbits   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRD   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRDbits   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRE   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDREbits   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+            DelayCounter1   0x000f7d       data     extern C:\MCC18\v3_39\src\extended\delays\delayd1.asm
+                  ECCP1AS   0x000fb6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              ECCP1ASbits   0x000fb6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    EEADR   0x000fa9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EEADRH   0x000faa       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EECON1   0x000fa6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               EECON1bits   0x000fa6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EECON2   0x000fa7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EEDATA   0x000fa8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR0   0x000fe9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR0H   0x000fea       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR0L   0x000fe9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR1   0x000fe1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR1H   0x000fe2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR1L   0x000fe1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR2   0x000fd9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR2H   0x000fda       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR2L   0x000fd9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+          FromMainHigh_MQ   0x000000       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+           FromMainLow_MQ   0x00029e       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                  HLVDCON   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              HLVDCONbits   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               IEEESeqNum   0x0000f2       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                    INDF0   0x000fef       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    INDF1   0x000fe7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    INDF2   0x000fdf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   INTCON   0x000ff2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  INTCON2   0x000ff1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              INTCON2bits   0x000ff1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  INTCON3   0x000ff0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              INTCON3bits   0x000ff0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               INTCONbits   0x000ff2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     IPR1   0x000f9f       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 IPR1bits   0x000f9f       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     IPR2   0x000fa2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 IPR2bits   0x000fa2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATA   0x000f89       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATAbits   0x000f89       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATB   0x000f8a       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATBbits   0x000f8a       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATC   0x000f8b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATCbits   0x000f8b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATD   0x000f8c       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATDbits   0x000f8c       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATE   0x000f8d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATEbits   0x000f8d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   LVDCON   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               LVDCONbits   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+        MACCurrentChannel   0x0000f3       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+            MACInitParams   0x0000ef       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+              MACRxPacket   0x000273       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                MAC_PANID   0x0000f4       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+ MQ_Main_Willing_to_block   0x000036       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+           MRF24J40Status   0x0000f8       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                      MTP   0x00026c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          MiWiAckRequired   0x0003fc       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         MiWiCapacityInfo   0x000200       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               MiWiSeqNum   0x00025b       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         MiWiStateMachine   0x000257       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                   OSCCON   0x000fd3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               OSCCONbits   0x000fd3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  OSCTUNE   0x000f9b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              OSCTUNEbits   0x000f9b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                       PC   0x000ff9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      PCL   0x000ff9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PCLATH   0x000ffa       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PCLATU   0x000ffb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIE1   0x000f9d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIE1bits   0x000f9d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIE2   0x000fa0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIE2bits   0x000fa0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIR1   0x000f9e       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIR1bits   0x000f9e       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIR2   0x000fa1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIR2bits   0x000fa1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW0   0x000feb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW1   0x000fe3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW2   0x000fdb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTA   0x000f80       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTAbits   0x000f80       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTB   0x000f81       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTBbits   0x000f81       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTC   0x000f82       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTCbits   0x000f82       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTD   0x000f83       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTDbits   0x000f83       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTE   0x000f84       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTEbits   0x000f84       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC0   0x000fed       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC1   0x000fe5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC2   0x000fdd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC0   0x000fee       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC1   0x000fe6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC2   0x000fde       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      PR2   0x000fcb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC0   0x000fec       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC1   0x000fe4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC2   0x000fdc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PROD   0x000ff3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PRODH   0x000ff4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PRODL   0x000ff3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PWM1CON   0x000fb7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              PWM1CONbits   0x000fb7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     RCON   0x000fd0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 RCONbits   0x000fd0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    RCREG   0x000fae       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    RCSTA   0x000fab       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                RCSTAbits   0x000fab       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 RxBuffer   0x000100       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                    SPBRG   0x000faf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SPBRGH   0x000fb0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SSPADD   0x000fc8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SSPBUF   0x000fc9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPCON1   0x000fc6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPCON1bits   0x000fc6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPCON2   0x000fc5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPCON2bits   0x000fc5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPSTAT   0x000fc7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPSTATbits   0x000fc7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   STATUS   0x000fd8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               STATUSbits   0x000fd8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   STKPTR   0x000ffc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               STKPTRbits   0x000ffc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T0CON   0x000fd5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T0CONbits   0x000fd5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T1CON   0x000fcd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T1CONbits   0x000fcd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T2CON   0x000fca       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T2CONbits   0x000fca       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T3CON   0x000fb1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T3CONbits   0x000fb1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   TABLAT   0x000ff5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   TBLPTR   0x000ff6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRH   0x000ff7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRL   0x000ff6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRU   0x000ff8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR0H   0x000fd7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR0L   0x000fd6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR1H   0x000fcf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR1L   0x000fce       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TMR2   0x000fcc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR3H   0x000fb3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR3L   0x000fb2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      TOS   0x000ffd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSH   0x000ffe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSL   0x000ffd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSU   0x000fff       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISA   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISAbits   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISB   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISBbits   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISC   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISCbits   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISD   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISDbits   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISE   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISEbits   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TXREG   0x000fad       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TXSTA   0x000fac       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TXSTAbits   0x000fac       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+            ToMainHigh_MQ   0x000400       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+             ToMainLow_MQ   0x000436       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                 TxBuffer   0x000382       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                   TxData   0x000251       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+             USART_Status   0x000f7e       data     extern C:\MCC18\v3_39\src\pmc_common\USART\udefs.c
+                        W   0x000fe8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   WDTCON   0x000fd1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               WDTCONbits   0x000fd1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     WREG   0x000fe8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                __RETVAL0   0x0000f9       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL1   0x0000fa       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL2   0x0000fb       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL3   0x0000fc       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcsetch.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcread.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\USART\uopen.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcopen.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\main.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                  __tmp_0   0x000f65       data     static C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+                  __tmp_0   0x000f65       data     static C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                  __tmp_1   0x000f6d       data     static C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                      buf   0x000080       data     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+                   curPos   0x000f77       data     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+                 cur_mean   0x0000fd       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                cur_power   0x0000ff       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+               cur_stddev   0x0000fe       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                curr_byte   0x0000e8       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+               curr_entry   0x0000ea       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+           currentChannel   0x0003f8       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                 data_ptr   0x0000ec       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+              defaultHops   0x0003fa       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           failureCounter   0x0003fe       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                   ic_ptr   0x000f73       data     static C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+                      len   0x000f79       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+            myLongAddress   0x0003f0       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         myNetworkAddress   0x0000f6       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                  myPANID   0x000254       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                 myParent   0x000256       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           myShortAddress   0x000252       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           openSocketInfo   0x00025c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                     prom   0x0000e5       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                rxMessage   0x000201       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                   stdout   0x000f7b       data     extern C:\MCC18\v3_39\src\extended\stdclib\stdout.c
+          tempLongAddress   0x000244       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           tempNodeStatus   0x000250       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                tempPANID   0x00024e       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         tempShortAddress   0x00024c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          timerExtension1   0x000f75       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+          timerExtension2   0x000f76       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+                    txbuf   0x000f00       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+                   uc_ptr   0x000f71       data     static C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   _entry   0x000000    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+       ___return_lbl00000   0x000004    program     static                          
+               _user_putc   0x000006    program     extern C:\MCC18\v3_39\src\extended\stdclib\_user_putc.c
+               HighVector   0x000008    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       ___return_lbl00156   0x00000c    program     static                          
+                  BusyADC   0x00000e    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcbusy.c
+                LowVector   0x000018    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       ___return_lbl00157   0x00001c    program     static                          
+                 MacroNop   0x000068    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+       ___return_lbl00000   0x00006a    program     static                          
+          BroadcastJitter   0x00006c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                MiWiTasks   0x00012c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+              __tmplbl_42   0x000b48    program     static                          
+              __tmplbl_41   0x000b48    program     static                          
+              __tmplbl_45   0x000b48    program     static                          
+              __tmplbl_46   0x000b48    program     static                          
+              __tmplbl_36   0x000b52    program     static                          
+              __tmplbl_37   0x000c7e    program     static                          
+            SendMACPacket   0x000c86    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     findNextNetworkEntry   0x000d36    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           DumpConnection   0x000d7e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+        DiscoverNodeByEUI   0x000f18    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               OpenSocket   0x0010c8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    SearchForShortAddress   0x001166    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     SearchForLongAddress   0x001208    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    AddNodeToNetworkTable   0x0012c2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+            isSameAddress   0x0013b8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+       MiApp_ProtocolInit   0x001402    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         MiApp_SetChannel   0x0014d0    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_ConnectionMode   0x0014fc    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_SearchConnection   0x001532    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+MiApp_EstablishConnection   0x0016f8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_MessageAvailable   0x001af4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_DiscardMessage   0x001b04    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    MiApp_BroadcastPacket   0x001b0c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+  MiApp_UnicastConnection   0x001b96    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+     MiApp_UnicastAddress   0x001dd4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    MiApp_StartConnection   0x002280    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+   MiApp_RemoveConnection   0x0022a2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+        PHYSetLongRAMAddr   0x00251e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       PHYSetShortRAMAddr   0x0025a2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+       PHYGetShortRAMAddr   0x0025e4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+        PHYGetLongRAMAddr   0x002624    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+             InitMRF24J40   0x0026aa    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+     MiMAC_ReceivedPacket   0x002862    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+      MiMAC_DiscardPacket   0x0030c8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         MiMAC_SendPacket   0x0030e8    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         MiMAC_SetChannel   0x0034e2    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+           MiMAC_SetPower   0x00353c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+      MiMAC_SetAltAddress   0x0035c6    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+               MiMAC_Init   0x003646    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                  HighISR   0x00369c    program     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+            s_put_n_chars   0x003926    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                 vfprintf   0x003958    program     extern C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_0   0x003fe8    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_1   0x003ff6    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_2   0x004006    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_3   0x004012    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_4   0x004026    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_5   0x004038    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_6   0x004048    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_7   0x00405a    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_8   0x004066    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                   __pa_9   0x004078    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_10   0x004084    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_11   0x004094    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_12   0x0040a4    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_13   0x0040b2    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_14   0x0040d0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_15   0x0040da    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_16   0x0040e0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_17   0x0040f0    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_18   0x0040fc    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_19   0x00410a    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_20   0x004114    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_21   0x00411e    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_22   0x004128    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __pa_23   0x004136    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+     i2c_configure_master   0x00413c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_master_send   0x00414e    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_master_recv   0x004160    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+    start_i2c_slave_reply   0x004172    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+             handle_start   0x004244    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          i2c_int_handler   0x0042fe    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+                 init_i2c   0x004774    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+      i2c_configure_slave   0x0047d8    program     extern C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+               init_queue   0x004806    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                 send_msg   0x004864    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                 recv_msg   0x00494c    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+        ToMainLow_sendmsg   0x004a52    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+        ToMainLow_recvmsg   0x004a80    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+       ToMainHigh_sendmsg   0x004ab2    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+       ToMainHigh_recvmsg   0x004ae0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+      FromMainLow_sendmsg   0x004b12    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+      FromMainLow_recvmsg   0x004b40    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+     FromMainHigh_sendmsg   0x004b72    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+     FromMainHigh_recvmsg   0x004ba0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+              init_queues   0x004bd2    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+         enter_sleep_mode   0x004c08    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+       ___return_lbl00019   0x004c0c    program     static                          
+                check_msg   0x004c0e    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+              SleepIfOkay   0x004c54    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+    block_on_To_msgqueues   0x004cb0    program     extern C:\Users\via\Desktop\TestProject-F4620\messages.c
+                    putch   0x004d02    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                     main   0x004d1e    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                 SETUPSTK   0x00500c    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 __div08u   0x005024    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 __mod08u   0x00502a    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+            _early08uexit   0x00502e    program     extern C:\MCC18\v3_39\src\extended\math\div08u.asm
+                divmod08u   0x005030    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                     loop   0x005038    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                  endloop   0x005046    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                  RESTORE   0x00504e    program     static C:\MCC18\v3_39\src\extended\math\div08u.asm
+                 SETUPSTK   0x005068    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                 __div16u   0x005080    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+                 __mod16u   0x005086    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+            _early16uexit   0x00508a    program     extern C:\MCC18\v3_39\src\extended\math\div16u.asm
+                divmod16u   0x00508c    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                     loop   0x005096    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                  endloop   0x0050b2    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+              RETQUOTIENT   0x0050ca    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                  RESTORE   0x0050d2    program     static C:\MCC18\v3_39\src\extended\math\div16u.asm
+                 SETUPSTK   0x0050e0    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                 __div32u   0x0050f8    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+                 __mod32u   0x0050fe    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+            _early32uexit   0x005102    program     extern C:\MCC18\v3_39\src\extended\math\div32u.asm
+                divmod32u   0x005104    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                     loop   0x005112    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                   _false   0x005146    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+              RETQUOTIENT   0x005166    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                  RESTORE   0x005176    program     static C:\MCC18\v3_39\src\extended\math\div32u.asm
+                  __mul32   0x005184    program     extern C:\MCC18\v3_39\src\extended\math\mul32.asm
+                   memcpy   0x005226    program     extern C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                    jLoop   0x00524e    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+              _4jContinue   0x00525a    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                   _5jEnd   0x005264    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+                     jEnd   0x00526a    program     static C:\MCC18\v3_39\src\extended\stdclib\memcpy.asm
+            strcpypgm2ram   0x00527c    program     extern C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                    jLoop   0x0052a2    program     static C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                     jEnd   0x0052ac    program     static C:\MCC18\v3_39\src\extended\stdclib\scpyp2r.asm
+                  strncpy   0x0052ae    program     extern C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                    jLoop   0x0052d6    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+              _4jContinue   0x0052e2    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                   _5jEnd   0x0052ec    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                     jEnd   0x0052f8    program     static C:\MCC18\v3_39\src\extended\stdclib\strncpy.asm
+                   strlen   0x00530a    program     extern C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                    jLoop   0x00531a    program     static C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                     jEnd   0x005324    program     static C:\MCC18\v3_39\src\extended\stdclib\strlen.asm
+                strlenpgm   0x005326    program     extern C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                    jLoop   0x005344    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                   _2jEnd   0x00535a    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                     jEnd   0x00535c    program     static C:\MCC18\v3_39\src\extended\stdclib\slenpgm.asm
+                 initMiwi   0x005370    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+              send_report   0x00539e    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+       handle_miwi_packet   0x00543c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+               __string_7   0x005494    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_6   0x0054c1    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_5   0x0054ed    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_4   0x0054f1    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_3   0x00551f    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_2   0x005527    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_1   0x00553a    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_0   0x005547    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __string_1   0x005552    program     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+               __string_0   0x005556    program     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+               __string_0   0x00555f    program     static C:\Users\via\Desktop\TestProject-F4620\timer0_thread.c
+               __string_0   0x005572    program     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+               __string_1   0x00557c    program     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+               __string_0   0x00558c    program     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+             uart_lthread   0x0055ae    program     extern C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+    uart_recv_int_handler   0x005692    program     extern C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+           init_uart_recv   0x00573c    program     extern C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+      init_timer1_lthread   0x005768    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+               set_tx_buf   0x005786    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+           timer1_lthread   0x0057be    program     extern C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+          handle_i2c_read   0x005838    program     extern C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+         handle_i2c_write   0x0058c6    program     extern C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+       timer0_int_handler   0x0058fa    program     extern C:\Users\via\Desktop\TestProject-F4620\user_interrupts.c
+       timer1_int_handler   0x005964    program     extern C:\Users\via\Desktop\TestProject-F4620\user_interrupts.c
+                _do_cinit   0x0059a2    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                     test   0x0059bc    program     static                          
+                copy_loop   0x005a14    program     static                          
+            copy_one_byte   0x005a1a    program     static                          
+             done_copying   0x005a28    program     static                          
+                     done   0x005a3e    program     static                          
+       ___return_lbl00002   0x005a3e    program     static                          
+        enable_interrupts   0x005a40    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+              in_high_int   0x005a48    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+           low_int_active   0x005a68    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+               in_low_int   0x005a88    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  in_main   0x005aa0    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+     UserInterruptHandler   0x005ac6    program     extern C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                OpenUSART   0x005adc    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uopen.c
+          InitSymbolTimer   0x005b5e    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+             MiWi_TickGet   0x005b72    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+                  initADC   0x005bda    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                  readADC   0x005c02    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                  stopADC   0x005c46    program     extern C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                     putc   0x005c4a    program     extern C:\MCC18\v3_39\src\extended\stdclib\putc.c
+                   printf   0x005cb0    program     extern C:\MCC18\v3_39\src\extended\stdclib\printf.c
+                  OpenADC   0x005d14    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcopen.c
+           timer0_lthread   0x005d78    program     extern C:\Users\via\Desktop\TestProject-F4620\timer0_thread.c
+               OpenTimer1   0x005dc4    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1open.c
+                ReadUSART   0x005e04    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uread.c
+                 ScanTime   0x005e42    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               OpenTimer0   0x005e7e    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t0open.c
+                   SPIPut   0x005eb4    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MSPI.c
+                   SPIGet   0x005edc    program     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MSPI.c
+              WriteTimer1   0x005ee6    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1write.c
+               ReadTimer1   0x005f16    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t1read.c
+              WriteTimer0   0x005f46    program     extern C:\MCC18\v3_39\src\pmc_common\Timers\t0write.c
+               SetChanADC   0x005f76    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcsetch.c
+               WriteUSART   0x005fa6    program     extern C:\MCC18\v3_39\src\pmc_common\USART\uwrite.c
+                  isdigit   0x005fd4    program     extern C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+                   jMatch   0x005ff4    program     static C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+                 jNoMatch   0x005ff6    program     static C:\MCC18\v3_39\src\extended\stdclib\isdigit.asm
+              Delay1KTCYx   0x005ff8    program     extern C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+                     D1Kx   0x006004    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+                    D1K_1   0x006006    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0012   0x00600a    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+        _D1KTCYXCODE_0018   0x006010    program     static C:\MCC18\v3_39\src\extended\delays\d1ktcyx.asm
+            __zero_memory   0x006018    program     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               zero_block   0x006026    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   loop_h   0x006026    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                compare_l   0x00602e    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   loop_l   0x006030    program     static C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              _usart_putc   0x006038    program     extern C:\MCC18\v3_39\src\pmc_common\USART\_usartpc.asm
+                     loop   0x006048    program     static C:\MCC18\v3_39\src\pmc_common\USART\_usartpc.asm
+                 _startup   0x006054    program     extern C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                     loop   0x006062    program     static                          
+       ___return_lbl00001   0x00606c    program     static                          
+                  ReadADC   0x00606e    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcread.c
+              Delay10TCYx   0x006086    program     extern C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+                     D10x   0x00608e    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D10TCYXCODE_000A   0x006090    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D10TCYXCODE_000C   0x006092    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+        _D10TCYXCODE_000E   0x006094    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+                    D10_1   0x006096    program     static C:\MCC18\v3_39\src\extended\delays\d10tcyx.asm
+                 s_digits   0x00609c    program     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+         PredefinedPacket   0x0060ad    program     extern C:\Users\via\Desktop\TestProject-F4620\main.c
+                 CloseADC   0x0060ba    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcclose.c
+               ConvertADC   0x0060c0    program     extern C:\MCC18\v3_39\src\pmc_common\ADC\adcconv.c
+                   __init   0x0060c4    program     extern C:\MCC18\v3_39\src\extended\stdclib\__init.c
+               __config_0   0x300001    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __config_1   0x300003    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+               __config_2   0x300006    program     static C:\Users\via\Desktop\TestProject-F4620\main.c
+          FromMainHigh_MQ   0x000000       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+ MQ_Main_Willing_to_block   0x000036       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                      buf   0x000080       data     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+                     prom   0x0000e5       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                curr_byte   0x0000e8       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+               curr_entry   0x0000ea       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+                 data_ptr   0x0000ec       data     static C:\MCC18\v3_39\src\extended\startup\c018i_e.c
+            MACInitParams   0x0000ef       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+               IEEESeqNum   0x0000f2       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+        MACCurrentChannel   0x0000f3       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                MAC_PANID   0x0000f4       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         myNetworkAddress   0x0000f6       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+           MRF24J40Status   0x0000f8       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                __RETVAL0   0x0000f9       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL1   0x0000fa       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL2   0x0000fb       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                __RETVAL3   0x0000fc       data     extern C:\MCC18\v3_39\src\extended\math\cmath18.asm
+                 cur_mean   0x0000fd       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+               cur_stddev   0x0000fe       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                cur_power   0x0000ff       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                 RxBuffer   0x000100       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+         MiWiCapacityInfo   0x000200       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                rxMessage   0x000201       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+    ActiveScanResultIndex   0x00020b       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+        ActiveScanResults   0x00020c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          tempLongAddress   0x000244       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         tempShortAddress   0x00024c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                tempPANID   0x00024e       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           tempNodeStatus   0x000250       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                   TxData   0x000251       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           myShortAddress   0x000252       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  myPANID   0x000254       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                 myParent   0x000256       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         MiWiStateMachine   0x000257       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+      AcknowledgementAddr   0x000259       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+               MiWiSeqNum   0x00025b       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           openSocketInfo   0x00025c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                      MTP   0x00026c       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+              MACRxPacket   0x000273       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+         BroadcastRecords   0x00027e       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           FromMainLow_MQ   0x00029e       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+          ConnectionTable   0x000300       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                 TxBuffer   0x000382       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+            myLongAddress   0x0003f0       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+           currentChannel   0x0003f8       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                 ConnMode   0x0003f9       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+              defaultHops   0x0003fa       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+       AcknowledgementSeq   0x0003fb       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+          MiWiAckRequired   0x0003fc       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                BankIndex   0x0003fd       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+           failureCounter   0x0003fe       data     extern C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+            ToMainHigh_MQ   0x000400       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+             ToMainLow_MQ   0x000436       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                    txbuf   0x000f00       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\extended\stdclib\vfprintf.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_adc.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\i2c_logic.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+                  __tmp_0   0x000f65       data     static C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\MiWi\MiWi.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\interrupts.c
+                  __tmp_0   0x000f65       data     static C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\messages.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\main.c
+                  __tmp_0   0x000f65       data     static C:\Users\via\Desktop\TestProject-F4620\my_miwi.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcopen.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\USART\uopen.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcread.c
+                  __tmp_0   0x000f65       data     static C:\MCC18\v3_39\src\pmc_common\ADC\adcsetch.c
+                  __tmp_1   0x000f6d       data     static C:\Microchip Solutions v2012-02-15\Microchip\Transceivers\MRF24J40\MRF24J40.c
+                   uc_ptr   0x000f71       data     static C:\Users\via\Desktop\TestProject-F4620\my_uart.c
+                   ic_ptr   0x000f73       data     static C:\Users\via\Desktop\TestProject-F4620\my_i2c.c
+          timerExtension1   0x000f75       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+          timerExtension2   0x000f76       data     extern C:\Microchip Solutions v2012-02-15\Microchip\WirelessProtocols\SymbolTime.c
+                   curPos   0x000f77       data     static C:\Users\via\Desktop\TestProject-F4620\uart_thread.c
+                      len   0x000f79       data     static C:\Users\via\Desktop\TestProject-F4620\timer1_thread.c
+                   stdout   0x000f7b       data     extern C:\MCC18\v3_39\src\extended\stdclib\stdout.c
+            DelayCounter1   0x000f7d       data     extern C:\MCC18\v3_39\src\extended\delays\delayd1.asm
+             USART_Status   0x000f7e       data     extern C:\MCC18\v3_39\src\pmc_common\USART\udefs.c
+                PORTAbits   0x000f80       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTA   0x000f80       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTBbits   0x000f81       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTB   0x000f81       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTCbits   0x000f82       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTC   0x000f82       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTDbits   0x000f83       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTD   0x000f83       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                PORTEbits   0x000f84       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PORTE   0x000f84       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATA   0x000f89       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATAbits   0x000f89       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATB   0x000f8a       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATBbits   0x000f8a       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATCbits   0x000f8b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATC   0x000f8b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATDbits   0x000f8c       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATD   0x000f8c       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 LATEbits   0x000f8d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     LATE   0x000f8d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRAbits   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISA   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRA   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISAbits   0x000f92       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRBbits   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRB   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISBbits   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISB   0x000f93       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRC   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRCbits   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISCbits   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISC   0x000f94       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDRDbits   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRD   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISDbits   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISD   0x000f95       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 DDREbits   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     DDRE   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TRISEbits   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TRISE   0x000f96       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              OSCTUNEbits   0x000f9b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  OSCTUNE   0x000f9b       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIE1bits   0x000f9d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIE1   0x000f9d       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIR1bits   0x000f9e       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIR1   0x000f9e       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     IPR1   0x000f9f       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 IPR1bits   0x000f9f       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIE2bits   0x000fa0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIE2   0x000fa0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 PIR2bits   0x000fa1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PIR2   0x000fa1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 IPR2bits   0x000fa2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     IPR2   0x000fa2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EECON1   0x000fa6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               EECON1bits   0x000fa6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EECON2   0x000fa7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EEDATA   0x000fa8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    EEADR   0x000fa9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   EEADRH   0x000faa       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    RCSTA   0x000fab       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                RCSTAbits   0x000fab       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                TXSTAbits   0x000fac       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TXSTA   0x000fac       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TXREG   0x000fad       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    RCREG   0x000fae       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    SPBRG   0x000faf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SPBRGH   0x000fb0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T3CONbits   0x000fb1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T3CON   0x000fb1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR3L   0x000fb2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR3H   0x000fb3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                CMCONbits   0x000fb4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CMCON   0x000fb4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               CVRCONbits   0x000fb5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CVRCON   0x000fb5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  ECCP1AS   0x000fb6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              ECCP1ASbits   0x000fb6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              PWM1CONbits   0x000fb7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PWM1CON   0x000fb7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  BAUDCON   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              BAUDCONbits   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  BAUDCTL   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              BAUDCTLbits   0x000fb8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  CCP2CON   0x000fba       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              CCP2CONbits   0x000fba       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CCPR2   0x000fbb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR2L   0x000fbb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR2H   0x000fbc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              CCP1CONbits   0x000fbd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  CCP1CON   0x000fbd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    CCPR1   0x000fbe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR1L   0x000fbe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   CCPR1H   0x000fbf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON2bits   0x000fc0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON2   0x000fc0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON1bits   0x000fc1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON1   0x000fc1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               ADCON0bits   0x000fc2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADCON0   0x000fc2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    ADRES   0x000fc3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADRESL   0x000fc3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   ADRESH   0x000fc4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPCON2bits   0x000fc5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPCON2   0x000fc5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPCON1bits   0x000fc6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPCON1   0x000fc6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  SSPSTAT   0x000fc7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              SSPSTATbits   0x000fc7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SSPADD   0x000fc8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   SSPBUF   0x000fc9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T2CONbits   0x000fca       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T2CON   0x000fca       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      PR2   0x000fcb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TMR2   0x000fcc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T1CONbits   0x000fcd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T1CON   0x000fcd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR1L   0x000fce       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR1H   0x000fcf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 RCONbits   0x000fd0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     RCON   0x000fd0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               WDTCONbits   0x000fd1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   WDTCON   0x000fd1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              HLVDCONbits   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               LVDCONbits   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   LVDCON   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  HLVDCON   0x000fd2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   OSCCON   0x000fd3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               OSCCONbits   0x000fd3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                T0CONbits   0x000fd5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    T0CON   0x000fd5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR0L   0x000fd6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    TMR0H   0x000fd7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   STATUS   0x000fd8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               STATUSbits   0x000fd8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR2L   0x000fd9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR2   0x000fd9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR2H   0x000fda       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW2   0x000fdb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC2   0x000fdc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC2   0x000fdd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC2   0x000fde       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    INDF2   0x000fdf       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      BSR   0x000fe0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR1L   0x000fe1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR1   0x000fe1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR1H   0x000fe2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW1   0x000fe3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC1   0x000fe4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC1   0x000fe5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC1   0x000fe6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    INDF1   0x000fe7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     WREG   0x000fe8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                        W   0x000fe8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     FSR0   0x000fe9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR0L   0x000fe9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    FSR0H   0x000fea       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PLUSW0   0x000feb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  PREINC0   0x000fec       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTDEC0   0x000fed       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                 POSTINC0   0x000fee       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    INDF0   0x000fef       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              INTCON3bits   0x000ff0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  INTCON3   0x000ff0       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+              INTCON2bits   0x000ff1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  INTCON2   0x000ff1       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   INTCON   0x000ff2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               INTCONbits   0x000ff2       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PRODL   0x000ff3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     PROD   0x000ff3       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                    PRODH   0x000ff4       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   TABLAT   0x000ff5       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRL   0x000ff6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   TBLPTR   0x000ff6       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRH   0x000ff7       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                  TBLPTRU   0x000ff8       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      PCL   0x000ff9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                       PC   0x000ff9       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PCLATH   0x000ffa       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   PCLATU   0x000ffb       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                   STKPTR   0x000ffc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+               STKPTRbits   0x000ffc       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                      TOS   0x000ffd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSL   0x000ffd       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSH   0x000ffe       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+                     TOSU   0x000fff       data     extern C:\MCC18\v3_39\src\extended\proc\p18F4620.asm
+
+
