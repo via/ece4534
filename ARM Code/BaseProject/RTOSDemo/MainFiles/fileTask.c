@@ -15,6 +15,8 @@
 #include "ff.h"
 #include "webdata.h"
 
+#define MILESTONE_FILE 1
+
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
 #define fileSTACK_SIZE		8*configMINIMAL_STACK_SIZE
@@ -47,10 +49,12 @@ void vStartFileTask( unsigned portBASE_TYPE uxPriority,vtFileStruct *ptr )
 
 static FATFS fatfs;  // Filesystem object
 static FIL fil;   	 // File object
-static uint8_t data_buf[256] = {0};
+static uint8_t data_buf[256];
 
 static portTASK_FUNCTION( vFileTask, pvParameters )
 {
+	xSemaphore = xSemaphoreCreateMutex();
+	
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtFileMsg msgBuffer;
 	vtFileStruct *filePtr = (vtFileStruct *) pvParameters;
@@ -88,7 +92,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
 		VT_HANDLE_FATAL_ERROR(0);
 	}
-	int j = 1;
+	int j = 2;
 	for(;;)
 	{	
 		/* Ask the RTOS to delay reschduling this task for the specified time */
@@ -104,7 +108,19 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			FRESULT rc; 
 			rc = F_Write(msgBuffer.buf, sizeof(msgBuffer.buf) - 1, FilePath, 1);
 			rc = F_Read(buf, sizeof(buf), FilePath);
-			strncat((char*)data_buf, (char*)msgBuffer.buf, strlen((char*)msgBuffer.buf));
+			if(xSemaphore != NULL){
+				if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
+					strncat((char*)data_buf, (char*)msgBuffer.buf, strlen((char*)msgBuffer.buf));
+					xSemaphoreGive( xSemaphore );
+				}
+			}
+			else{
+				sprintf((char*)(lcdBuffer.buf), "Semaphail");
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
+				if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
 		}
 		else{
 			// Do nothing
@@ -116,16 +132,28 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			}
 			*/
 		}
+		#if MILESTONE_FILE == 1
+		if(msgBuffer.length){
+			sprintf((char*)(lcdBuffer.buf), "MQ IN: %s", msgBuffer.buf);
+			lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
+			if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
+				VT_HANDLE_FATAL_ERROR(0);
+			}
+		}
+		#endif
 		if(j){
-			sprintf((char*)msgBuffer.buf, "Data 2\t37.0\t-80.0\n");
+			switch(j){
+			 	case 2: sprintf((char*)msgBuffer.buf, "Data 2\t37.0\t-80.0\n");
+						break;
+				case 1: sprintf((char*)msgBuffer.buf, "Invalid");			
+						break;
+				default: break;
+			}
+			msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
+			if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
+				VT_HANDLE_FATAL_ERROR(0);
+			}
 			j--;
-		}
-		else{
-			sprintf((char*)msgBuffer.buf, "Nope");
-		}
-		msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
-		if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
-			VT_HANDLE_FATAL_ERROR(0);
 		}
 	}
     //vTaskDelete(NULL);

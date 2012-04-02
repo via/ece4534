@@ -230,8 +230,15 @@ generate_rtos_stats(void *arg)
 static unsigned short
 generate_pos_data(void *arg)
 {
-	prep_data(uip_appdata);
-	//snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "data");
+	if(xSemaphore != NULL){
+		if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
+			prep_data(uip_appdata);			
+			xSemaphoreGive( xSemaphore );
+		}
+	}
+	else{
+		snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "Mutex fail");
+	}
 	return strlen(uip_appdata);
 }
 static

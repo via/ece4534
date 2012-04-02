@@ -74,7 +74,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	/* We need to initialise xLastUpdateTime prior to the first call to vTaskDelayUntil(). */
 	xLastUpdateTime = xTaskGetTickCount();
 	
-	strncpy((char *)nmeaString, (const char *) testData2, 6);
+	// Not needed 2012/04/02: strncpy((char *)nmeaString, (const char *) testData2, 6);
 	// Like all good tasks, this should never exit
 	for(;;)
 	{
