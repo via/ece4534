@@ -10,7 +10,6 @@ AutoSaveProject=1
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/19inch.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/40xx.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/41xx.lbr"
-UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/4534_Node_Board.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/45xx.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/74ac-logic.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/74ttl-din.lbr"
@@ -337,13 +336,23 @@ UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/zetex.lbr"
 UsedLibrary="C:/Program Files/EAGLE-6.1.0/lbr/zilog.lbr"
 UsedLibrary="4534_I2C2.lbr"
 UsedLibrary="4534_Node_Board.lbr"
+UsedLibrary="4534.lbr"
 
 [Win_1]
+Type="CAM Processor"
+Loc="150 150 749 585"
+State=2
+Number=4
+File="Spring12_6_Node.brd"
+Job="eagle.cam"
+
+[Win_2]
 Type="Control Panel"
-Loc="642 161 1241 560"
+Loc="48 0 873 471"
 State=2
 Number=0
 
 [Desktop]
-Screen="1276 721"
+Screen="1280 754"
 Window="Win_1"
+Window="Win_2"
