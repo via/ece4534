@@ -9,7 +9,7 @@ double convert_rssi_to_db( uint8_t* rssi_value ){
     //-90 dBm = 0x00 -> -120 dBW = 0x00
     return value*(double)55/255 - 120;
 	#else
-	return 0;
+	return (double)(*rssi_value);
 	#endif
 }
 
@@ -73,7 +73,7 @@ double distance_to_transmitter( const double power_received, const double power_
     double distance = pow(10,(power_received - power_transmitted - receive_gain - transmit_gain)/20)*4*pi/lambda;
     return 1/distance;
 	#else
-	return 0;
+	return power_received;
 	#endif
 }
 
@@ -94,7 +94,7 @@ void location_gradient_descent( struct utm_coordinate** receiver_positions, cons
     current_position->northings += 2*y_dev*stepsize;
     current_position->eastings += 2*x_dev*stepsize;
 	#else
-	current_position->northings = 0;
-	current_position->eastings = 0;
+	current_position->northings = distance_data[0];
+	current_position->eastings = distance_data[0];
 	#endif
 }

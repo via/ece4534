@@ -54,10 +54,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead2[] = {0x03};
 	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
 	uint8_t numCal[3] = { 0 }; //one entry for each pic, 1 if calibrated
-	uint8_t P0Read[2] = { 0 };
-	uint8_t P1Read[2] = { 0 };
-	uint8_t P2Read[2] = { 0 };
-	uint8_t rssiString[6];
+	uint8_t P0Read = 0;
+	uint8_t P1Read = 0;
+	uint8_t P2Read = 0;
+	uint8_t rssiString = 0;
 	uint8_t nmeaString[6];
 	uint8_t tempBuf[15];
 	uint8_t *tempRead = tempBuf;
@@ -84,72 +84,59 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
 		/*
 		//PIC 0
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,2) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,2,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		//handle conversion of received here
-		strncpy((char *)P0Read, (const char *) tempBuf, 2);
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-		
-		//PIC 1
-		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(readReg0),readReg0,2) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,2,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		//handle conversion of received here
-		strncpy((char *)P1Read, (const char *) tempBuf, 2);
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
-		//PIC 2
-		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg0),readReg0,2) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-
-		if (vtI2CDeQ(devPtr,2,tempRead,&rxLen,&status) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		//handle conversion of received here
-		strncpy((char *)P2Read, (const char *) tempBuf, 2);
-		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-		
-		//Write to reg1
-		if (vtI2CEnQ(devPtr,0x00,0x1d,2,testWrite,0) != pdTRUE) {
-			VT_HANDLE_FATAL_ERROR(0);
-		}
-		
-		 if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg1),readReg1,1) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
 		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		
+		//handle conversion of received here
+		P0Read = tempBuf[0];
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+		
+		//PIC 1
+		if (vtI2CEnQ(devPtr,0x00,0x1c,sizeof(readReg0),readReg0,1) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		//handle conversion of received here
+		P1Read = tempBuf[0];
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
+
+		//PIC 2
+		if (vtI2CEnQ(devPtr,0x00,0x1d,sizeof(readReg0),readReg0,1) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		//handle conversion of received here
+		P2Read = tempBuf[0];
+		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
 		*/
 		//Milestone 4 stuff
 		
 		//NMEA String read 1
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,6) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg0),readReg0,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 
-		if (vtI2CDeQ(devPtr,6,tempRead,&rxLen,&status) != pdTRUE) {
+		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		
 		vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-
+		
 		//Calculations and passing to calc
-		strncpy((char *) rssiString, (const char *) tempBuf, 6);
+		rssiString = tempBuf[0];
 				 
 		//NMEA String read 1
 		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(readReg1),readReg1,6) != pdTRUE) {
@@ -166,12 +153,12 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		strncpy((char *) nmeaString, (const char *) tempBuf, 6);
 
 		if (i2c_State == 1){
-			calcBuffer.buf[1] = 12;
-			calcBuffer.buf[2] = 11;
+			calcBuffer.buf[0] = 12;
+			calcBuffer.buf[1] = 11;
 			if (P0Read[0] > 250 && P0Read[0] > P1Read[0] && P0Read[0] > P2Read[0] && numCal[0] == 0){
 				//close to pic0
-				calcBuffer.buf[3]= 0;
-				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				calcBuffer.buf[2]= 0;
+				strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
 				if (calcData != NULL) {
 					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
@@ -184,7 +171,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			else if (P1Read[0] > 250 && P1Read[0] > P0Read[0] && P1Read[0] > P2Read[0] && numCal[1] == 0){
 				//close to pic1
 				calcBuffer.buf[2] = 1;
-				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
 				if (calcData != NULL) {
 					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
@@ -197,7 +184,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			else if (P2Read[0] > 250 && P2Read[0] > P1Read[0] && P2Read[0] > P1Read[0] && numCal[2] == 0){
 				//close to pic2
 				calcBuffer.buf[2] = 2;
-				strcat((char *)calcBuffer.buf, (const char *) nmeaString);
+				strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
 				if (calcData != NULL) {
 					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 					calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
@@ -212,8 +199,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 		}
 		else if (i2c_State == 2){
-			strncpy((char *)calcBuffer.buf, (const char *) rssiString, 6);
-			strncpy((char*) calcBuffer.buf + 6, (const char*) nmeaString, 6);
+			calcBuffer.buf[0] = P0Read;
+			calcBuffer.buf[1] = P1Read; //make this P1 later
+			calcBuffer.buf[2] = P2Read; //make this P2 later
+			strncpy((char*) calcBuffer.buf + 3, (const char*) nmeaString, 6);
 			if (calcData != NULL) {
 				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
