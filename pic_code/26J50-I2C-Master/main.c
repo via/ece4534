@@ -1,9 +1,17 @@
 /* Compile options:  -ml (Large code model) */
+#define I2C_SCL TRISBbits.TRISB4
+#define I2C_SDA TRISBbits.TRISB5
+
 #include "maindefs.h"
 #include <i2c.h>
 
-void putch(unsigned char b) {
- // WriteUSART(b);
+void wait_a_little(){
+	INTCON &= 0b11111011;
+	INTCON |= 0x20;
+	TMR0L = 0xFF - 120;
+	T0CON = 0b11101000;
+	while( ~(INTCON & 0x04) );
+	INTCON &= 0b11011011;
 }
 
 #define SDAset(n) PORTBbits.RB5=n;LATBbits.LATB5=n
@@ -29,44 +37,17 @@ const char Line2 = 0xC0;
 void I2C_out(unsigned char j)
 //I2C Output
 {
-	int n;
-	unsigned char d;
-	d=j;
-	for(n=0;n<8;n++){
-		if((d&0x80)==0x80){
-			SDAset(1);
-		}else{
-			SDAset(0);
-		}
-		d=(d<<1);
-		SCLset(0);
-		SCLset(1);
-		SCLset(0);
-	}
-	SCLset(1);
-	TRISBbits.TRISB5 = 1;
-	while(SDA==1){
-		SCLset(0);
-		SCLset(1);
-	}
-	TRISCbits.TRISC1 = 0;
-	SCLset(0);
+	WriteI2C1( j );
 }
 /*****************************************************/
 void I2C_Start(void)
 {
-	SCLset(1);
-	SDAset(1);
-	SDAset(0);
-	SCLset(0);
+	StartI2C1();
 }
 /*****************************************************/
 void I2C_Stop(void)
 {
-	SDAset(0);
-	SCLset(0);
-	SCLset(1);
-	SDAset(1);
+	StopI2C1();
 }
 /*****************************************************/
 void Show(unsigned char *text)
@@ -112,9 +93,15 @@ void main (void)
 {
 	// ensure the two lines are set for input (we are a slave)
 	TRISBbits.TRISB4=0;
-	TRISBbits.TRISB5=0;	
-	TRISBbits.TRISB6=0;
-	PORTBbits.RB6 = 1;
+	TRISBbits.TRISB5=0;
+	//OpenI2C
+	SSP1STAT = 0x0; //Slew off
+	SSP1CON1 = 0x0;
+	SSP1CON2 = 0x0;
+	SSP1CON1 |= 0x14;  // enable master
+	SSP1ADD = 29;
+	SSP1STAT |= SLEW_OFF;	
+	IdleI2C1();
 	init_LCD();
 
 	while(1)

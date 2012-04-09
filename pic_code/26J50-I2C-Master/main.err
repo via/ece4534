@@ -1,2 +1,2 @@
-Warning[2058] E:\Documents\ClassFiles\ece4534\pic_code\26J50-I2C-Master\main.c 118 : call of function without prototype
-Warning[2054] E:\Documents\ClassFiles\ece4534\pic_code\26J50-I2C-Master\main.c 123 : suspicious pointer conversion
+Warning[2058] E:\Documents\ClassFiles\ece4534\pic_code\26J50-I2C-Master\main.c 105 : call of function without prototype
+Warning[2054] E:\Documents\ClassFiles\ece4534\pic_code\26J50-I2C-Master\main.c 110 : suspicious pointer conversion
