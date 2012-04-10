@@ -1,6 +1,6 @@
 function do_various_simulations
     %enable pausing
-    pause on
+    %pause on
     
     %Setup our 'typical' node setup in an equillateral triangle
     receiverX = [0,-6.5,6.5];
@@ -37,7 +37,7 @@ function do_various_simulations
         yp = distance_data(i)*sin(0:0.1:2*pi);
         plot( receiverX(i) + xp, receiverY(i) + yp, 'k');
     end
-    
+    print -dpng "run1.png";
     pause
     
     
@@ -62,7 +62,7 @@ function do_various_simulations
         yp = distance_data(i)*sin(0:0.1:2*pi);
         plot( receiverX(i) + xp, receiverY(i) + yp, 'k');
     end
-    
+    print -dpng "run2.png"
     pause
     
     position_data(1,:) = position_data(max_iterations+1,:);
