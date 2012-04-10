@@ -1,0 +1,95 @@
+eeschema (2012-01-19 BZR 3256)-stable  >> Creation date: Mon 09 Apr 2012 01:47:43 PM EDT
+
+#Cmp ( order = Reference )
+| 74HC573    SOIC_20     
+| ACCESSORY-1 2510-6002   
+| ACCESSORY-2 2510-6002   
+| BATT       ~           
+| C1         10uF        
+| C2         10uF        
+| C3         10uF        
+| C4         10uF        
+| C5         10uF        
+| C6         10uF        
+| C7         18pF        
+| C8         18pF        
+| C9         0.1uF       
+| C10        10uF        
+| C11        0.1uF       
+| C12        1uF         
+| C13        1uF         
+| C14        10uF        
+| DEBUG-0    LED-SMD-1206
+| DEBUG-1    LED-SMD-1206
+| I2C-SCL    LED-SMD-1206
+| IC1        LM555D      
+| MA02-1     BACKLIGHT   
+| MIWI-STATUS LED-SMD-1206
+| MIWI-TX    LED-SMD-1206
+| PICKIT     J3          
+| Q1         20MHz       
+| R1         500         
+| R2         1k          
+| R3         100         
+| R4         10k         
+| R5         1K5         
+| R6         1K5         
+| REG        ~           
+| RF         ~           
+| SL1        ~           
+| SL2        ~           
+| SPI-SCK    LED-SMD-1206
+| SW0        SW-PB-MOM   
+| U$         ~           
+| U$1        PIC18F26J50 
+| UART-RX    LED-SMD-1206
+| UART-TX    LED-SMD-1206
+#End Cmp
+
+#Cmp ( order = Value )
+| 0.1uF        C9        
+| 0.1uF        C11       
+| 100          R3        
+| 10k          R4        
+| 10uF         C1        
+| 10uF         C2        
+| 10uF         C3        
+| 10uF         C4        
+| 10uF         C5        
+| 10uF         C6        
+| 10uF         C10       
+| 10uF         C14       
+| 18pF         C7        
+| 18pF         C8        
+| 1k           R2        
+| 1K5          R5        
+| 1K5          R6        
+| 1uF          C12       
+| 1uF          C13       
+| 20MHz        Q1        
+| 2510-6002    ACCESSORY-1
+| 2510-6002    ACCESSORY-2
+| 500          R1        
+| BACKLIGHT    MA02-1    
+| J3           PICKIT    
+| LED-SMD-1206 DEBUG-0   
+| LED-SMD-1206 DEBUG-1   
+| LED-SMD-1206 I2C-SCL   
+| LED-SMD-1206 MIWI-STATUS
+| LED-SMD-1206 MIWI-TX   
+| LED-SMD-1206 SPI-SCK   
+| LED-SMD-1206 UART-RX   
+| LED-SMD-1206 UART-TX   
+| LM555D       IC1       
+| PIC18F26J50  U$1       
+| SOIC_20      74HC573   
+| SW-PB-MOM    SW0       
+| ~            BATT      
+| ~            REG       
+| ~            RF        
+| ~            SL1       
+| ~            SL2       
+| ~            U$        
+#End Cmp
+
+#End List
