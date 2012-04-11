@@ -111,13 +111,11 @@ static unsigned short hsl2rgb(float H,float S,float L)
 static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 {
 	portTickType xUpdateRate, xLastUpdateTime;
-	uint8_t rVoltage = 0;
-	uint8_t counter = 0;
-	unsigned int ypos = 280; //change later to reflect initial drawing position
-	//uncomment next line if we want to do tracking array
-	//uint8_t tArray[281] = {0};
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
+
+	//counter for line display
+	uint8_t counter = 0;
 
 	/* Initialize the LCD */
 	GLCD_Init();
@@ -144,13 +142,10 @@ if (LCD_STATE == 1){
 		//picIndex = (picIndex + 1) % 9;
 		/* modify this to make use of drawing the axes */
 		GLCD_Bitmap(0,0,320,240,(unsigned char *) &Bg_final);
-		GLCD_SetTextColor(Black);
-		GLCD_SetWindow(25, 35, 215, 285);
 		LCD_STATE = 2;
 	}
 
 else if (LCD_STATE == 2){
-		//GLCD_ClearArea(Blue, 25, 35, 215, 285);
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -160,15 +155,14 @@ else if (LCD_STATE == 2){
 		// Decide what color and then clear the line
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
-		
-		//GLCD_ClearLn(counter,1);
+
 		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
 
-		if (counter >= 2){
-			counter = 0;
+		if (counter <= 3){
+			counter++;	
 		}
 		else {
-			counter++;
+			counter = 0;
 		}
 	}
 else{

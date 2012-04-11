@@ -54,6 +54,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "webdata.h"
+
 HTTPD_CGI_CALL(file, "file-stats", file_stats);
 HTTPD_CGI_CALL(tcp, "tcp-connections", tcp_stats);
 HTTPD_CGI_CALL(net, "net-stats", net_stats);
@@ -61,8 +63,10 @@ HTTPD_CGI_CALL(rtos, "rtos-stats", rtos_stats );
 HTTPD_CGI_CALL(run, "run-time", run_time );
 HTTPD_CGI_CALL(io, "led-io", led_io );
 
+HTTPD_CGI_CALL(data, "pos-data", pos_data);
 
-static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &rtos, &run, &io, NULL };
+
+static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &rtos, &run, &io, &data, NULL };
 
 /*---------------------------------------------------------------------------*/
 static
@@ -223,7 +227,28 @@ generate_rtos_stats(void *arg)
 	return strlen( uip_appdata );
 }
 /*---------------------------------------------------------------------------*/
-
+static unsigned short
+generate_pos_data(void *arg)
+{
+	if(xSemaphore != NULL){
+		if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
+			prep_data(uip_appdata);			
+			xSemaphoreGive( xSemaphore );
+		}
+	}
+	else{
+		snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "Mutex fail");
+	}
+	return strlen(uip_appdata);
+}
+static
+PT_THREAD(pos_data(struct httpd_state *s, char *ptr))
+{
+  PSOCK_BEGIN(&s->sout);
+  (void) ptr;
+  PSOCK_GENERATOR_SEND(&s->sout, generate_pos_data, NULL);
+  PSOCK_END(&s->sout);
+}
 
 static
 PT_THREAD(rtos_stats(struct httpd_state *s, char *ptr))

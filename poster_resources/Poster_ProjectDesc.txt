@@ -1,0 +1,11 @@
+Overview
+- The goal of this project is to be able to track the position of a mobile unit within a set of fixed nodes.
+
+PIC Functionality
+All nodes, as well as the mobile unit, are equipped with MiWi modules. 
+The mobile unit uses its module to transmit data received from an attached GPS module to the fixed nodes. 
+The fixed nodes measure the signal strength received from the mobile unit, and relay this data to the primary fixed node, which also recieves the location data from the mobile unit's GPS module. 
+
+ARM Functionality
+All of this data is relayed to the ARM Board, which performs assorted calculations on the data to get an estimated position and then stores this information to the SD Card attached to the board. 
+The data is displayed via the onboard LCD and the webserver running within the operating system.
