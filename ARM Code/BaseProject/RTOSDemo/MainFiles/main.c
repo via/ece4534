@@ -92,8 +92,12 @@ You should read the note above.
 #define USE_I2C 1
 // Define whether to use USB task
 #define USE_USB 0
+// Define if use web server
+#define USE_WEB 1
 
 #define USE_CALC 1
+
+#define USE_FILE 1
 
 #include "partest.h"
 
@@ -103,6 +107,7 @@ You should read the note above.
 #include "i2cTemp.h"
 #include "vtI2C.h"
 #include "calcTask.h"
+#include "fileTask.h"
 
 /* syscalls initialization -- *must* occur first */
 #include "syscalls.h"
@@ -128,6 +133,7 @@ tick hook). */
 #define mainUSB_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainI2CMONITOR_TASK_PRIORITY		( tskIDLE_PRIORITY)
 #define mainCALC_TASK_PRIORITY				( tskIDLE_PRIORITY)
+#define mainFILE_TASK_PRIORITY				( tskIDLE_PRIORITY)
 
 /* The WEB server has a larger stack as it utilises stack hungry string
 handling library calls. */
@@ -181,6 +187,10 @@ static vtLCDStruct vtLCDdata;
 static vtCalcStruct vtCalcdata;
 #endif
 
+#if USE_FILE == 1
+static vtFileStruct vtFiledata;
+#endif
+
 /*-----------------------------------------------------------*/
 
 int main( void )
@@ -195,20 +205,31 @@ int main( void )
 	/* Configure the hardware for use by this demo. */
 	prvSetupHardware();
 
+	#if USE_WEB == 1
 	// Not a standard demo -- but also not one of mine (MTJ)
 	/* Create the uIP task.  The WEB server runs in this task. */
     xTaskCreate( vuIP_Task, ( signed char * ) "uIP", mainBASIC_WEB_STACK_SIZE, ( void * ) NULL, mainUIP_TASK_PRIORITY, NULL );
+	#endif
 
 	// MTJ: My LCD demonstration task
 	#if USE_LCD == 1
 	vStartLCDTask( mainLCD_TASK_PRIORITY,&vtLCDdata);
-	vtCalcdata.lcdData = &vtLCDdata;
 	#endif
 	
 	#if USE_CALC == 1
 	vStartCalcTask( mainCALC_TASK_PRIORITY,&vtCalcdata);
+	#if USE_LCD == 1
+	vtCalcdata.lcdData = &vtLCDdata;
+	#endif
 	#endif
 
+	#if USE_FILE == 1
+	vStartFileTask( mainFILE_TASK_PRIORITY,&vtFiledata);
+	#if USE_LCD == 1
+	vtFiledata.lcdData = &vtLCDdata;
+	#endif
+	#endif
+	
 	// i2c initialization
 	#if USE_I2C == 1
 	vtI2C0.devNum = 0;
