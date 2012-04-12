@@ -1,0 +1,19 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\section*{Overview}
+\paragraph*{}The goal of this project is to track, using MiWi wireless communications, the position of a mobile unit within a set of fixed nodes.
+
+\section*{PIC Functionality}
+\paragraph*{}All nodes, as well as the mobile unit, are equipped with MiWi modules. \paragraph*{}The mobile unit uses its module to transmit data received from an attached GPS module to the fixed nodes. 
+\paragraph*{}The fixed nodes measure the signal strength received from the mobile unit, and relay this data to the primary fixed node, which also receives the location data from the mobile unit's GPS module. 
+
+\section*{ARM Functionality}
+\paragraph*{}All of this data is relayed to the ARM Board, which performs assorted calculations on the data to get an estimated position and then stores this information to the SD Card attached to the board. 
+\paragraph*{}The data is displayed via the onboard LCD and the webserver running within the operating system.
+
+\end{document}
