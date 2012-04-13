@@ -71,7 +71,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t TSC_INIT_13[] = {0x0B, 0xFF};
 	const uint8_t TSC_INIT_14[] = {0x09, 0x01};
 	
-	uint8_t i2c_State = 2; //set to 1 normally, 2 for m4
+	uint8_t i2c_State = 1; //1 to start at calibration, 2 for skipping
 	uint8_t numCal = 0;
 	uint8_t PRead[3] = { 0 };
 	uint8_t rssiString = 0;
