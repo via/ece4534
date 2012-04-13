@@ -344,19 +344,19 @@
 <wire x1="20.32" y1="-15.24" x2="-20.32" y2="-15.24" width="0.127" layer="21"/>
 <wire x1="-20.32" y1="-15.24" x2="-20.32" y2="10.16" width="0.127" layer="21"/>
 <wire x1="-20.32" y1="10.16" x2="-8.89" y2="10.16" width="0.127" layer="21"/>
-<text x="7.62" y="-13.97" size="1.27" layer="25">MRF24J40MA-1</text>
-<text x="-10.16" y="8.89" size="0.6096" layer="25" rot="R180">GND</text>
-<text x="10.16" y="8.89" size="0.6096" layer="25">GND</text>
-<text x="10.16" y="6.35" size="0.6096" layer="25">GND</text>
-<text x="10.16" y="3.81" size="0.6096" layer="25">Vin</text>
-<text x="10.16" y="1.27" size="0.6096" layer="25">NC</text>
-<text x="10.16" y="-1.27" size="0.6096" layer="25">CS</text>
-<text x="10.16" y="-3.81" size="0.6096" layer="25">SDO</text>
-<text x="-10.16" y="6.35" size="0.6096" layer="25" rot="R180">~RESET</text>
-<text x="-10.16" y="3.81" size="0.6096" layer="25" rot="R180">WAKE</text>
-<text x="-10.16" y="1.27" size="0.6096" layer="25" rot="R180">INT</text>
-<text x="-10.16" y="-1.27" size="0.6096" layer="25" rot="R180">SDI</text>
-<text x="-10.16" y="-3.81" size="0.6096" layer="25" rot="R180">SCK</text>
+<text x="7.62" y="-13.97" size="1.27" layer="21">MRF24J40MA-1</text>
+<text x="-15.24" y="7.62" size="1.27" layer="21">GND</text>
+<text x="13.97" y="7.62" size="1.27" layer="21">GND</text>
+<text x="13.97" y="5.08" size="1.27" layer="21">GND</text>
+<text x="13.97" y="2.54" size="1.27" layer="21">Vin</text>
+<text x="13.97" y="0" size="1.27" layer="21">NC</text>
+<text x="13.97" y="-2.54" size="1.27" layer="21">CS</text>
+<text x="13.97" y="-5.08" size="1.27" layer="21">SDO</text>
+<text x="-17.78" y="5.08" size="1.27" layer="21">~RESET</text>
+<text x="-16.51" y="2.54" size="1.27" layer="21">WAKE</text>
+<text x="-13.97" y="0" size="1.27" layer="21">INT</text>
+<text x="-13.97" y="-2.54" size="1.27" layer="21">SDI</text>
+<text x="-15.24" y="-5.08" size="1.27" layer="21">SCK</text>
 </package>
 <package name="SOIC8-N_MC">
 <smd name="1" x="-2.3622" y="1.905" dx="1.9812" dy="0.5588" layer="1"/>

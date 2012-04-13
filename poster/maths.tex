@@ -1,0 +1,44 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+\section*{Positioning Algorithm}
+\subsection*{General Principles}
+\paragraph*{}Suppose we establish a 2D cartesian coordinate system on which to place each receiver node.
+\paragraph*{}Each receiver node $i$ is assigned a coordinate matching its physical location using UTM coordinates, $(x_{i},y_{i})$
+\paragraph*{}Given the received signal strength in dB, we can estimate the range to target from each receiver using \textit{Friis Transmission Equation}.
+\begin{equation}
+P_{r} = P_{t} + G_{r} + G_{t} + 20\log_{10}\left( \frac{\lambda}{4\pi R}\right)
+\end{equation}
+\paragraph*{} Where $P_{r} =$ Received power.
+\paragraph*{} $P_{t} =$ Transmitted power.
+\paragraph*{} $G_{r} =$ Receiver antenna gain.
+\paragraph*{} $G_{t} =$ Transmitter antenna gain.
+\paragraph*{} $\lambda =$ Wavelength.
+\paragraph*{} $R =$ Distance to target.  
+\subsection*{Determination of most likely position}
+\paragraph*{}Solving (1) for $R$ for each receiver node, we obtain three circles of possible locations.  The most likely position for the mobile node is the point on the plane where the distance to all circles is minimized.  Distance from any point $(x',y')$ to $(x_{i},y_{i})$ is given by:
+\begin{equation}
+D_{i} = \vert R_{i} - \sqrt{ \left( x' - x_{i} \right)^{2} +\left( y' - y_{i} \right)^{2} } \vert
+\end{equation}
+\paragraph*{}The optimization function becomes:
+\begin{equation}
+\phi\left(x,y\right) = \sum_{i=0}^{2}D_{i}
+\end{equation}
+\paragraph*{}This function is generally concave, therefore we can take the gradient of it and add a step to follow this function to its minimum.
+\begin{equation}
+\left(x_{next},y_{next}\right) = (x,y) + \nabla\phi\left(x,y\right)\cdot stepsize
+\end{equation}
+\begin{equation}
+\nabla\phi = \frac{\delta}{\delta x}\phi\left(x,y\right)\hat{x} + \frac{\delta}{\delta y}\phi\left(x,y\right)\hat{y}
+\end{equation}
+\paragraph*{}To simplify this for embedded system calculations, we approximate the magnitude function with a squaring operation and define the below equations.
+\begin{equation}
+K_{i} = \sqrt{\left(x-x_{i}\right)^{2} + \left(y-y_{i}\right)^{2}}
+\end{equation}
+\begin{equation}
+\nabla\phi\left(x,y\right) = \hat{x}2\left[\sum_{i=0}^{2}\left(R_{i}-K_{i}\right)\left(\frac{-1}{2K_{0}}\right)\left(-2x+2x_{i}\right)\right] + \hat{y}2\left[\sum_{i=0}^{2}\left(R_{i}-K_{i}\right)\left(\frac{-1}{2K_{0}}\right)\left(-2y+2y_{i}\right)\right]
+\end{equation}
+\end{document}

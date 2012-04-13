@@ -2,24 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : C:/Users/Mitch/Documents/eagle/Spring12_6_rev4/Spring12_6_rev4.brd
 
-Start at      : 23:57:08 (4/9/2012)
-End at        : 23:57:08 (4/9/2012)
-Elapsed time  : 00:00:00
+Start at      : 13:51:55 (4/12/2012)
+End at        : 13:51:56 (4/12/2012)
+Elapsed time  : 00:00:01
 
-Signals       :    49   RoutingGrid: 50 mil  Layers: 2
-Connections   :   167   predefined:  125 ( 33 Vias )
+Signals       :    61   RoutingGrid: 50 mil  Layers: 2
+Connections   :   191   predefined:  186 ( 40 Vias )
 
-Router memory :   25276
+Router memory :   26400
 
 Passname          :    Busses     Route Optimize1 Optimize2 Optimize3 Optimize4
 
-Time per pass     :  00:00:00  00:00:00  00:00:00  00:00:00  00:00:00  00:00:00
-Number of Ripups  :         0         4         0         0         0         0
-max. Level        :         0         1         0         0         0         0
-max. Total        :         0         2         0         0         0         0
+Time per pass     :  00:00:00  00:00:01  00:00:00  00:00:00  00:00:00  00:00:00
+Number of Ripups  :         0         0         0         0         0         0
+max. Level        :         0         0         0         0         0         0
+max. Total        :         0         0         0         0         0         0
 
-Routed            :         7        35        35        35        35        35
-Vias              :         0        30        17        12        12        13
-Resolution        :    79.0 %    95.8 %    95.8 %    95.8 %    95.8 %    95.8 %
+Routed            :         0         3         3         3         3         3
+Vias              :         0         1         0         0         0         0
+Resolution        :    97.4 %    99.0 %    99.0 %    99.0 %    99.0 %    99.0 %
 
-Final             : 94.6% finished. Polygons may have fallen apart.
+Final             : 98.4% finished. Polygons may have fallen apart.
