@@ -10,6 +10,7 @@
 #include "GLCD.h"
 #include "vtUtilities.h"
 #include "LCDtask.h"
+#include "vtI2C.h"
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the LCD operations
@@ -41,12 +42,10 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 	}
 }
 
-//#define LCD_STATE 1
 int LCD_STATE = 2;
-//#if LCD_STATE == 1
-// This include the file with the definition of the ARM bitmap
+
 #include "Bg_final.c"
-//#endif
+
 
 // Convert from HSL colormap to RGB values in this weird colormap
 // H: 0 to 360
@@ -113,10 +112,9 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
-
+	devPtr = lcdPtr->dev;
 	//counter for line display
 	uint8_t counter = 0;
-
 	/* Initialize the LCD */
 	GLCD_Init();
 	GLCD_Clear(White);
@@ -135,7 +133,10 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	// Like all good tasks, this should never exit
 	for(;;)
 	{	
-if (LCD_STATE == 1){
+	if (LCD_STATE == 0){
+		
+	}
+else if (LCD_STATE == 1){
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
   		/* go through a  bitmap that is really a series of bitmaps */
@@ -170,4 +171,3 @@ else{
 	}	
 	}
 }
-

@@ -505,6 +505,182 @@ void GLCD_Init (void) {
   }
 }
 
+/*******************************************************************************
+* Initialize the Graphic LCD controller and touchscreen                        *
+*   Parameter:                                                                 *
+*   Return:                                                                    *
+*******************************************************************************/
+
+void GLCD_TSInit (void) { 
+  unsigned short driverCode;
+  PINSEL_CFG_Type PinCfg;
+  SSP_CFG_Type SSP_ConfigStruct;
+  /* Enable clock for SSP1, clock = CCLK / 2                                  */
+  //LPC_SC->PCONP       |= 0x00000400;
+  //LPC_SC->PCLKSEL0    |= 0x00200000;
+  CLKPWR_SetPCLKDiv(CLKPWR_PCLKSEL_SSP1,2);   
+
+  /* Configure the LCD Control pins                                           */
+  LPC_PINCON->PINSEL9 &= 0xF0FFFFFF;
+  LPC_GPIO4->FIODIR   |= 0x30000000;
+  LPC_GPIO4->FIOSET    = 0x20000000;
+
+  /* SSEL1 is GPIO output set to high                                         */
+  /* LPC_GPIO0->FIODIR   |= 0x00000040;
+  LPC_GPIO0->FIOSET    = 0x00000040;   */
+  /*LPC_PINCON->PINSEL0 &= 0xFFF03FFF;
+  LPC_PINCON->PINSEL0 |= 0x000A8000; */
+
+  /* Enable SPI in Master Mode, CPOL=1, CPHA=1                                */
+  /* Max. 12.5 MBit used for Data Transfer @ 100MHz                           */
+  /*LPC_SSP1->CR0        = 0x01C7;
+  LPC_SSP1->CPSR       = 0x02;
+  LPC_SSP1->CR1        = 0x02;	*/
+  // MTJ: Here is the right way to initialize this unit
+  // configure the pins for SSP1
+  // P0.6 -- SSEL1
+  // P0.7 -- SCK1
+  // P0.8 -- MISO1
+  // P0.9 -- MOSI1
+  // Set P0.6 (as GPIO) to have an output of '1' (idle CS)
+  GPIO_SetDir(0,0x00000040,1);
+  GPIO_SetValue(0,0x00000040);
+  PinCfg.Funcnum = 0;
+  PinCfg.OpenDrain = 0;
+  PinCfg.Pinmode = 0;
+  PinCfg.Portnum = 0;
+  PinCfg.Pinnum = 6;
+  PINSEL_ConfigPin(&PinCfg);
+  PinCfg.Funcnum = 2;
+  PinCfg.Pinnum = 7;
+  PINSEL_ConfigPin(&PinCfg);
+  PinCfg.Pinnum = 8;
+  PINSEL_ConfigPin(&PinCfg);
+  PinCfg.Pinnum = 9;
+  PINSEL_ConfigPin(&PinCfg);
+  // initialize the configuration struction with default values
+  SSP_ConfigStructInit(&SSP_ConfigStruct);
+  // then change the values we care about
+  SSP_ConfigStruct.ClockRate = 0xBEBC20; // 12.5MHz
+  SSP_ConfigStruct.CPOL = SSP_CPOL_LO;
+  SSP_ConfigStruct.CPHA = SSP_CPHA_SECOND;
+  // initialize the SSP1 unit
+  SSP_Init(LPC_SSP1,&SSP_ConfigStruct);
+  LPC_SSP1->IMSC = 0;
+  // now turn it on
+  SSP_Cmd(LPC_SSP1,ENABLE);
+  // End of new initialization
+
+  delay(5);                             /* Delay 50 ms                        */
+  driverCode = rd_reg(0x00);
+
+  /* Start Initial Sequence --------------------------------------------------*/
+  wr_reg(0x01, 0x0100);                 /* Set SS bit                         */
+  wr_reg(0x02, 0x0700);                 /* Set 1 line inversion               */
+  wr_reg(0x04, 0x0000);                 /* Resize register                    */
+  wr_reg(0x08, 0x0207);                 /* 2 lines front, 7 back porch        */
+  wr_reg(0x09, 0x0000);                 /* Set non-disp area refresh cyc ISC  */
+  wr_reg(0x0A, 0x0000);                 /* FMARK function                     */
+  wr_reg(0x0C, 0x0000);                 /* RGB interface setting              */
+  wr_reg(0x0D, 0x0000);                 /* Frame marker Position              */
+  wr_reg(0x0F, 0x0000);                 /* RGB interface polarity             */
+
+  /* Power On sequence -------------------------------------------------------*/
+  wr_reg(0x10, 0x0000);                 /* Reset Power Control 1              */
+  wr_reg(0x11, 0x0000);                 /* Reset Power Control 2              */
+  wr_reg(0x12, 0x0000);                 /* Reset Power Control 3              */
+  wr_reg(0x13, 0x0000);                 /* Reset Power Control 4              */
+  delay(20);                            /* Discharge cap power voltage (200ms)*/
+  wr_reg(0x10, 0x12B0);                 /* SAP, BT[3:0], AP, DSTB, SLP, STB   */
+  wr_reg(0x11, 0x0007);                 /* DC1[2:0], DC0[2:0], VC[2:0]        */
+  delay(5);                             /* Delay 50 ms                        */
+  wr_reg(0x12, 0x01BD);                 /* VREG1OUT voltage                   */
+  delay(5);                             /* Delay 50 ms                        */
+  wr_reg(0x13, 0x1400);                 /* VDV[4:0] for VCOM amplitude        */
+  wr_reg(0x29, 0x000E);                 /* VCM[4:0] for VCOMH                 */
+  delay(5);                             /* Delay 50 ms                        */
+  wr_reg(0x20, 0x0000);                 /* GRAM horizontal Address            */
+  wr_reg(0x21, 0x0000);                 /* GRAM Vertical Address              */
+
+  /* Adjust the Gamma Curve --------------------------------------------------*/
+  if (driverCode == 0x5408) {           /* LCD with SPFD5408 LCD Controller   */
+    wr_reg(0x30, 0x0B0D);
+    wr_reg(0x31, 0x1923);
+    wr_reg(0x32, 0x1C26);
+    wr_reg(0x33, 0x261C);
+    wr_reg(0x34, 0x2419);
+    wr_reg(0x35, 0x0D0B);
+    wr_reg(0x36, 0x1006);
+    wr_reg(0x37, 0x0610);
+    wr_reg(0x38, 0x0706);
+    wr_reg(0x39, 0x0304);
+    wr_reg(0x3A, 0x0E05);
+    wr_reg(0x3B, 0x0E01);
+    wr_reg(0x3C, 0x010E);
+    wr_reg(0x3D, 0x050E);
+    wr_reg(0x3E, 0x0403);
+    wr_reg(0x3F, 0x0607);
+  }
+  else {                                /* LCD with other LCD Controller      */
+    wr_reg(0x30, 0x0006);
+    wr_reg(0x31, 0x0101);
+    wr_reg(0x32, 0x0003);
+    wr_reg(0x35, 0x0106);
+    wr_reg(0x36, 0x0B02);
+    wr_reg(0x37, 0x0302);
+    wr_reg(0x38, 0x0707);
+    wr_reg(0x39, 0x0007);
+    wr_reg(0x3C, 0x0600);
+    wr_reg(0x3D, 0x020B);
+  }
+
+  /* Set GRAM area -----------------------------------------------------------*/
+  wr_reg(0x50, 0x0000);                 /* Horizontal GRAM Start Address      */
+  wr_reg(0x51, (HEIGHT-1));             /* Horizontal GRAM End   Address      */
+  wr_reg(0x52, 0x0000);                 /* Vertical   GRAM Start Address      */
+  wr_reg(0x53, (WIDTH-1));              /* Vertical   GRAM End   Address      */
+  if (driverCode == 0x5408)             /* LCD with SPFD5408 LCD Controller   */
+    wr_reg(0x60, 0xA700);               /* Gate Scan Line                     */
+  else                                  /* LCD with other LCD Controller      */
+    wr_reg(0x60, 0x2700);               /* Gate Scan Line                     */
+  wr_reg(0x61, 0x0001);                 /* NDL,VLE, REV                       */
+  wr_reg(0x6A, 0x0000);                 /* Set scrolling line                 */
+
+  /* Partial Display Control -------------------------------------------------*/
+  wr_reg(0x80, 0x0000);
+  wr_reg(0x81, 0x0000);
+  wr_reg(0x82, 0x0000);
+  wr_reg(0x83, 0x0000);
+  wr_reg(0x84, 0x0000);
+  wr_reg(0x85, 0x0000);
+
+  /* Panel Control -----------------------------------------------------------*/
+  wr_reg(0x90, 0x0010);
+  wr_reg(0x92, 0x0000);
+  wr_reg(0x93, 0x0003);
+  wr_reg(0x95, 0x0110);
+  wr_reg(0x97, 0x0000);
+  wr_reg(0x98, 0x0000);
+
+  /* Set GRAM write direction
+     I/D=11 (Horizontal : increment, Vertical : increment)                    */
+
+#if (HORIZONTAL == 1)
+  /* AM=1   (address is updated in vertical writing direction)                */
+  wr_reg(0x03, 0x1038);
+#else 
+  /* AM=0   (address is updated in horizontal writing direction)              */
+  wr_reg(0x03, 0x1030);
+#endif
+
+  wr_reg(0x07, 0x0137);                 /* 262K color and display ON          */
+  LPC_GPIO4->FIOSET = 0x10000000;	  // Turn on the backlight
+
+  // Initialize the interrupt driver for bulk SPI transfer on SSP1
+  if (vtSSPIsrInit(1) != vtSSPInitSuccess) {
+  	VT_HANDLE_FATAL_ERROR(0);
+  }
+}
 
 /*******************************************************************************
 * Set draw window region                                                       *
