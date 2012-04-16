@@ -50,7 +50,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtLCDStruct *lcdData = calcPtr->lcdData;
 	vtLCDMsg lcdBuffer;
 	
-	uint8_t calcState = 2;
+	uint8_t calcState = 1;
 	uint8_t picNum = 10;
 	uint8_t picCal[3] = { 0 }; //determine which pics are calibrated
 	

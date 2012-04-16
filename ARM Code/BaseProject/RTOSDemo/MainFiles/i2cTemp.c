@@ -75,7 +75,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	uint8_t numCal = 0;
 	uint8_t PRead[3] = { 0 };
 	uint8_t rssiString = 0;
-	uint8_t nmeaString[6];
+	uint8_t nmeaString[6] = { 0 };
 	uint8_t tempBuf[15];
 	uint8_t *tempRead = tempBuf;
 	uint8_t rxLen, status;
