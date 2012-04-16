@@ -168,7 +168,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			calcBuffer.buf[1] = 11;
 			#if LCD_I2C==1
 			//i2c read from lcd to see if interrupt triggered
-			if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(lcdRead),lcdRead,1) != pdTRUE) {
+			if (vtI2CEnQ(devPtr,0x0F,0x41,sizeof(lcdRead),lcdRead,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
