@@ -54,10 +54,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
 	const uint8_t lcdRead[] = {0x0B};
+	const uint8_t zRead[] = {0x51};
 	const uint8_t lcdClear[] = {0x0B, 0x02};
 	//Commands for initializing touchscreen
 	const uint8_t TSC_INIT_1[] = {0x04, 0x0C};
-	const uint8_t TSC_INIT_2[] = {0x0A, 0x07};
+	const uint8_t TSC_INIT_2[] = {0x0A, 0x02};
 	const uint8_t TSC_INIT_3[] = {0x20, 0x49};
 	const uint8_t TSC_INIT_4[] = {0x21, 0x01};
 	const uint8_t TSC_INIT_5[] = {0x17, 0x00};
@@ -67,7 +68,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t TSC_INIT_9[] = {0x4B, 0x00};
 	const uint8_t TSC_INIT_10[] = {0x56, 0x07};
 	const uint8_t TSC_INIT_11[] = {0x58, 0x01};
-	const uint8_t TSC_INIT_12[] = {0x40, 0x01};
+	const uint8_t TSC_INIT_12[] = {0x40, 0x09}; //z only
 	const uint8_t TSC_INIT_13[] = {0x0B, 0xFF};
 	const uint8_t TSC_INIT_14[] = {0x09, 0x01};
 	
@@ -182,7 +183,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				numCal = numCal + 1;
 				calcBuffer.buf[2] = numCal;
 				
-				//screen triggered, do passing of things to LCD
+				if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(zRead),zRead,1) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+
+				if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+				
+				//screen triggered, do passing of things to calc
 				strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
 				if (calcData != NULL) {
 					// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
