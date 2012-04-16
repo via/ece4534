@@ -64,7 +64,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t TSC_INIT_5[] = {0x17, 0x00};
 	const uint8_t TSC_INIT_6[] = {0x41, 0x9A};
 	const uint8_t TSC_INIT_7[] = {0x4A, 0x01};
-	const uint8_t TSC_INIT_8]] = {0x4B, 0x01};
+	const uint8_t TSC_INIT_8[] = {0x4B, 0x01};
 	const uint8_t TSC_INIT_9[] = {0x4B, 0x00};
 	const uint8_t TSC_INIT_10[] = {0x56, 0x07};
 	const uint8_t TSC_INIT_11[] = {0x58, 0x01};
@@ -166,7 +166,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		if (i2c_State == 1){
 			calcBuffer.buf[0] = 12;
 			calcBuffer.buf[1] = 11;
-			#if LCD_I2C==1
+
 			//i2c read from lcd to see if interrupt triggered
 			if (vtI2CEnQ(devPtr,0x0F,0x41,sizeof(lcdRead),lcdRead,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -176,9 +176,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
-			#else
-			//spi code here
-			#endif
+	   		tempBuf[1] = 0x00;
 			if ((tempBuf[0] && 0x02) == 0x02) {
 				numCal = numCal + 1;
 				calcBuffer.buf[2] = numCal;
@@ -200,14 +198,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 						VT_HANDLE_FATAL_ERROR(0);
 					}
 				}
-				#if LCD_I2C==1
 				//clear LCD interrupt
 				if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(lcdClear),lcdClear,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
-				#else
-				//spi code here
-				#endif
+
 			}
 			if (numCal == 3){
 				i2c_State = 2;

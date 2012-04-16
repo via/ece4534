@@ -112,7 +112,6 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
-	devPtr = lcdPtr->dev;
 	//counter for line display
 	uint8_t counter = 0;
 	/* Initialize the LCD */

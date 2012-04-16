@@ -31,8 +31,9 @@ ObjectFiles/filetask.o: MainFiles/fileTask.c \
  ../FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h \
  ../FreeRTOS/Source/include/mpu_wrappers.h \
  ../FreeRTOS/Source/include/task.h ../FreeRTOS/Source/include/list.h \
- ../vtCode/vtUtilities.h ../NXPDrivers/include/lpc_types.h \
- C:/Keil/ARM/INC/NXP/LPC17xx/lpc17xx.h MainFiles/fileTask.h \
- ../FreeRTOS/Source/include/queue.h MainFiles/lcdTask.h \
- MainFiles/lcdtask.h ../../src/diskio.h ../../src/integer.h \
- ../../src/ff.h ../../src/ffconf.h
+ ../FreeRTOS/Source/include/queue.h ../vtCode/vtUtilities.h \
+ ../NXPDrivers/include/lpc_types.h C:/Keil/ARM/INC/NXP/LPC17xx/lpc17xx.h \
+ MainFiles/fileTask.h MainFiles/lcdTask.h MainFiles/lcdtask.h \
+ ../../src/diskio.h ../../src/integer.h ../../src/ff.h ../../src/ffconf.h \
+ MainFiles/webdata.h ../FreeRTOS/Source/include/semphr.h \
+ ../FreeRTOS/Source/include/queue.h
