@@ -1555,19 +1555,19 @@ NS Package M08A</description>
 <wire x1="20.32" y1="-15.24" x2="-20.32" y2="-15.24" width="0.127" layer="21"/>
 <wire x1="-20.32" y1="-15.24" x2="-20.32" y2="10.16" width="0.127" layer="21"/>
 <wire x1="-20.32" y1="10.16" x2="-8.89" y2="10.16" width="0.127" layer="21"/>
-<text x="7.62" y="-13.97" size="1.27" layer="21">MRF24J40MA-1</text>
-<text x="-15.24" y="7.62" size="1.27" layer="21">GND</text>
-<text x="13.97" y="7.62" size="1.27" layer="21">GND</text>
-<text x="13.97" y="5.08" size="1.27" layer="21">GND</text>
-<text x="13.97" y="2.54" size="1.27" layer="21">Vin</text>
-<text x="13.97" y="0" size="1.27" layer="21">NC</text>
-<text x="13.97" y="-2.54" size="1.27" layer="21">CS</text>
-<text x="13.97" y="-5.08" size="1.27" layer="21">SDO</text>
-<text x="-17.78" y="5.08" size="1.27" layer="21">~RESET</text>
-<text x="-16.51" y="2.54" size="1.27" layer="21">WAKE</text>
-<text x="-13.97" y="0" size="1.27" layer="21">INT</text>
-<text x="-13.97" y="-2.54" size="1.27" layer="21">SDI</text>
-<text x="-15.24" y="-5.08" size="1.27" layer="21">SCK</text>
+<text x="7.62" y="-13.97" size="1.27" layer="25">MRF24J40MA-1</text>
+<text x="-10.16" y="8.89" size="0.6096" layer="25" rot="R180">GND</text>
+<text x="10.16" y="8.89" size="0.6096" layer="25">GND</text>
+<text x="10.16" y="6.35" size="0.6096" layer="25">GND</text>
+<text x="10.16" y="3.81" size="0.6096" layer="25">Vin</text>
+<text x="10.16" y="1.27" size="0.6096" layer="25">NC</text>
+<text x="10.16" y="-1.27" size="0.6096" layer="25">CS</text>
+<text x="10.16" y="-3.81" size="0.6096" layer="25">SDO</text>
+<text x="-10.16" y="6.35" size="0.6096" layer="25" rot="R180">~RESET</text>
+<text x="-10.16" y="3.81" size="0.6096" layer="25" rot="R180">WAKE</text>
+<text x="-10.16" y="1.27" size="0.6096" layer="25" rot="R180">INT</text>
+<text x="-10.16" y="-1.27" size="0.6096" layer="25" rot="R180">SDI</text>
+<text x="-10.16" y="-3.81" size="0.6096" layer="25" rot="R180">SCK</text>
 </package>
 </packages>
 <symbols>
@@ -8398,7 +8398,7 @@ Source: AVX .. aphvc.pdf</description>
 <part name="C10" library="4534_I2C2" deviceset="C2.5-5" device="" value="10uF">
 <attribute name="DIGIKEY" value="490-3632-ND"/>
 </part>
-<part name="U$2" library="nhd-cog" deviceset="NHD-C0216CIZ-FN-FBW-3V" device=""/>
+<part name="U$2" library="nhd-cog" deviceset="NHD-C0216CIZ-FN-FBW-3V" device="" value="NHD-C0216CIZ-FSW-FBW-3V3"/>
 <part name="C12" library="4534_I2C2" deviceset="C2.5-5" device="" value="1uF">
 <attribute name="DIGIKEY" value="490-3632-ND"/>
 </part>
@@ -8415,8 +8415,8 @@ Source: AVX .. aphvc.pdf</description>
 <part name="R2" library="4534_I2C2" deviceset="R1206" device="" value="1k"/>
 <part name="C14" library="4534_I2C2" deviceset="C2.5-5" device="" value="10uF"/>
 <part name="74HC573" library="SparkFun" deviceset="SOIC_20" device=""/>
-<part name="R6" library="4534_I2C2" deviceset="R1206" device="" value="4K7"/>
-<part name="R5" library="4534_I2C2" deviceset="R1206" device="" value="4K7"/>
+<part name="R6" library="4534_I2C2" deviceset="R1206" device="" value="10K"/>
+<part name="R5" library="4534_I2C2" deviceset="R1206" device="" value="10K"/>
 <part name="J1" library="4534" deviceset="MA07-1" device=""/>
 <part name="J2" library="4534" deviceset="MA07-1" device=""/>
 <part name="SV3" library="4534" deviceset="MA03-1" device=""/>
@@ -8431,11 +8431,11 @@ Source: AVX .. aphvc.pdf</description>
 <part name="C15" library="rcl" deviceset="C-US" device="C1206" value="100pF">
 <attribute name="MOUSER" value="810-CGA5C4C0G2J101J"/>
 </part>
-<part name="U$6" library="4534" deviceset="MA02-1" device=""/>
-<part name="F1" library="SparkFun" deviceset="PTC" device="SMD" value="1A PTC">
-<attribute name="DIGIKEY" value="F3733CT-ND"/>
-<attribute name="IHOLD" value="500 mA"/>
-<attribute name="ITRIP" value="1A"/>
+<part name="POWER" library="4534" deviceset="MA02-1" device=""/>
+<part name="F1" library="SparkFun" deviceset="PTC" device="SMD" value="2.2A PTC">
+<attribute name="DIGIKEY" value="F3366CT-ND"/>
+<attribute name="IHOLD" value="1.10 A"/>
+<attribute name="ITRIP" value="2.2A"/>
 </part>
 </parts>
 <sheets>
@@ -8549,7 +8549,7 @@ Source: AVX .. aphvc.pdf</description>
 <attribute name="NAME" x="-118.364" y="3.175" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-125.984" y="3.429" size="1.778" layer="96"/>
 </instance>
-<instance part="U$6" gate="G$1" x="-55.88" y="-25.4"/>
+<instance part="POWER" gate="G$1" x="-55.88" y="-25.4"/>
 <instance part="F1" gate="G$1" x="-27.94" y="-27.94" smashed="yes">
 <attribute name="IHOLD" x="-27.94" y="-22.86" size="1.778" layer="96" display="both"/>
 <attribute name="ITRIP" x="-27.94" y="-20.32" size="1.778" layer="96" display="both"/>
@@ -9230,7 +9230,7 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="-58.42" y1="5.08" x2="-38.1" y2="5.08" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$6" gate="G$1" pin="2"/>
+<pinref part="POWER" gate="G$1" pin="2"/>
 <wire x1="-50.8" y1="-25.4" x2="-43.18" y2="-25.4" width="0.1524" layer="91"/>
 <label x="-48.26" y="-25.4" size="1.778" layer="95"/>
 </segment>
@@ -9700,7 +9700,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="N$12" class="0">
 <segment>
-<pinref part="U$6" gate="G$1" pin="1"/>
+<pinref part="POWER" gate="G$1" pin="1"/>
 <pinref part="F1" gate="G$1" pin="1"/>
 <wire x1="-50.8" y1="-27.94" x2="-33.02" y2="-27.94" width="0.1524" layer="91"/>
 </segment>
