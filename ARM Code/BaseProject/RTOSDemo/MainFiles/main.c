@@ -175,6 +175,7 @@ static char *pcStatusMessage = mainPASS_STATUS_MESSAGE;
 #if USE_I2C == 1
 // hold i2c device information for the I2C0 peripheral
 static vtI2CStruct vtI2C0;
+static vtI2CStruct vtI2C1;
 static i2cTempStruct DeviceParams;
 #endif
 
@@ -234,12 +235,19 @@ int main( void )
 	#if USE_I2C == 1
 	vtI2C0.devNum = 0;
 	vtI2C0.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
+	
+	vtI2C1.devNum = 1;
+	vtI2C1.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
 	// Initialize I2C0 
 	int retVal;
 	if ((retVal = vtI2CInit(&vtI2C0,100000)) != vtI2CInitSuccess) {
 		VT_HANDLE_FATAL_ERROR(retVal);
 	}
-	DeviceParams.dev = &vtI2C0;
+	if ((retVal = vtI2CInit(&vtI2C1,100000)) != vtI2CInitSuccess) {
+		VT_HANDLE_FATAL_ERROR(retVal);
+	}
+	DeviceParams.dev0 = &vtI2C0;
+	DeviceParams.dev1 = &vtI2C1;
 	#if USE_LCD == 1
 	DeviceParams.lcdData = &vtLCDdata;
 	#else

@@ -83,7 +83,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	// Get the parameters
 	i2cTempStruct *param = (i2cTempStruct *) pvParameters;
 	// Get the I2C device pointer
-	vtI2CStruct *devPtr = param->dev;
+	vtI2CStruct *devPtr = param->dev0;
+	vtI2CStruct *tscPtr = param->dev1;
 	// Get the calc information pointer
 	vtCalcStruct *calcData = param->calcData;
 	vtCalcMsg calcBuffer;
@@ -95,59 +96,59 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	xLastUpdateTime = xTaskGetTickCount();
 	
 	//Begin touchscreen initialization
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_1),TSC_INIT_1,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_1),TSC_INIT_1,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 	
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_2),TSC_INIT_2,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_2),TSC_INIT_2,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 	
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_3),TSC_INIT_3,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_3),TSC_INIT_3,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 	
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_4),TSC_INIT_4,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_4),TSC_INIT_4,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_5),TSC_INIT_5,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_5),TSC_INIT_5,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_6),TSC_INIT_6,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_6),TSC_INIT_6,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_7),TSC_INIT_7,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_7),TSC_INIT_7,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_8),TSC_INIT_8,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_8),TSC_INIT_8,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_9),TSC_INIT_9,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_9),TSC_INIT_9,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_10),TSC_INIT_10,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_10),TSC_INIT_10,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_11),TSC_INIT_11,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_11),TSC_INIT_11,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_12),TSC_INIT_12,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_12),TSC_INIT_12,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			
-	if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(TSC_INIT_14),TSC_INIT_14,0) != pdTRUE) {
+	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_14),TSC_INIT_14,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 	
@@ -168,11 +169,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			calcBuffer.buf[1] = 11;
 
 			//i2c read from lcd to see if interrupt triggered
-			if (vtI2CEnQ(devPtr,0x0F,0x41,sizeof(lcdRead),lcdRead,1) != pdTRUE) {
+			if (vtI2CEnQ(tscPtr,0x0F,0x41,sizeof(lcdRead),lcdRead,1) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
-			if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+			if (vtI2CDeQ(tscPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 			vtITMu8(vtITMPortTempVals,rxLen); // Log the length received
@@ -181,11 +182,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				numCal = numCal + 1;
 				calcBuffer.buf[2] = numCal;
 				
-				if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(zRead),zRead,1) != pdTRUE) {
+				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(zRead),zRead,1) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 
-				if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+				if (vtI2CDeQ(tscPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 				
@@ -199,7 +200,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					}
 				}
 				//clear LCD interrupt
-				if (vtI2CEnQ(devPtr,0x01,0x41,sizeof(lcdClear),lcdClear,0) != pdTRUE) {
+				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(lcdClear),lcdClear,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 
