@@ -240,11 +240,11 @@ int main( void )
 	vtI2C1.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
 	// Initialize I2C0 
 	int retVal;
-	/*
+	
 	if ((retVal = vtI2CInit(&vtI2C0,100000)) != vtI2CInitSuccess) {
 		VT_HANDLE_FATAL_ERROR(retVal);
 	}
-	*/
+	
 	if ((retVal = vtI2CInit(&vtI2C1,100000)) != vtI2CInitSuccess) {
 		VT_HANDLE_FATAL_ERROR(retVal);
 	}

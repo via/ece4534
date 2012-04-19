@@ -15,8 +15,6 @@
 #include "calcTask.h"
 #include "i2cTemp.h"
 
-uint8_t testasd = 0;
-
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the calc operations
 #if PRINTF_VERSION==1
@@ -52,24 +50,24 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t readReg1[] = {0x01};
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
-	const uint8_t zRead[] = {0x51};
-	const uint8_t lcdClear[] = {0x0B, 0x02};
 	//Commands for initializing touchscreen
-	const uint8_t TSC_INIT_1[] = {0x04, 0x0C};
-	const uint8_t TSC_INIT_2[] = {0x0A, 0x07};
-	const uint8_t TSC_INIT_3[] = {0x20, 0x49};
-	const uint8_t TSC_INIT_4[] = {0x21, 0x01};
-	const uint8_t TSC_INIT_5[] = {0x17, 0x00};
-	const uint8_t TSC_INIT_6[] = {0x41, 0x9A};
-	const uint8_t TSC_INIT_7[] = {0x4A, 0x01};
-	const uint8_t TSC_INIT_8[] = {0x4B, 0x01};
-	const uint8_t TSC_INIT_9[] = {0x4B, 0x00};
-	const uint8_t TSC_INIT_10[] = {0x56, 0x07};
-	const uint8_t TSC_INIT_11[] = {0x58, 0x01};
+	const uint8_t TSC_INIT_1[] = {0x40, 0x09}; //z only
+	const uint8_t TSC_INIT_2[] = {0x03, 0x02}; //reset controller
+	const uint8_t TSC_INIT_3[] = {0x04, 0x0C}; //clock
+	const uint8_t TSC_INIT_4[] = {0x0A, 0x07}; //int enable
+	const uint8_t TSC_INIT_5[] = {0x20, 0x69}; //adc
+	const uint8_t TSC_INIT_6[] = {0x21, 0x01}; //adc
+	const uint8_t TSC_INIT_7[] = {0x41, 0xF5}; //tsc config
+	const uint8_t TSC_INIT_8[] = {0x4A, 0x01}; //single pt reader
+	const uint8_t TSC_INIT_9[] = {0x4B, 0x01, 0x00}; //fifo status
+	const uint8_t TSC_INIT_10[] = {0x56, 0x07}; //fraction z cfg
+	const uint8_t TSC_INIT_11[] = {0x58, 0x01}; //set tsc I drive
 	const uint8_t TSC_INIT_12[] = {0x40, 0x09}; //z only
-	const uint8_t TSC_INIT_13[] = {0x0B, 0xFF};
-	const uint8_t TSC_INIT_14[] = {0x09, 0x01};
-	const uint8_t TSC_INT[1] = {0x0B}; //normally 0B
+	const uint8_t TSC_INIT_13[] = {0x0B, 0xFF}; //clear interrupts reuse later
+	const uint8_t TSC_INIT_14[] = {0x09, 0x01}; //enable interrupts
+	
+	const uint8_t TSC_INT[] = {0x0B}; //normally 0B
+	const uint8_t zRead[] = {0xD7};
 	
 	uint8_t i2c_State = 1; //1 to start at calibration, 2 for skipping
 	uint8_t numCal = 0;
@@ -82,7 +80,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	// Get the parameters
 	i2cTempStruct *param = (i2cTempStruct *) pvParameters;
 	// Get the I2C device pointer
-	//vtI2CStruct *devPtr = param->dev0;
+	vtI2CStruct *devPtr = param->dev0;
 	vtI2CStruct *tscPtr = param->dev1;
 	// Get the calc information pointer
 	vtCalcStruct *calcData = param->calcData;
@@ -116,7 +114,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
-	vTaskDelay(2/ portTICK_RATE_MS );
+	vTaskDelay(10/ portTICK_RATE_MS );
 	
 	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_4),TSC_INIT_4,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -131,6 +129,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	if (vtI2CDeQ(tscPtr,0,NULL,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
+			
+	vTaskDelay(2/ portTICK_RATE_MS );
 			
 	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_6),TSC_INIT_6,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -221,10 +221,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
-			testasd = tempBuf[0];
-			calcBuffer.buf[2] = 0;
-			if ((tempBuf[0] && 0x02) == 0x02) {
-				testasd = tempBuf[0];
+			if (tempBuf[0] & 0x02) {
 				numCal = numCal + 1;
 				calcBuffer.buf[2] = numCal;
 				
