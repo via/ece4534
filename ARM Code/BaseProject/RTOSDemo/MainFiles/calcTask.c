@@ -165,11 +165,13 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDist[1] = distance_to_transmitter( picDBW[1], pwr_tx, rc_gain, tx_gain, freq );
 			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
 			
-			//Calculate estimated position
-			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
+			//Calculate estimated position, run function 16 times
+			uint8_t count;
+			for (count = 0; count < 16; count++){
+				location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
+				}
+				
 			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
-			//sprintf((char*)(lcdBuffer.buf), "THIS WORKS");
-			//Do Stuff here, msgBuffer.buf for message contents
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
 				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
