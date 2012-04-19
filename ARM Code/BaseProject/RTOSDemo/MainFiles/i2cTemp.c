@@ -221,8 +221,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
-			if (tempBuf[0] & 0x02) {
-				numCal = numCal + 1;
+			if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
 				calcBuffer.buf[2] = numCal;
 				
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(zRead),zRead,1) != pdTRUE) {
@@ -243,15 +242,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					}
 				}
 				//clear LCD interrupt
-				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(lcdClear),lcdClear,0) != pdTRUE) {
+				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 				if (vtI2CDeQ(tscPtr,0,NULL,&rxLen,&status) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
-
+				numCal = numCal + 1;
 			}
-			if (numCal == 3){
+			if (numCal == 2){
 				i2c_State = 2;
 			}
 		}

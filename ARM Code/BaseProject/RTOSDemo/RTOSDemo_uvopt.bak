@@ -144,7 +144,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>(105=697,204,1366,551,0)(106=610,461,1366,768,0)(107=1036,563,1366,741,0)</Name>
+          <Name>(105=697,204,1366,551,0)(106=602,444,1358,747,0)(107=1036,563,1366,741,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -166,9 +166,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>179</LineNumber>
+          <LineNumber>193</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>8756</Address>
+          <Address>9690</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
@@ -176,14 +176,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\179</Expression>
+          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\193</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>172</LineNumber>
+          <LineNumber>220</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>8820</Address>
+          <Address>9786</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
@@ -191,7 +191,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\172</Expression>
+          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\220</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
@@ -280,8 +280,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>860</TopLine>
-      <CurrentLine>868</CurrentLine>
+      <TopLine>839</TopLine>
+      <CurrentLine>851</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Source/queue.c</PathWithFileName>
       <FilenameWithoutPath>queue.c</FilenameWithoutPath>
@@ -294,8 +294,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>683</TopLine>
-      <CurrentLine>683</CurrentLine>
+      <TopLine>1973</TopLine>
+      <CurrentLine>1984</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Source/tasks.c</PathWithFileName>
       <FilenameWithoutPath>tasks.c</FilenameWithoutPath>
@@ -329,8 +329,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>187</TopLine>
-      <CurrentLine>198</CurrentLine>
+      <TopLine>367</TopLine>
+      <CurrentLine>378</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -341,10 +341,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>61</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>97</TopLine>
+      <CurrentLine>106</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../vtCode/vtUtilities.c</PathWithFileName>
       <FilenameWithoutPath>vtUtilities.c</FilenameWithoutPath>
@@ -383,10 +383,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>64</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>170</TopLine>
-      <CurrentLine>172</CurrentLine>
+      <TopLine>199</TopLine>
+      <CurrentLine>199</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/i2cTemp.c</PathWithFileName>
       <FilenameWithoutPath>i2cTemp.c</FilenameWithoutPath>
@@ -397,10 +397,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>5</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>52</TopLine>
-      <CurrentLine>53</CurrentLine>
+      <TopLine>100</TopLine>
+      <CurrentLine>113</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/calcTask.c</PathWithFileName>
       <FilenameWithoutPath>calcTask.c</FilenameWithoutPath>
@@ -847,8 +847,8 @@
       <Focus>0</Focus>
       <ColumnNumber>39</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>70</TopLine>
-      <CurrentLine>71</CurrentLine>
+      <TopLine>161</TopLine>
+      <CurrentLine>161</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../vtCode/vtI2C/vtI2C.c</PathWithFileName>
       <FilenameWithoutPath>vtI2C.c</FilenameWithoutPath>
@@ -933,35 +933,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTUTILITIES.H</PathWithFilename>
-    <TopLine>31</TopLine>
-    <CurrentLine>39</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
     <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTI2C\VTI2C.H</PathWithFilename>
-    <TopLine>54</TopLine>
-    <CurrentLine>54</CurrentLine>
+    <TopLine>73</TopLine>
+    <CurrentLine>79</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -993,9 +967,9 @@
       <Documents>
         <Doc>
           <Name>.\MainFiles/i2cTemp.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>170</TopLine>
-          <CurrentLine>172</CurrentLine>
+          <ColumnNumber>64</ColumnNumber>
+          <TopLine>199</TopLine>
+          <CurrentLine>199</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/LCDtask.c</Name>
@@ -1006,38 +980,32 @@
         <Doc>
           <Name>.\MainFiles/main.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>187</TopLine>
-          <CurrentLine>198</CurrentLine>
+          <TopLine>367</TopLine>
+          <CurrentLine>378</CurrentLine>
         </Doc>
         <Doc>
           <Name>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTI2C\VTI2C.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>54</TopLine>
-          <CurrentLine>54</CurrentLine>
+          <TopLine>73</TopLine>
+          <CurrentLine>79</CurrentLine>
         </Doc>
         <Doc>
           <Name>../vtCode/vtI2C/vtI2C.c</Name>
           <ColumnNumber>39</ColumnNumber>
-          <TopLine>70</TopLine>
-          <CurrentLine>71</CurrentLine>
+          <TopLine>161</TopLine>
+          <CurrentLine>161</CurrentLine>
         </Doc>
         <Doc>
-          <Name>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTUTILITIES.H</Name>
+          <Name>.\MainFiles/calcTask.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>31</TopLine>
-          <CurrentLine>39</CurrentLine>
+          <TopLine>100</TopLine>
+          <CurrentLine>113</CurrentLine>
         </Doc>
         <Doc>
-          <Name>../FreeRTOS/Source/tasks.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>683</TopLine>
-          <CurrentLine>683</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>../FreeRTOS/Source/queue.c</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>860</TopLine>
-          <CurrentLine>868</CurrentLine>
+          <Name>../vtCode/vtUtilities.c</Name>
+          <ColumnNumber>61</ColumnNumber>
+          <TopLine>97</TopLine>
+          <CurrentLine>106</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
