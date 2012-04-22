@@ -166,9 +166,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>110</LineNumber>
+          <LineNumber>323</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>10866</Address>
+          <Address>10868</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
@@ -176,14 +176,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\RTOSDemo\MainFiles/calcTask.c\110</Expression>
+          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\323</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>127</LineNumber>
+          <LineNumber>271</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>11014</Address>
+          <Address>10408</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
@@ -191,7 +191,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\RTOSDemo\MainFiles/calcTask.c\127</Expression>
+          <Expression>\\RTOSDemo\MainFiles/i2cTemp.c\271</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
@@ -280,8 +280,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>839</TopLine>
-      <CurrentLine>851</CurrentLine>
+      <TopLine>944</TopLine>
+      <CurrentLine>957</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Source/queue.c</PathWithFileName>
       <FilenameWithoutPath>queue.c</FilenameWithoutPath>
@@ -327,10 +327,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>2</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>187</TopLine>
-      <CurrentLine>198</CurrentLine>
+      <CurrentLine>187</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -369,10 +369,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>30</ColumnNumber>
+      <ColumnNumber>17</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>113</TopLine>
-      <CurrentLine>121</CurrentLine>
+      <TopLine>144</TopLine>
+      <CurrentLine>144</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/LCDtask.c</PathWithFileName>
       <FilenameWithoutPath>LCDtask.c</FilenameWithoutPath>
@@ -383,10 +383,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>4</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>222</TopLine>
-      <CurrentLine>222</CurrentLine>
+      <TopLine>268</TopLine>
+      <CurrentLine>271</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/i2cTemp.c</PathWithFileName>
       <FilenameWithoutPath>i2cTemp.c</FilenameWithoutPath>
@@ -397,10 +397,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>7</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>108</TopLine>
-      <CurrentLine>129</CurrentLine>
+      <TopLine>99</TopLine>
+      <CurrentLine>99</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/calcTask.c</PathWithFileName>
       <FilenameWithoutPath>calcTask.c</FilenameWithoutPath>
@@ -933,9 +933,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\vtCode\vtI2C\vtI2C.h</PathWithFilename>
-    <TopLine>68</TopLine>
-    <CurrentLine>84</CurrentLine>
+    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTI2C\VTI2C.H</PathWithFilename>
+    <TopLine>46</TopLine>
+    <CurrentLine>63</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -963,37 +963,43 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>3</ActiveTab>
+      <ActiveTab>0</ActiveTab>
       <Documents>
         <Doc>
           <Name>.\MainFiles/i2cTemp.c</Name>
-          <ColumnNumber>4</ColumnNumber>
-          <TopLine>222</TopLine>
-          <CurrentLine>222</CurrentLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>268</TopLine>
+          <CurrentLine>271</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/LCDtask.c</Name>
-          <ColumnNumber>30</ColumnNumber>
-          <TopLine>113</TopLine>
-          <CurrentLine>121</CurrentLine>
+          <ColumnNumber>17</ColumnNumber>
+          <TopLine>144</TopLine>
+          <CurrentLine>144</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/main.c</Name>
-          <ColumnNumber>0</ColumnNumber>
+          <ColumnNumber>2</ColumnNumber>
           <TopLine>187</TopLine>
-          <CurrentLine>198</CurrentLine>
+          <CurrentLine>187</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/calcTask.c</Name>
-          <ColumnNumber>7</ColumnNumber>
-          <TopLine>108</TopLine>
-          <CurrentLine>129</CurrentLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>99</TopLine>
+          <CurrentLine>99</CurrentLine>
         </Doc>
         <Doc>
           <Name>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTI2C\VTI2C.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>68</TopLine>
-          <CurrentLine>84</CurrentLine>
+          <TopLine>46</TopLine>
+          <CurrentLine>63</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>../FreeRTOS/Source/queue.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>944</TopLine>
+          <CurrentLine>957</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

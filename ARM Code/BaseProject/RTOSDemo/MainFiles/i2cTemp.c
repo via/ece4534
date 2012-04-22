@@ -67,6 +67,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t TSC_INIT_14[] = {0x09, 0x01}; //enable interrupts
 	
 	const uint8_t TSC_INT[] = {0x0B}; //normally 0B
+	const uint8_t TSC_FIFO[] = {0x4C};
 	const uint8_t tscRead[] = {0xD7};
 	
 	/*
@@ -230,6 +231,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		//Do requests from PIC0 and processing of data here
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
+		glatDeg = 0;
+		glatMin = 0.0;
+		glonDeg = 0;
+		glonMin = 0.0;
 		 
 		
 		
@@ -245,27 +250,25 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 
 			if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
-				calcBuffer.buf[2] = numCal;
-				
 				//Read X,Y values, need to recombine them later
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,3) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 
-				if (vtI2CDeQ(tscPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+				if (vtI2CDeQ(tscPtr,3,tempRead,&rxLen,&status) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
+				
 				//x
 				tsc_temp = (tempBuf[1] >> 4) & 0x0F;
 				tsc_x = (tempBuf[0] << 4) | tsc_temp;
 				//y
 				tsc_temp = tempBuf[1] << 4;
 				tsc_y = (tsc_temp << 4) | tempBuf[2];
-				
+
 				//Do button checks here
-				uint8_t rtval;
 				//Check node0
-				if ((rtval = tscButton(0, 0, 0, 0, tsc_x, tsc_y)) == 1){
+				if ((tsc_x > 0xBA0) && (tsc_x < 0xBFF) && (tsc_y > 0x8A0) && (tsc_y < 0x8FF)){
 					numCal = 0;
 					i2c_State = 2;
 					latDeg = 0;
@@ -274,7 +277,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					lonMin = 0.0;
 				}
 				//Check node1
-				else if ((rtval = tscButton(0, 0, 0, 0, tsc_x, tsc_y)) == 1){
+				else if ((tsc_x > 0x560) && (tsc_x < 0x5B0) && (tsc_y > 0x680) && (tsc_y < 0x6D0)){
 					numCal = 1;
 					i2c_State = 2;
 					latDeg = 0;
@@ -283,7 +286,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					lonMin = 0.0;
 				}
 				//Check node2
-				else if ((rtval = tscButton(0, 0, 0, 0, tsc_x, tsc_y)) == 1){
+				else if ((tsc_x > 0x4D0) && (tsc_x < 0x4FF) && (tsc_y > 0x690) && (tsc_y < 0x740)){
 					numCal = 2;
 					i2c_State = 2;
 					latDeg = 0;
@@ -292,10 +295,21 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					lonMin = 0.0;
 				}
 				//Check end button
-				else if ((rtval = tscButton(0, 0, 0, 0, tsc_x, tsc_y)) == 1){
+				else if ((tsc_x > 0xA20) && (tsc_x < 0xA70) && (tsc_y > 0x350) && (tsc_y < 0x3B0)){
 					i2c_State = 3;
+					calcBuffer.buf[0] = 0xD0;
+					calcBuffer.buf[1] = 0xCF;
+					calcBuffer.buf[2] = 0x11;
+					if (calcData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+						if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
+					
 				}
-				
+				 
 				//clear LCD interrupt
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
@@ -306,6 +320,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 		}
 		else if (i2c_State == 2){
+			vtLEDOn(0x80);
 			if (avgCount < 10){
 				//Cumulative moving average
 				latDeg = ((latDeg * avgCount) + glatDeg) / (avgCount + 1);
@@ -343,6 +358,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 							VT_HANDLE_FATAL_ERROR(0);
 						}
 					}
+					vtLEDOff(0x80);
 					i2c_State = 1;
 				}
 		}
@@ -374,17 +390,4 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		
 	}
-}
-
-uint8_t tscButton(int minX, int minY, int maxX, int maxY, int inX, int inY){
-	int tempX, tempY;
-	uint8_t returnval = 0;
-	
-	tempX = (0.08653 * inY) - 12.0676;
-	tempY = (0.06433 * inX) - 10.6034;
-	
-	if ((tempX > minX) && (tempX < maxX) && (tempY > minY) && (tempY < maxY))
-		returnval = 1;
-		
-	return returnval;
 }

@@ -42,9 +42,9 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 	}
 }
 
-int LCD_STATE = 2;
+int LCD_STATE = 1;
 
-#include "Bg_final.c"
+#include "bgclb.c"
 
 
 // Convert from HSL colormap to RGB values in this weird colormap
@@ -141,11 +141,24 @@ else if (LCD_STATE == 1){
   		/* go through a  bitmap that is really a series of bitmaps */
 		//picIndex = (picIndex + 1) % 9;
 		/* modify this to make use of drawing the axes */
-		GLCD_Bitmap(0,0,320,240,(unsigned char *) &Bg_final);
+		GLCD_Bitmap(0,0,320,240,(unsigned char *) &BgClb);
 		LCD_STATE = 2;
 	}
 
 else if (LCD_STATE == 2){
+		// wait for a message from another task telling us to send/recv over i2c
+		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		//Log that we are processing a message
+		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
+
+		if (msgBuffer.buf[0] == 0xDE && msgBuffer.buf[1] == 0xAD && msgBuffer.buf[2] == 0xBE){
+			GLCD_Clear(White);
+			LCD_STATE = 3;		
+		}
+	}
+else if (LCD_STATE == 3){
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);

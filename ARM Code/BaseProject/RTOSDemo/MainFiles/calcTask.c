@@ -132,9 +132,18 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				}
 				
 			}
-			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1)
+			if (msgBuffer.buf[0] == 0xD0 && msgBuffer.buf[1] == 0xCF && msgBuffer.buf[2] == 0x11){
+				lcdBuffer.buf[0] = 0xDE;
+				lcdBuffer.buf[1] = 0xAD;
+				lcdBuffer.buf[2] = 0xBE;
+					if (lcdData != NULL) {
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
 				calcState = 2;
-			
+			 }
 
 		}
 		else if (calcState == 2){
