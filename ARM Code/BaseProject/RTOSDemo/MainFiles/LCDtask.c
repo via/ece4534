@@ -132,21 +132,11 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	// Like all good tasks, this should never exit
 	for(;;)
 	{	
-	if (LCD_STATE == 0){
-		
-	}
-else if (LCD_STATE == 1){
+	if (LCD_STATE == 2){
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
-  		/* go through a  bitmap that is really a series of bitmaps */
-		//picIndex = (picIndex + 1) % 9;
-		/* modify this to make use of drawing the axes */
-		GLCD_Bitmap(0,0,320,240,(unsigned char *) &BgClb);
-		LCD_STATE = 2;
-	}
-
-else if (LCD_STATE == 2){
 		// wait for a message from another task telling us to send/recv over i2c
+		
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
@@ -157,8 +147,11 @@ else if (LCD_STATE == 2){
 			GLCD_Clear(White);
 			LCD_STATE = 3;		
 		}
+		else {
+			GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+		}
 	}
-else if (LCD_STATE == 3){
+	else if (LCD_STATE == 3){
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);

@@ -121,14 +121,6 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
 					convertDMS_to_UTM( dmsCord, picCords[picNum] );
 					picCal[picNum] = 1;
-
-					sprintf((char*)(lcdBuffer.buf),"Calibrating");
-					if (lcdData != NULL) {
-						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-							VT_HANDLE_FATAL_ERROR(0);
-						}
-					}
 				}
 				
 			}

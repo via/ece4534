@@ -26,6 +26,9 @@
 // Set the task up to run every second (need to modify this to poll more often from the adc)
 #define i2cREAD_RATE_BASE	( ( portTickType ) 1000)
 
+//choose whether to use z only or XY
+#define USE_XY 0
+
 /* The i2cTemp task. */
 static portTASK_FUNCTION_PROTO( vi2cTempUpdateTask, pvParameters );
 
@@ -51,7 +54,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t nmeaRead[] = {0x02};
 	const uint8_t nmeaRead2[] = {0x03};
 	//Commands for initializing touchscreen
-	const uint8_t TSC_INIT_1[] = {0x40, 0x03}; //xy only
+	const uint8_t TSC_INIT_1[] = {0x40, 0x09}; //z only
 	const uint8_t TSC_INIT_2[] = {0x03, 0x02}; //reset controller
 	const uint8_t TSC_INIT_3[] = {0x04, 0x0C}; //clock
 	const uint8_t TSC_INIT_4[] = {0x0A, 0x07}; //int enable
@@ -62,7 +65,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	const uint8_t TSC_INIT_9[] = {0x4B, 0x01, 0x00}; //fifo status
 	const uint8_t TSC_INIT_10[] = {0x56, 0x07}; //fraction z cfg
 	const uint8_t TSC_INIT_11[] = {0x58, 0x01}; //set tsc I drive
-	const uint8_t TSC_INIT_12[] = {0x40, 0x03}; //xy only
+	const uint8_t TSC_INIT_12[] = {0x40, 0x09}; //z only
 	const uint8_t TSC_INIT_13[] = {0x0B, 0xFF}; //clear interrupts reuse later
 	const uint8_t TSC_INIT_14[] = {0x09, 0x01}; //enable interrupts
 	
@@ -77,9 +80,11 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	*/
 	uint8_t i2c_State = 1; 
 	
+	#if USE_XY==1
 	//Touchscreen vars
 	int tsc_x, tsc_y;
 	uint8_t tsc_temp;
+	#endif
 	
 	//Rolling gps avg vars
 	int latDeg = 0;
@@ -110,6 +115,9 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	// Get the calc information pointer
 	vtCalcStruct *calcData = param->calcData;
 	vtCalcMsg calcBuffer;
+	//LCD info
+	vtLCDStruct *lcdData = param->lcdData;
+	vtLCDMsg lcdBuffer;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = i2cREAD_RATE_BASE / portTICK_RATE_MS;
@@ -221,7 +229,16 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	if (vtI2CDeQ(tscPtr,0,NULL,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 			}
-
+	
+	//Set up initial LCD display
+	sprintf((char*)(lcdBuffer.buf),"Tap to calibrate Node 0");
+					if (lcdData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
 	// Like all good tasks, this should never exit
 	for(;;)
 	{
@@ -251,21 +268,22 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 
 			if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
 				//Read X,Y values, need to recombine them later
-				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,3) != pdTRUE) {
+				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,1) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 
-				if (vtI2CDeQ(tscPtr,3,tempRead,&rxLen,&status) != pdTRUE) {
+				if (vtI2CDeQ(tscPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 				
+				#if USE_XY==1
 				//x
 				tsc_temp = (tempBuf[1] >> 4) & 0x0F;
 				tsc_x = (tempBuf[0] << 4) | tsc_temp;
 				//y
 				tsc_temp = tempBuf[1] << 4;
 				tsc_y = (tsc_temp << 4) | tempBuf[2];
-
+				
 				//Do button checks here
 				//Check node0
 				if ((tsc_x > 0xBA0) && (tsc_x < 0xBFF) && (tsc_y > 0x8A0) && (tsc_y < 0x8FF)){
@@ -309,7 +327,36 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					}
 					
 				}
-				 
+				#else
+				if (tempBuf[0] > 128){
+					i2c_State = 2;
+					latDeg = 0;
+					latMin = 0.0;
+					lonDeg = 0;
+					lonMin = 0.0;
+					sprintf((char*)(lcdBuffer.buf),"Calibrating Node %d", numCal);
+					if (lcdData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
+				}
+				if (numCal >= 3) {
+					i2c_State = 3;
+					calcBuffer.buf[0] = 0xD0;
+					calcBuffer.buf[1] = 0xCF;
+					calcBuffer.buf[2] = 0x11;
+					if (calcData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+						if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
+				}
+				#endif
 				//clear LCD interrupt
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
@@ -320,7 +367,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 		}
 		else if (i2c_State == 2){
-			vtLEDOn(0x80);
 			if (avgCount < 10){
 				//Cumulative moving average
 				latDeg = ((latDeg * avgCount) + glatDeg) / (avgCount + 1);
@@ -358,8 +404,21 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 							VT_HANDLE_FATAL_ERROR(0);
 						}
 					}
-					vtLEDOff(0x80);
+					
+					if (numCal < 2) {
+						//Show that we are done calibrating
+						sprintf((char*)(lcdBuffer.buf),"Tap to calibrate Node %d", numCal+1);
+						if (lcdData != NULL) {
+							// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+							lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+							if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+								VT_HANDLE_FATAL_ERROR(0);
+							}
+						}
+					}
+					
 					i2c_State = 1;
+					numCal = numCal + 1;
 				}
 		}
 		else if (i2c_State == 3){
