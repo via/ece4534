@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 /* Scheduler include files. */
 #include "FreeRTOS.h"
@@ -15,7 +16,7 @@
 #include "ff.h"
 #include "webdata.h"
 
-#define MILESTONE_FILE 1
+#define MILESTONE_FILE 0
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -49,7 +50,8 @@ void vStartFileTask( unsigned portBASE_TYPE uxPriority,vtFileStruct *ptr )
 
 static FATFS fatfs;  // Filesystem object
 static FIL fil;   	 // File object
-static uint8_t data_buf[256];
+static uint8_t data_buf[512] = {0};
+static uint8_t temp_buf[512] = {0};
 
 static portTASK_FUNCTION( vFileTask, pvParameters )
 {
@@ -63,7 +65,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	
 
     static BYTE buf[64];
-    BYTE Message[] = "Test message\n" ; // message's content
+    //BYTE Message[] = "Test message\n" ; // message's content
     TCHAR *FilePath = "0:data.txt" ; // file path
 	
 	// Scale the update rate to ensure it really is in ms
@@ -86,6 +88,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
     //------------------------------------
     // Like all good tasks, this should never exit
 	
+	#if MILESTONE_FILE == 1
 	// Temp, remove later on
 	sprintf((char*)msgBuffer.buf, "Data 1\t37.2\t-80.3\n");
 	msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
@@ -93,6 +96,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		VT_HANDLE_FATAL_ERROR(0);
 	}
 	int j = 2;
+	#endif
 	for(;;)
 	{	
 		/* Ask the RTOS to delay reschduling this task for the specified time */
@@ -104,13 +108,36 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
-		if(msgBuffer.buf[0] == 'D'){
-			FRESULT rc; 
-			rc = F_Write(msgBuffer.buf, sizeof(msgBuffer.buf) - 1, FilePath, 1);
+		if(msgBuffer.buf[0] == '#'){
+			int id = 0;
+			float e_calc, n_calc, e_actual, n_actual, error;
+			// sscanf the values needed
+			sscanf((char*)msgBuffer.buf, "#%d %f %f %f %f %f", 
+					&id, &e_calc, &n_calc, &e_actual, &n_actual, &error);
+			
+			// sprintf to buffer to line formatted as needed
+			BYTE line[64] = {0};
+			snprintf((char*)line, sizeof(line), "%d\t%4.3f\t%4.3f\t%4.3f\t%4.3f\t%4.3f\n",
+					id, e_calc, n_calc, e_actual, n_actual, error);
+			
+			// write new line to file
+			FRESULT rc;			
+			rc = F_Write((BYTE*)line, sizeof(line) - 1, FilePath, 1);
+			// read here for insurance in other lines if needed, not used
 			rc = F_Read(buf, sizeof(buf), FilePath);
 			if(xSemaphore != NULL){
 				if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
-					strncat((char*)data_buf, (char*)msgBuffer.buf, strlen((char*)msgBuffer.buf));
+					// each iteration = roll one line out of buffer if not enough space
+					while( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+						char* pos = strchr((char*)data_buf, '\n');
+						int offset = (int)(pos - (char*)data_buf);
+						memset(temp_buf, 0, sizeof(temp_buf));
+						memcpy(temp_buf, data_buf, strlen((char*)data_buf));
+						memset(data_buf, 0, sizeof(data_buf));
+						memcpy(data_buf, temp_buf + offset + 1, strlen((char*)temp_buf) - offset - 1);
+					}
+					// add new line to buffer
+					strncat((char*)data_buf, (char*)line, strlen((char*)line));
 					xSemaphoreGive( xSemaphore );
 				}
 			}
@@ -140,7 +167,6 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}
-		#endif
 		if(j){
 			switch(j){
 			 	case 2: sprintf((char*)msgBuffer.buf, "Data 2\t37.0\t-80.0\n");
@@ -155,6 +181,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			}
 			j--;
 		}
+		#endif
 	}
     //vTaskDelete(NULL);
 } 

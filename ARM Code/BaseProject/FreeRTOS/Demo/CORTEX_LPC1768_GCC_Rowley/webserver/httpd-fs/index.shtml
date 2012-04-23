@@ -8,7 +8,8 @@
     <font face="arial">
         <h2>Position Data</h2>
         <font face="courier">
-            <pre>Item	Latitude	Longitude<br>************************************************<br>
+            <pre>ID	E(Calc)   N(Calc)   E(Actual)   N(Actual)   Error(%)
+			<br>************************************************<br>
         %! pos-data
             </pre>
         </font>
