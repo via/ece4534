@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2012.4.10)  24 APR 2012 08:58
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2012.4.10)  24 APR 2012 09:28
 entering extended mode
  %&-line parsing enabled.
 **requirements.tex
@@ -136,7 +136,7 @@ equirements.aux) )
 Here is how much of TeX's memory you used:
  898 strings out of 256216
  11527 string characters out of 1917072
- 65480 words of memory out of 1500000
+ 66480 words of memory out of 1500000
  4236 multiletter control sequences out of 10000+200000
  5504 words of font info for 20 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
@@ -148,7 +148,7 @@ texmf/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm
 /cmr7.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf
 /fonts/type1/bluesky/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmti
 10.pfb>
-Output written on requirements.pdf (3 pages, 183379 bytes).
+Output written on requirements.pdf (3 pages, 184452 bytes).
 PDF statistics:
  51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)

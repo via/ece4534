@@ -3,7 +3,7 @@
 \usepackage{graphicx}
 
 \begin{document}
-
+\section*{CEL Team VI - Project Requirements Document}
 \section*{Hardware Requirements}
 \paragraph*{}
 The hardware portion of this project is divided into two portions, one set of nodes designed for reception and position estimation of a mobile signal, and one mobile node which will be responsible for broadcasting information gathered from the sensor. Each receiving node will consist of a MiWi device, an antenna, and possibly a microcontroller to handle sending of data. Each mobile node will connect to the primary ARM board, and transmit the data they received to it for further processing. The ARM board will be responsible for calculating the mobile unit's position, and logging the sensor data transmitted by it to an SD card attached to the device. It will also be responsible for displaying the sensor data on the attached LCD, as well as hosting the webserver which will provide an expanded view of the logged data. As a whole, the receiving segment will consist of at least 4 receiving antennas and the ARM board.
