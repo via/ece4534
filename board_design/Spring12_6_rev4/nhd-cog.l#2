@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
+<grid distance="0.5" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -66,20 +66,20 @@
 <wire x1="-19.5" y1="0" x2="-19.5" y2="6.5" width="0.127" layer="51"/>
 <wire x1="-19.5" y1="6.5" x2="-19.5" y2="25" width="0.127" layer="51"/>
 <wire x1="-19.5" y1="6.5" x2="30.5" y2="6.5" width="0.127" layer="51"/>
-<pad name="8" x="0" y="0" drill="0.8" shape="square"/>
-<pad name="7" x="1.5" y="0" drill="0.8" shape="square"/>
-<pad name="6" x="3" y="0" drill="0.8" shape="square"/>
-<pad name="5" x="4.5" y="0" drill="0.8" shape="square"/>
-<pad name="4" x="6" y="0" drill="0.8" shape="square"/>
-<pad name="3" x="7.5" y="0" drill="0.8" shape="square"/>
-<pad name="2" x="9" y="0" drill="0.8" shape="square"/>
-<pad name="1" x="10.5" y="0" drill="0.8" shape="square"/>
+<pad name="8" x="0" y="0" drill="0.8"/>
+<pad name="7" x="1.5" y="0" drill="0.8"/>
+<pad name="6" x="3" y="0" drill="0.8"/>
+<pad name="5" x="4.5" y="0" drill="0.8"/>
+<pad name="4" x="6" y="0" drill="0.8"/>
+<pad name="3" x="7.5" y="0" drill="0.8"/>
+<pad name="2" x="9" y="0" drill="0.8"/>
+<pad name="1" x="10.5" y="0" drill="0.8"/>
 <text x="2" y="5" size="1.27" layer="51">&gt;NAME</text>
 <text x="-17.5" y="0.5" size="1.27" layer="51" rot="R90">&gt;VALUE</text>
 <wire x1="-20.3" y1="25.9" x2="36.6" y2="25.9" width="0.127" layer="21"/>
-<wire x1="36.6" y1="25.9" x2="36.6" y2="-3.6" width="0.127" layer="21"/>
-<wire x1="36.6" y1="-3.6" x2="-20.3" y2="-3.6" width="0.127" layer="21"/>
-<wire x1="-20.3" y1="-3.6" x2="-20.3" y2="25.9" width="0.127" layer="21"/>
+<wire x1="36.6" y1="25.9" x2="36.6" y2="0.21" width="0.127" layer="21"/>
+<wire x1="36.6" y1="0.21" x2="-20.3" y2="0.21" width="0.127" layer="21"/>
+<wire x1="-20.3" y1="0.21" x2="-20.3" y2="25.9" width="0.127" layer="21"/>
 <pad name="P$1" x="36.6" y="15.3" drill="0.8" shape="square"/>
 <pad name="P$2" x="36.6" y="17.8" drill="0.8" shape="square"/>
 </package>

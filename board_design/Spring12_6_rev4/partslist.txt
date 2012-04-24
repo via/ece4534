@@ -1,3 +1,11 @@
+Partlist
+
+Exported from Spring12_6_rev4.sch at 4/14/2012 9:43:56 AM
+
+EAGLE Version 6.1.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
 Part        Value                    Device                 Package      Library         Sheet
 
 74HC573     SOIC_20                  SOIC_20                SO20W        SparkFun        1

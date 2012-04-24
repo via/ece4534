@@ -8432,10 +8432,10 @@ Source: AVX .. aphvc.pdf</description>
 <attribute name="MOUSER" value="810-CGA5C4C0G2J101J"/>
 </part>
 <part name="POWER" library="4534" deviceset="MA02-1" device=""/>
-<part name="F1" library="SparkFun" deviceset="PTC" device="SMD" value="1A PTC">
-<attribute name="DIGIKEY" value="F3733CT-ND"/>
-<attribute name="IHOLD" value="500 mA"/>
-<attribute name="ITRIP" value="1A"/>
+<part name="F1" library="SparkFun" deviceset="PTC" device="SMD" value="2.2A PTC">
+<attribute name="DIGIKEY" value="F3366CT-ND"/>
+<attribute name="IHOLD" value="1.10 A"/>
+<attribute name="ITRIP" value="2.2A"/>
 </part>
 </parts>
 <sheets>
@@ -9114,11 +9114,6 @@ Source: AVX .. aphvc.pdf</description>
 <junction x="-53.34" y="162.56"/>
 <junction x="-53.34" y="187.96"/>
 </segment>
-<segment>
-<wire x1="-58.42" y1="50.8" x2="-86.36" y2="50.8" width="0.1524" layer="91"/>
-<label x="-81.28" y="50.8" size="1.778" layer="95"/>
-<pinref part="J3" gate="1" pin="2"/>
-</segment>
 </net>
 <net name="UART_RX" class="0">
 <segment>
@@ -9703,6 +9698,13 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="POWER" gate="G$1" pin="1"/>
 <pinref part="F1" gate="G$1" pin="1"/>
 <wire x1="-50.8" y1="-27.94" x2="-33.02" y2="-27.94" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="PICKIT-VDD" class="0">
+<segment>
+<pinref part="J3" gate="1" pin="2"/>
+<wire x1="-58.42" y1="50.8" x2="-86.36" y2="50.8" width="0.1524" layer="91"/>
+<label x="-81.28" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

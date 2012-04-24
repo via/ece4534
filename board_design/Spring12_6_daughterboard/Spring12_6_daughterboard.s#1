@@ -368,7 +368,7 @@
 </class>
 </classes>
 <parts>
-<part name="ACCESSORY-1" library="4534_I2C2" deviceset="2510-6002" device=""/>
+<part name="ACCESSORY" library="4534_I2C2" deviceset="2510-6002" device=""/>
 <part name="PPS-LED" library="4534_I2C2" deviceset="LED-SMD-1206" device=""/>
 <part name="U$1" library="4534_Node_Board" deviceset="796136-1-CR2302_HOLDER" device=""/>
 <part name="U$3" library="4534_Node_Board" deviceset="GPS-UP501" device=""/>
@@ -378,7 +378,7 @@
 <plain>
 </plain>
 <instances>
-<instance part="ACCESSORY-1" gate="G$1" x="68.58" y="76.2" rot="R180"/>
+<instance part="ACCESSORY" gate="G$1" x="68.58" y="76.2" rot="R180"/>
 <instance part="PPS-LED" gate="G$1" x="149.86" y="15.24" rot="R90"/>
 <instance part="U$1" gate="G$1" x="149.86" y="66.04"/>
 <instance part="U$3" gate="G$1" x="116.84" y="48.26"/>
@@ -388,7 +388,7 @@
 <nets>
 <net name="VSS" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$9"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$9"/>
 <wire x1="78.74" y1="86.36" x2="86.36" y2="86.36" width="0.1524" layer="91"/>
 <label x="81.28" y="86.36" size="1.778" layer="95"/>
 </segment>
@@ -431,42 +431,42 @@
 </net>
 <net name="SPI_MISO" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$3"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$3"/>
 <wire x1="78.74" y1="71.12" x2="86.36" y2="71.12" width="0.1524" layer="91"/>
 <label x="81.28" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SPI_MOSI" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$5"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$5"/>
 <wire x1="78.74" y1="76.2" x2="86.36" y2="76.2" width="0.1524" layer="91"/>
 <label x="81.28" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SPI_SCK" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$7"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$7"/>
 <wire x1="78.74" y1="81.28" x2="86.36" y2="81.28" width="0.1524" layer="91"/>
 <label x="81.28" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="I2C_SDA" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$1"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$1"/>
 <wire x1="78.74" y1="66.04" x2="86.36" y2="66.04" width="0.1524" layer="91"/>
 <label x="81.28" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="I2C_SCL" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$2"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$2"/>
 <wire x1="58.42" y1="66.04" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
 <label x="45.72" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="UART_RX" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$4"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$4"/>
 <wire x1="58.42" y1="71.12" x2="50.8" y2="71.12" width="0.1524" layer="91"/>
 <label x="45.72" y="71.12" size="1.778" layer="95"/>
 </segment>
@@ -478,7 +478,7 @@
 </net>
 <net name="UART_TX" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$6"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$6"/>
 <wire x1="58.42" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
 <label x="45.72" y="76.2" size="1.778" layer="95"/>
 </segment>
@@ -490,7 +490,7 @@
 </net>
 <net name="VDD_ACC" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$10"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$10"/>
 <wire x1="58.42" y1="86.36" x2="50.8" y2="86.36" width="0.1524" layer="91"/>
 <label x="45.72" y="86.36" size="1.778" layer="95"/>
 </segment>
@@ -502,7 +502,7 @@
 </net>
 <net name="GPIO" class="0">
 <segment>
-<pinref part="ACCESSORY-1" gate="G$1" pin="P$8"/>
+<pinref part="ACCESSORY" gate="G$1" pin="P$8"/>
 <wire x1="58.42" y1="81.28" x2="50.8" y2="81.28" width="0.1524" layer="91"/>
 <label x="45.72" y="81.28" size="1.778" layer="95"/>
 </segment>
