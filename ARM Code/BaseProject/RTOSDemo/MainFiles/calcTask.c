@@ -179,6 +179,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
+			/* MESSAGE TO FILE_TASK
+			sprintf(BUFFER, "#%d %4.3f %4.3f %4.3f %4.3f %4.3f\n",
+					ID, CALCULATED E, CALCULATED N, ACTUAL E, ACTUAL N, ERROR);
+			*/
 		}
 	}
 }

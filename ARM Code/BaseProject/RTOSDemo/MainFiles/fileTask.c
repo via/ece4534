@@ -26,7 +26,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 200 )
+#define taskRUN_RATE	( ( portTickType ) 500 )
 
 static portTASK_FUNCTION_PROTO( vFileTask, pvParameters );
 static FRESULT F_Write(BYTE Msg[], UINT msg_size, TCHAR *path, int append);
@@ -105,6 +105,8 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		if (xQueueReceive(filePtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		GPIO_ClearValue(2, 0x7C);
+		GPIO_SetValue  (2, 0x01);
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
@@ -159,6 +161,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			}
 			*/
 		}
+		GPIO_SetValue  (1, 0x80000000);
 		#if MILESTONE_FILE == 1
 		if(msgBuffer.length){
 			sprintf((char*)(lcdBuffer.buf), "MQ IN: %s", msgBuffer.buf);
