@@ -97,7 +97,7 @@ You should read the note above.
 
 #define USE_CALC 1
 
-#define USE_FILE 0
+#define USE_FILE 1
 
 #include "partest.h"
 

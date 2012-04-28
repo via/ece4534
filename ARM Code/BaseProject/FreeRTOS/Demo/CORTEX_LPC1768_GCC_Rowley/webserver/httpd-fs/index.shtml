@@ -8,9 +8,10 @@
     <font face="arial">
         <h2>Position Data</h2>
         <font face="courier">
-            <pre>ID	E(Calc)   N(Calc)   E(Actual)   N(Actual)   Error(%)
+            <pre>
+ID	E(Calc) N(Calc) E(GPS)  N(GPS)  Error(%)
 			<br>************************************************<br>
-        %! pos-data
+%! pos-data
             </pre>
         </font>
     </font>
