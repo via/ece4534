@@ -2829,14 +2829,14 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="-19.5" y1="0" x2="-19.5" y2="6.5" width="0.127" layer="51"/>
 <wire x1="-19.5" y1="6.5" x2="-19.5" y2="25" width="0.127" layer="51"/>
 <wire x1="-19.5" y1="6.5" x2="30.5" y2="6.5" width="0.127" layer="51"/>
-<pad name="8" x="0" y="0" drill="0.8" shape="square"/>
-<pad name="7" x="1.5" y="0" drill="0.8" shape="square"/>
-<pad name="6" x="3" y="0" drill="0.8" shape="square"/>
-<pad name="5" x="4.5" y="0" drill="0.8" shape="square"/>
-<pad name="4" x="6" y="0" drill="0.8" shape="square"/>
-<pad name="3" x="7.5" y="0" drill="0.8" shape="square"/>
-<pad name="2" x="9" y="0" drill="0.8" shape="square"/>
-<pad name="1" x="10.5" y="0" drill="0.8" shape="square"/>
+<pad name="8" x="0" y="0" drill="0.7"/>
+<pad name="7" x="1.5" y="0" drill="0.7"/>
+<pad name="6" x="3" y="0" drill="0.7"/>
+<pad name="5" x="4.5" y="0" drill="0.7"/>
+<pad name="4" x="6" y="0" drill="0.7"/>
+<pad name="3" x="7.5" y="0" drill="0.7"/>
+<pad name="2" x="9" y="0" drill="0.7"/>
+<pad name="1" x="10.5" y="0" drill="0.7"/>
 <text x="2" y="5" size="1.27" layer="51">&gt;NAME</text>
 <text x="-17.5" y="0.5" size="1.27" layer="51" rot="R90">&gt;VALUE</text>
 <wire x1="-20.3" y1="25.9" x2="36.6" y2="25.9" width="0.127" layer="21"/>
@@ -8411,7 +8411,7 @@ Source: AVX .. aphvc.pdf</description>
 <part name="U$19" library="4534_I2C2" deviceset="VIA" device=""/>
 <part name="U$20" library="4534_I2C2" deviceset="VIA" device=""/>
 <part name="IC1" library="4534" deviceset="*555" device="D" technology="LM"/>
-<part name="R1" library="4534_I2C2" deviceset="R1206" device="" value="500"/>
+<part name="R1" library="4534_I2C2" deviceset="R1206" device="" value="510"/>
 <part name="R2" library="4534_I2C2" deviceset="R1206" device="" value="1k"/>
 <part name="C14" library="4534_I2C2" deviceset="C2.5-5" device="" value="10uF"/>
 <part name="74HC573" library="SparkFun" deviceset="SOIC_20" device=""/>
@@ -8461,6 +8461,7 @@ Source: AVX .. aphvc.pdf</description>
 <text x="5.08" y="231.14" size="1.778" layer="91">f = 1.38 / [ (R1 + 2*R2)*C14 ]</text>
 <text x="5.08" y="226.06" size="1.778" layer="91">duty % = (R1 + R2) / (R1 + 2*R2)</text>
 <text x="-241.554" y="152.908" size="1.778" layer="91" rot="R180">~OE</text>
+<text x="-40.64" y="228.6" size="1.778" layer="91">NC</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="-142.24" y="165.1"/>

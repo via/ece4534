@@ -106,6 +106,9 @@
 <wire x1="28.88" y1="0" x2="28.88" y2="46.98" width="0" layer="20"/>
 <wire x1="28.88" y1="46.98" x2="0" y2="46.98" width="0" layer="20"/>
 <wire x1="0" y1="46.98" x2="0" y2="0" width="0" layer="20"/>
+<text x="15.24" y="44.45" size="0.8128" layer="21">ECE4534 - Group 6</text>
+<text x="15.24" y="43.18" size="0.8128" layer="21">Spring 2012</text>
+<text x="15.24" y="41.91" size="0.8128" layer="21">MiWi Daughterboard</text>
 </plain>
 <libraries>
 <library name="4534_I2C2">

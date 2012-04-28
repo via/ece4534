@@ -1,0 +1,40 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+\section*{CEL Team VI - Demonstration Plan Overview}
+\begin{enumerate}
+\item Demonstrate communication and parsing of GPS data by entering receiver node calibration mode.
+	\begin{enumerate}
+	\item The User interfaces with the ARM LCD screen and follows on-screen calibration instructions.
+	\item GPS data is received over UART on the mobile node.
+	\item GPS data is then parsed and transmitted using MiWi to the receivers.
+	\item ARM board queries node0 for GPS position information.
+	\item ARM board accumulates several samples of GPS position information and determines the designated node's position.
+	\end{enumerate}
+\item Demonstrate position estimation algorithm by placing the system into run mode.
+	\begin{enumerate}
+	\item As the user moves about, GPS data is transmitted from the mobile node.
+	\item Each receiver node calculates received signal strength from the mobile node.
+	\item node1 and node2 forward their received signal strength to node0.
+	\item ARM board queries node0 for all RSSI and GPS data.
+	\item Positioning algorithm updates position estimation based on RSSI data.
+	\end{enumerate}
+\item Demonstrate web interface functionality
+	\begin{enumerate}
+	\item After section 2 is complete, continue to operate system in run mode.
+	\item Establish a connection to the ARM webserver.
+	\item Recent position information will be displayed on the web page.
+	\item The web page refresh rate is once every 10 seconds.
+	\end{enumerate}
+\item Demonstrate filesystem functionality
+	\begin{enumerate}
+	\item After sections 2 and 3 are complete, shut down the ARM board.
+	\item Remove the SD card and insert into a computer.
+	\item Display the logged information on a computer.
+	\end{enumerate}
+\item Demonstration Complete.
+\end{enumerate}
+\end{document}

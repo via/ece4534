@@ -1,0 +1,15 @@
+Partlist
+
+Exported from Spring12_6_daughterboard.sch at 4/14/2012 12:37:43 PM
+
+EAGLE Version 6.1.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
+Part      Value                  Device                 Package                Library         Sheet
+
+ACCESSORY 2510-6002              2510-6002              2510-6002              4534_I2C2       1
+PPS-LED   LED-SMD-1206           LED-SMD-1206           LED1206                4534_I2C2       1
+R1        560                    R-US_R1206             R1206                  rcl             1
+U$1       796136-1-CR2302_HOLDER 796136-1-CR2302_HOLDER 796136-1-CR2032_HOLDER 4534_Node_Board 1
+U$3       GPS-UP501              GPS-UP501              GPS-UP501              4534_Node_Board 1
