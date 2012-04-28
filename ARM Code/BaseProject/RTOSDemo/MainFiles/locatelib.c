@@ -1,6 +1,6 @@
 #include "locatelib.h"
 
-#define MILESTONE 0
+#define MILESTONE 1
 
 double convert_rssi_to_db( uint8_t* rssi_value ){
 	#if MILESTONE == 1

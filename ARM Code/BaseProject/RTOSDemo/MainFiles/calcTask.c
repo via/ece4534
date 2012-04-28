@@ -48,6 +48,8 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtCalcMsg msgBuffer;
 	vtCalcStruct *calcPtr = (vtCalcStruct *) pvParameters;
 	vtLCDStruct *lcdData = calcPtr->lcdData;
+	vtFileStruct *fileData = calcPtr->fileData;
+	vtFileMsg fileBuffer;
 	vtLCDMsg lcdBuffer;
 	
 	uint8_t calcState = 1;
@@ -179,10 +181,16 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			/* MESSAGE TO FILE_TASK
-			sprintf(BUFFER, "#%d %4.3f %4.3f %4.3f %4.3f %4.3f\n",
-					ID, CALCULATED E, CALCULATED N, ACTUAL E, ACTUAL N, ERROR);
-			*/
+
+			sprintf((char*)(fileBuffer.buf), "#%d %4.3f %4.3f %4.3f %4.3f %4.3f\n",
+					ID, utmTx->eastings, utmTx->northings, utmNmea->eastings, utmNmea->northings, ERROR);
+			if (fileData != NULL) {
+				fileBuffer.length = strlen((char*)(fileBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&fileBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+			
 		}
 	}
 }

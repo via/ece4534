@@ -415,6 +415,21 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 								VT_HANDLE_FATAL_ERROR(0);
 							}
 						}
+						//Clear any touchscreen interrupts that may have come up
+						if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,1) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+
+						if (vtI2CDeQ(tscPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+						
+						if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+						if (vtI2CDeQ(tscPtr,0,NULL,&rxLen,&status) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
 					}
 					
 					i2c_State = 1;
