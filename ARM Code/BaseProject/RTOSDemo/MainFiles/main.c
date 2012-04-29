@@ -230,6 +230,10 @@ int main( void )
 	vtFiledata.lcdData = &vtLCDdata;
 	#endif
 	#endif
+
+	#if USE_FILE == 1 && USE_CALC == 1
+	vtCalcdata.fileData = &vtFiledata;
+	#endif
 	
 	// i2c initialization
 	#if USE_I2C == 1

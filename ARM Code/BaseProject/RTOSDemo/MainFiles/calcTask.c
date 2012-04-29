@@ -182,8 +182,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				}
 			}
 
-			sprintf((char*)(fileBuffer.buf), "#%d %4.3f %4.3f %4.3f %4.3f %4.3f\n",
-					ID, utmTx->eastings, utmTx->northings, utmNmea->eastings, utmNmea->northings, ERROR);
+			fileBuffer.buf[0] = '\xCA';
+			fileBuffer.buf[1] = '\xFE';
+			sprintf((char*)(fileBuffer.buf + 2), "%4.3f %4.3f %4.3f %4.3f",
+					utmTx->eastings, utmTx->northings, utmNmea->eastings, utmNmea->northings);
 			if (fileData != NULL) {
 				fileBuffer.length = strlen((char*)(fileBuffer.buf))+1;
 				if (xQueueSend(lcdData->inQ,(void *) (&fileBuffer),portMAX_DELAY) != pdTRUE) {

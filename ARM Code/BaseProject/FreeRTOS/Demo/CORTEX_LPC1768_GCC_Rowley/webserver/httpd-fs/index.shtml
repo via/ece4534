@@ -9,7 +9,7 @@
         <h2>Position Data</h2>
         <font face="courier">
             <pre>
-ID	E(Calc) N(Calc) E(GPS)  N(GPS)  Error(%)
+E(Calc) N(Calc) E(GPS)  N(GPS)
 			<br>************************************************<br>
 %! pos-data
             </pre>

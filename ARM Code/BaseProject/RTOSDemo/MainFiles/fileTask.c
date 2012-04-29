@@ -15,8 +15,10 @@
 #include "diskio.h"
 #include "ff.h"
 #include "webdata.h"
+#include "lpc17xx_gpio.h"
 
-#define MILESTONE_FILE 1
+#define MILESTONE_FILE 0
+#define USE_GPIO 1
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -60,8 +62,8 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtFileMsg msgBuffer;
 	vtFileStruct *filePtr = (vtFileStruct *) pvParameters;
-	vtLCDStruct *lcdData = filePtr->lcdData;
-	vtLCDMsg lcdBuffer;
+	//vtLCDStruct *lcdData = filePtr->lcdData;
+	//vtLCDMsg lcdBuffer;
 	
     TCHAR *FilePath = "0:data.txt" ; // file path
 	
@@ -87,7 +89,9 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	
 	#if MILESTONE_FILE == 1
 	// Temp, remove later on
-	sprintf((char*)msgBuffer.buf, "#1 1.111 2.222 3.333 4.444 99.9\n");
+	msgBuffer.buf[0] = '\xCA';
+	msgBuffer.buf[1] = '\xFE';
+	sprintf((char*)msgBuffer.buf + 2, "1.1111 2.2222 3.3333 4.4444");
 	msgBuffer.length = strlen((char*)msgBuffer.buf);
 	if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
 		VT_HANDLE_FATAL_ERROR(0);
@@ -106,20 +110,22 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		
-		//GPIO_ClearValue(2, 0x7C);
-		//GPIO_SetValue  (2, 0x01);
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0xB0000000);
+		GPIO_ClearValue(2, 0x7C);
+		GPIO_SetValue  (2, 0x01);
+		#endif
 		
-		if(msgBuffer.buf[0] == '#'){
-			int id = 0;
-			float e_calc, n_calc, e_actual, n_actual, error;
+		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
+			float e_calc, n_calc, e_actual, n_actual;
 			// sscanf the values needed
-			sscanf((char*)msgBuffer.buf, "#%d %f %f %f %f %f", 
-					&id, &e_calc, &n_calc, &e_actual, &n_actual, &error);
+			sscanf((char*)msgBuffer.buf + 2, "%f %f %f %f", 
+					&e_calc, &n_calc, &e_actual, &n_actual);
 			
 			// sprintf to buffer to line formatted as needed
 			BYTE line[64];
-			sprintf((char*)line, "%d\t%4.3f\t%4.3f\t%4.3f\t%4.3f\t%4.3f\n",
-					id, e_calc, n_calc, e_actual, n_actual, error);
+			sprintf((char*)line, "%4.3f\t%4.3f\t%4.3f\t%4.3f\n",
+					e_calc, n_calc, e_actual, n_actual);
 			
 			// read here for insurance in other lines if needed, not used
 			//BYTE buf[64];
@@ -127,12 +133,8 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			if(xSemaphore != NULL){
 				if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
 					// write new line to file
-					int a = 0;
-					while(a < 5000){
-						a++;
-					}
 					FRESULT rc;			
-					rc = F_Write((BYTE*)line, strlen(line), FilePath, 1);
+					rc = F_Write((BYTE*)line, strlen((char*)line), FilePath, 1);
 					if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
 						memset(data_buf, 0, sizeof(data_buf));
 					}
@@ -148,10 +150,14 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		else{
 			// Do nothing
 		}
-		//GPIO_SetValue  (1, 0x80000000);
+		#if USE_GPIO == 1
+		GPIO_SetValue  (1, 0x80000000);
+		#endif
 		#if MILESTONE_FILE == 1
 		if(j < 100){
-			sprintf((char*)msgBuffer.buf, "#%d 1.111 2.222 3.333 4.444 99.9\n", j);		
+			msgBuffer.buf[0] = '\xCA';
+			msgBuffer.buf[1] = '\xFE';
+			sprintf((char*)msgBuffer.buf + 2, "1.1111 2.2222 3.3333 4.4444");		
 			j++;
 			msgBuffer.length = strlen((char*)msgBuffer.buf);
 			if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
@@ -171,21 +177,29 @@ FRESULT F_Write(BYTE Message[], UINT msg_size, TCHAR *filepath, int append){
     rc = f_open(&fil, filepath, FA_WRITE | FA_OPEN_ALWAYS);
     if(rc){
 		//printf("File open error = %u",rc);
+		return rc;
     }
 	
 	// Seek end if append
 	if(append){
 		rc = f_lseek(&fil, f_size(&fil));
+		if(rc){
+			f_close(&fil);
+			return rc;
+		}
 	}
 
     rc = f_write(&fil, Message, msg_size, &bw); // write file
     if(rc){
 		//printf("Write error = %u", rc);
+		f_close(&fil);
+		return rc;
     }
 
     rc = f_close(&fil);
     if(rc){
 		//printf("File close error = %u", rc);
+		return rc;
     }
 	
 	return rc;
