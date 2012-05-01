@@ -17,8 +17,8 @@
 #include "webdata.h"
 #include "lpc17xx_gpio.h"
 
-#define MILESTONE_FILE 0
-#define USE_GPIO 1
+#define MILESTONE_FILE 1
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -28,7 +28,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 500 )
+#define taskRUN_RATE	( ( portTickType ) 200 )
 
 static portTASK_FUNCTION_PROTO( vFileTask, pvParameters );
 static FRESULT F_Write(BYTE Msg[], UINT msg_size, TCHAR *path, int append);
@@ -53,7 +53,7 @@ void vStartFileTask( unsigned portBASE_TYPE uxPriority,vtFileStruct *ptr )
 static FATFS fatfs;  // Filesystem object
 static FIL fil;   	 // File object
 static uint8_t data_buf[256];
-//static uint8_t temp_buf[256];
+static uint8_t temp_buf[256];
 
 static portTASK_FUNCTION( vFileTask, pvParameters )
 {
@@ -91,7 +91,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	// Temp, remove later on
 	msgBuffer.buf[0] = '\xCA';
 	msgBuffer.buf[1] = '\xFE';
-	sprintf((char*)msgBuffer.buf + 2, "1.1111 2.2222 3.3333 4.4444");
+	sprintf((char*)msgBuffer.buf + 2, "1111111 2222222 3333333 4444444");
 	msgBuffer.length = strlen((char*)msgBuffer.buf);
 	if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
 		VT_HANDLE_FATAL_ERROR(0);
@@ -111,9 +111,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		
 		#if USE_GPIO == 1
-		GPIO_ClearValue(1, 0xB0000000);
-		GPIO_ClearValue(2, 0x7C);
-		GPIO_SetValue  (2, 0x01);
+		GPIO_ClearValue(0, 0x00080000);
 		#endif
 		
 		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
@@ -124,7 +122,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			
 			// sprintf to buffer to line formatted as needed
 			BYTE line[64];
-			sprintf((char*)line, "%4.3f\t%4.3f\t%4.3f\t%4.3f\n",
+			sprintf((char*)line, "%7.3f\t%7.3f\t%7.3f\t%7.3f\n",
 					e_calc, n_calc, e_actual, n_actual);
 			
 			// read here for insurance in other lines if needed, not used
@@ -135,8 +133,16 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 					// write new line to file
 					FRESULT rc;			
 					rc = F_Write((BYTE*)line, strlen((char*)line), FilePath, 1);
-					if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+					/*if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
 						memset(data_buf, 0, sizeof(data_buf));
+					}*/
+					while( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+						char* pos = strchr((char*)data_buf, '\n');
+						int offset = (int)(pos - (char*)data_buf);
+						memset(temp_buf, 0, sizeof(temp_buf));
+						memcpy(temp_buf, data_buf, strlen((char*)data_buf));
+						memset(data_buf, 0, sizeof(data_buf));
+						memcpy(data_buf, temp_buf + offset + 1, strlen((char*)temp_buf) - offset - 1);
 					}
 					// add new line to buffer
 					strncat((char*)data_buf, (char*)line, strlen((char*)line));
@@ -151,13 +157,13 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			// Do nothing
 		}
 		#if USE_GPIO == 1
-		GPIO_SetValue  (1, 0x80000000);
+		GPIO_SetValue(0, 0x00080000);
 		#endif
 		#if MILESTONE_FILE == 1
 		if(j < 100){
 			msgBuffer.buf[0] = '\xCA';
 			msgBuffer.buf[1] = '\xFE';
-			sprintf((char*)msgBuffer.buf + 2, "1.1111 2.2222 3.3333 4.4444");		
+			sprintf((char*)msgBuffer.buf + 2, "1111111 2222222 3333333 4444444");		
 			j++;
 			msgBuffer.length = strlen((char*)msgBuffer.buf);
 			if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){

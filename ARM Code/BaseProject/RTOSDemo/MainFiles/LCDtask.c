@@ -42,7 +42,7 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 	}
 }
 
-int LCD_STATE = 1;
+int LCD_STATE = 2;
 
 #include "bgclb.c"
 

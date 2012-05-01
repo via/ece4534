@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>This is a title</title>
+        <title>Wireless Positioning - CEL Team VI</title>
     </head>
     <BODY onLoad="window.setTimeout(&quot;location.href='index.shtml'&quot;,2000)">
 
@@ -9,8 +9,8 @@
         <h2>Position Data</h2>
         <font face="courier">
             <pre>
-E(Calc) N(Calc) E(GPS)  N(GPS)
-			<br>************************************************<br>
+Eastings(Calc)  Northings(Calc) Eastings(GPS)   Northings(GPS)
+<br>**************************************************************<br>
 %! pos-data
             </pre>
         </font>

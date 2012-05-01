@@ -14,6 +14,7 @@
 #include "vtI2C.h"
 #include "calcTask.h"
 #include "i2cTemp.h"
+#include "lpc17xx_gpio.h"
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the calc operations
@@ -28,6 +29,7 @@
 
 //choose whether to use z only or XY
 #define USE_XY 0
+#define USE_GPIO 1
 
 /* The i2cTemp task. */
 static portTASK_FUNCTION_PROTO( vi2cTempUpdateTask, pvParameters );
@@ -231,7 +233,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 	
 	//Set up initial LCD display
-	sprintf((char*)(lcdBuffer.buf),"Tap to calibrate Node 0");
+	sprintf((char*)(lcdBuffer.buf),"Tap to calibrate #0");
 					if (lcdData != NULL) {
 						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -244,7 +246,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	{
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
-
+		
 		//Do requests from PIC0 and processing of data here
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
@@ -266,7 +268,24 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			VT_HANDLE_FATAL_ERROR(0);
 			}
 
-			if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
+			if (numCal >= 3) {
+					i2c_State = 3;
+					calcBuffer.buf[0] = 0xD0;
+					calcBuffer.buf[1] = 0xCF;
+					calcBuffer.buf[2] = 0x11;
+					if (calcData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
+						if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
+				}
+
+			else if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
+				#if USE_GPIO == 1
+				GPIO_SetValue(0, 0x000F0000);
+				#endif
 				//Read X,Y values, need to recombine them later
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,1) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
@@ -328,13 +347,14 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					
 				}
 				#else
-				if (tempBuf[0] > 128){
+				if (tempBuf[0] > 30){
 					i2c_State = 2;
 					latDeg = 0;
 					latMin = 0.0;
 					lonDeg = 0;
 					lonMin = 0.0;
-					sprintf((char*)(lcdBuffer.buf),"Calibrating Node %d", numCal);
+					avgCount = 0;
+					sprintf((char*)(lcdBuffer.buf),"Calibrating Node #%d", numCal);
 					if (lcdData != NULL) {
 						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -343,19 +363,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 						}
 					}
 				}
-				if (numCal >= 3) {
-					i2c_State = 3;
-					calcBuffer.buf[0] = 0xD0;
-					calcBuffer.buf[1] = 0xCF;
-					calcBuffer.buf[2] = 0x11;
-					if (calcData != NULL) {
-						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
-						if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
-							VT_HANDLE_FATAL_ERROR(0);
-						}
-					}
-				}
+				
 				#endif
 				//clear LCD interrupt
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
@@ -365,6 +373,9 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
+			#if USE_GPIO == 1
+			GPIO_ClearValue(0, 0x000F0000);
+			#endif
 		}
 		else if (i2c_State == 2){
 			if (avgCount < 10){
@@ -407,7 +418,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					
 					if (numCal < 2) {
 						//Show that we are done calibrating
-						sprintf((char*)(lcdBuffer.buf),"Tap to calibrate Node %d", numCal+1);
+						sprintf((char*)(lcdBuffer.buf),"Tap to calibrate #%d", numCal+1);
 						if (lcdData != NULL) {
 							// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 							lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -462,6 +473,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				}
 			}
 		}
-		
+		int a = 5;
 	}
 }

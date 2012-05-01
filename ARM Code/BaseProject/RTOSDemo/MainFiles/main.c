@@ -108,6 +108,7 @@ You should read the note above.
 #include "vtI2C.h"
 #include "calcTask.h"
 #include "fileTask.h"
+#include "lpc17xx_gpio.h"
 
 /* syscalls initialization -- *must* occur first */
 #include "syscalls.h"
@@ -201,7 +202,7 @@ int main( void )
 	init_syscalls();
 
 	// Set up the LED ports and turn them off
-	vtInitLED();
+	//vtInitLED();
 
 	/* Configure the hardware for use by this demo. */
 	prvSetupHardware();
@@ -234,6 +235,9 @@ int main( void )
 	#if USE_FILE == 1 && USE_CALC == 1
 	vtCalcdata.fileData = &vtFiledata;
 	#endif
+
+	GPIO_SetDir    (0, 0x00078000, 1);
+	GPIO_ClearValue(0, 0x00078000);
 	
 	// i2c initialization
 	#if USE_I2C == 1

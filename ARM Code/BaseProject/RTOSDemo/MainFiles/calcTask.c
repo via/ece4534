@@ -194,6 +194,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			}
 			
 		}
+		int a = 5;
 	}
 }
 
