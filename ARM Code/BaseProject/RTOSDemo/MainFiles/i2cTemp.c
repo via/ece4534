@@ -27,8 +27,6 @@
 // Set the task up to run every second (need to modify this to poll more often from the adc)
 #define i2cREAD_RATE_BASE	( ( portTickType ) 1000)
 
-//choose whether to use z only or XY
-#define USE_XY 0
 #define USE_GPIO 1
 
 /* The i2cTemp task. */
@@ -81,13 +79,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	3 - Normal operation
 	*/
 	uint8_t i2c_State = 1; 
-	
-	#if USE_XY==1
-	//Touchscreen vars
-	int tsc_x, tsc_y;
-	uint8_t tsc_temp;
-	#endif
-	
+
 	//Rolling gps avg vars
 	int latDeg = 0;
 	double latMin = 0.0;
@@ -247,6 +239,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
 		
+		#if USE_GPIO == 1
+		GPIO_SetValue(0,0x00040000); //pin 18
+		#endif
+		
 		//Do requests from PIC0 and processing of data here
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
@@ -283,9 +279,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				}
 
 			else if ((tempBuf[0] & 0x02) | (tempBuf[0] & 0x01)) {
-				#if USE_GPIO == 1
-				GPIO_SetValue(0, 0x000F0000);
-				#endif
 				//Read X,Y values, need to recombine them later
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(tscRead),tscRead,1) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
@@ -295,58 +288,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 				
-				#if USE_XY==1
-				//x
-				tsc_temp = (tempBuf[1] >> 4) & 0x0F;
-				tsc_x = (tempBuf[0] << 4) | tsc_temp;
-				//y
-				tsc_temp = tempBuf[1] << 4;
-				tsc_y = (tsc_temp << 4) | tempBuf[2];
-				
-				//Do button checks here
-				//Check node0
-				if ((tsc_x > 0xBA0) && (tsc_x < 0xBFF) && (tsc_y > 0x8A0) && (tsc_y < 0x8FF)){
-					numCal = 0;
-					i2c_State = 2;
-					latDeg = 0;
-					latMin = 0.0;
-					lonDeg = 0;
-					lonMin = 0.0;
-				}
-				//Check node1
-				else if ((tsc_x > 0x560) && (tsc_x < 0x5B0) && (tsc_y > 0x680) && (tsc_y < 0x6D0)){
-					numCal = 1;
-					i2c_State = 2;
-					latDeg = 0;
-					latMin = 0.0;
-					lonDeg = 0;
-					lonMin = 0.0;
-				}
-				//Check node2
-				else if ((tsc_x > 0x4D0) && (tsc_x < 0x4FF) && (tsc_y > 0x690) && (tsc_y < 0x740)){
-					numCal = 2;
-					i2c_State = 2;
-					latDeg = 0;
-					latMin = 0.0;
-					lonDeg = 0;
-					lonMin = 0.0;
-				}
-				//Check end button
-				else if ((tsc_x > 0xA20) && (tsc_x < 0xA70) && (tsc_y > 0x350) && (tsc_y < 0x3B0)){
-					i2c_State = 3;
-					calcBuffer.buf[0] = 0xD0;
-					calcBuffer.buf[1] = 0xCF;
-					calcBuffer.buf[2] = 0x11;
-					if (calcData != NULL) {
-						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
-						if (xQueueSend(calcData->inQ,(void *) (&calcBuffer),portMAX_DELAY) != pdTRUE) {
-							VT_HANDLE_FATAL_ERROR(0);
-						}
-					}
-					
-				}
-				#else
 				if (tempBuf[0] > 30){
 					i2c_State = 2;
 					latDeg = 0;
@@ -363,8 +304,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 						}
 					}
 				}
-				
-				#endif
+
 				//clear LCD interrupt
 				if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_13),TSC_INIT_13,0) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
@@ -373,9 +313,6 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			#if USE_GPIO == 1
-			GPIO_ClearValue(0, 0x000F0000);
-			#endif
 		}
 		else if (i2c_State == 2){
 			if (avgCount < 10){
@@ -473,6 +410,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				}
 			}
 		}
-		int a = 5;
+		#if USE_GPIO == 1
+		GPIO_ClearValue(0,0x00040000);
+		#endif
 	}
 }
