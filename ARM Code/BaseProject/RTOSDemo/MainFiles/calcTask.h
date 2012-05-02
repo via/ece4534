@@ -13,7 +13,7 @@ typedef struct __vtCalcStruct {
 #define vtCalcQLen 5
 // Structure used to define the messages that are sent to the LCD thread
 //   the maximum length of a message to be printed is the size of the "buf" field below
-#define vtCalcMLen 20
+#define vtCalcMLen 45
 typedef struct __vtCalcMsg {
 	uint8_t	length;	 // Length of the message to be printed
 	uint8_t buf[vtCalcMLen]; // On the way in, message to be sent, on the way out, message received (if any)

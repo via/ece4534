@@ -28,7 +28,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 200 )
+#define taskRUN_RATE	( ( portTickType ) 1000 )
 
 static portTASK_FUNCTION_PROTO( vFileTask, pvParameters );
 static FRESULT F_Write(BYTE Msg[], UINT msg_size, TCHAR *path, int append);
@@ -111,7 +111,8 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		
 		#if USE_GPIO == 1
-		GPIO_ClearValue(0, 0x00080000);
+		GPIO_SetValue(1, 0x40000000);
+		GPIO_SetValue(2, 0x00000008);
 		#endif
 		
 		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
@@ -157,7 +158,8 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			// Do nothing
 		}
 		#if USE_GPIO == 1
-		GPIO_SetValue(0, 0x00080000);
+		GPIO_ClearValue(1, 0x40000000);
+		GPIO_ClearValue(2, 0x00000008);
 		#endif
 		#if MILESTONE_FILE == 1
 		if(j < 100){

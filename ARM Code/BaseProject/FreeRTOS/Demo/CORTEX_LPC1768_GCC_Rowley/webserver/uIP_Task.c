@@ -71,6 +71,9 @@
 #include "EthDev.h"
 #include "ParTest.h"
 
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 1
+
 /*-----------------------------------------------------------*/
 
 /* How long to wait before attempting to connect the MAC again. */
@@ -159,6 +162,9 @@ extern void ( vEMAC_ISR_Wrapper )( void );
 
 	for( ;; )
 	{
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x10000000);
+		#endif
 		/* Is there received data ready to be processed? */
 		uip_len = ulGetEMACRxData();
 
@@ -227,6 +233,9 @@ extern void ( vEMAC_ISR_Wrapper )( void );
 				xSemaphoreTake( xEMACSemaphore, configTICK_RATE_HZ / 2 );
 			}
 		}
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x10000000);
+		#endif
 	}
 }
 /*-----------------------------------------------------------*/
