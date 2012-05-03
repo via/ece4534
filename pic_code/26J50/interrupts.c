@@ -1,6 +1,6 @@
 #include "maindefs.h"
 #include "interrupts.h"
-#include "user_interrupts.h"
+#include "my_uart.h"
 #include "messages.h"
 #include "my_miwi.h"
 #include "WirelessProtocols/MiWi/MiWi.h"

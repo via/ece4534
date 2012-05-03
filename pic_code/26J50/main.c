@@ -9,10 +9,6 @@
 #include "messages.h"
 #include "my_uart.h"
 #include "my_i2c.h"
-#include "uart_thread.h"
-#include "timer1_thread.h"
-#include "timer0_thread.h"
-#include "my_adc.h"
 #include "i2c_logic.h"
 #include "my_miwi.h"
 
@@ -95,9 +91,6 @@ void main (void)
 	i2c_comm ic;
 	unsigned char msgbuffer[MSGLEN+1];
 	unsigned char i;
-
-	timer1_thread_struct t1thread_data; // info for timer1_lthread
-	timer0_thread_struct t0thread_data; // info for timer0_lthread
 
    
     initTristates();
