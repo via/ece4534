@@ -115,3 +115,9 @@ void record_other_rssi(char boardID, char rssi) {
     final_rssi_values[boardID] = rssi;
 
 }
+
+void get_all_rssi(unsigned char* msgbuffer) {
+    msgbuffer[0] = final_rssi_values[0];
+    msgbuffer[1] = final_rssi_values[1];
+    msgbuffer[2] = final_rssi_values[2];
+}

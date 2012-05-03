@@ -102,6 +102,9 @@ void main (void)
 #ifdef MOBILEUNIT
     
     initBeaconTimer();
+#else
+    init_i2c(&ic);
+    i2c_configure_slave(I2C_ADDR);
 #endif
     init_queues();
 
@@ -122,6 +125,13 @@ void main (void)
 #ifndef MOBILEUNIT
                 case MSGT_MIWI:
                     handlePacket();
+                    break;
+                case MSGT_I2C_DATA:
+                    last_reg_recvd = msgbuffer[0];
+                    break;
+                case MSGT_I2C_RQST:
+                    length = handle_i2c_read(last_reg_recvd, msgbuffer);
+                    start_i2c_slave_reply(length, msgbuffer);
                     break;
 #endif
             }
