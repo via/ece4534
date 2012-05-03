@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 /* Scheduler include files. */
@@ -58,9 +59,6 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	uint8_t calcState = 1;
 	uint8_t picNum = 10;
 	uint8_t picCal[3] = { 0 }; //determine which pics are calibrated
-
-	int latDeg, lonDeg;
-	float latMin, lonMin;
 	
 	//Location calculation related
 	double picDBW[3] = { 0.0 };
@@ -117,12 +115,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
+		int latDeg, lonDeg;
+		float latMin, lonMin;
 		if (calcState == 1){
 			if (msgBuffer.buf[0] == 12 && msgBuffer.buf[1] == 11){
 				picNum = msgBuffer.buf[2];
 				//convert the parsed stuff to dms_coordinate struct
 				if (picNum < 3){
-					sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+					sscanf((char*) msgBuffer.buf + 3, "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
 					dmsCord->latDegrees = (int) latDeg;
 					dmsCord->latMinutes = (double) latMin;
 					dmsCord->lonDegrees = (int) lonDeg;
@@ -193,7 +193,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-		}
+		}  
 		#if USE_GPIO == 1
 		GPIO_ClearValue(1, 0x80000000);
 		#endif

@@ -239,8 +239,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
 		#if USE_GPIO == 1
-		GPIO_SetValue(1,0x08000000);
-		GPIO_SetValue(2,0x00000004);
+		GPIO_SetValue(1, 0x40000000);
+		GPIO_SetValue(2, 0x00000008);
 		#endif
 		//Do requests from PIC0 and processing of data here
 		//nmeaString will be formatted later, for now sprintf the nmea into 
@@ -381,8 +381,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 			}
 		}
 		#if USE_GPIO == 1
-		GPIO_ClearValue(1,0x08000000);
-		GPIO_ClearValue(2,0x00000004);
+		GPIO_ClearValue(1, 0x40000000);
+		GPIO_ClearValue(2, 0x00000008);
 		#endif
 	}
 }

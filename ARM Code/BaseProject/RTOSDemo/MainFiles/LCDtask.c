@@ -24,7 +24,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define lcdWRITE_RATE_BASE	( ( portTickType ) 200 )
+#define lcdWRITE_RATE_BASE	( ( portTickType ) 3000 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vLCDUpdateTask, pvParameters );
@@ -156,6 +156,9 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 		}
 	}
 	else if (LCD_STATE == 3){
+		/* Ask the RTOS to delay reschduling this task for the specified time */
+		//vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
+
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);

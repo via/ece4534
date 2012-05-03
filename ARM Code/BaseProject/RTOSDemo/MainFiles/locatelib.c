@@ -7,7 +7,9 @@ double convert_rssi_to_db( uint8_t* rssi_value ){
     //convert to a 16+ bit integer (so we don't mess up signed arithmetic)
     int  value = 0x00FF & (*rssi_value);
     //-90 dBm = 0x00 -> -120 dBW = 0x00
-    return value*(double)55/255 - 120;
+	double rtval = ((double)value * 0.215686) - 120;
+    //return value*(double)55/255 - 120;
+	return rtval;
 	#else
 	return (double)(*rssi_value);
 	#endif
