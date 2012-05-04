@@ -72,7 +72,7 @@
 #include "ParTest.h"
 
 #include "lpc17xx_gpio.h"
-#define USE_GPIO 1
+#define USE_GPIO 0
 
 /*-----------------------------------------------------------*/
 
