@@ -162,9 +162,6 @@ extern void ( vEMAC_ISR_Wrapper )( void );
 
 	for( ;; )
 	{
-		#if USE_GPIO == 1
-		GPIO_SetValue(1, 0x10000000);
-		#endif
 		/* Is there received data ready to be processed? */
 		uip_len = ulGetEMACRxData();
 
@@ -230,11 +227,16 @@ extern void ( vEMAC_ISR_Wrapper )( void );
 				processing to perform.  Block for a fixed period.  If a packet
 				is received during this period we will be woken by the ISR
 				giving us the Semaphore. */
+				#if USE_GPIO == 1
+				GPIO_ClearValue(1,0x08000000);
+				GPIO_ClearValue(2,0x00000004);
+				#endif
 				xSemaphoreTake( xEMACSemaphore, configTICK_RATE_HZ / 2 );
 			}
 		}
 		#if USE_GPIO == 1
-		GPIO_ClearValue(1, 0x10000000);
+		GPIO_SetValue(1,0x08000000);
+		GPIO_SetValue(2,0x00000004);
 		#endif
 	}
 }
