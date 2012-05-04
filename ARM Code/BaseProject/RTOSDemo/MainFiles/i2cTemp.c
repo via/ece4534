@@ -27,7 +27,7 @@
 // Set the task up to run every second (need to modify this to poll more often from the adc)
 #define i2cREAD_RATE_BASE	( ( portTickType ) 1000)
 
-#define USE_GPIO 1
+#define USE_GPIO 0
 
 /* The i2cTemp task. */
 static portTASK_FUNCTION_PROTO( vi2cTempUpdateTask, pvParameters );
@@ -118,7 +118,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 
 	/* We need to initialise xLastUpdateTime prior to the first call to vTaskDelayUntil(). */
 	xLastUpdateTime = xTaskGetTickCount();
-	
+
 	//Begin touchscreen initialization
 	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_1),TSC_INIT_1,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -233,6 +233,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 							VT_HANDLE_FATAL_ERROR(0);
 						}
 					}
+
 	// Like all good tasks, this should never exit
 	for(;;)
 	{
@@ -243,13 +244,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		GPIO_SetValue(2, 0x00000008);
 		#endif
 		//Do requests from PIC0 and processing of data here
-		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,1) != pdTRUE) {
+		if (vtI2CEnQ(devPtr,0x02,0x1b,sizeof(readReg0),readReg0,3) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
 		
-		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+		if (vtI2CDeQ(devPtr,3,tempRead,&rxLen,&status) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+
+		strncpy((char*) PRead, (const char*) tempRead, 3);
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
 		glatDeg = 0;

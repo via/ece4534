@@ -18,7 +18,7 @@
 #include "lpc17xx_gpio.h"
 
 #define MILESTONE_FILE 1
-#define USE_GPIO 1
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
