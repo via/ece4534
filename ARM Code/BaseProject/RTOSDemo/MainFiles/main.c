@@ -206,8 +206,8 @@ int main( void )
 
 	/* Configure the hardware for use by this demo. */
 	prvSetupHardware();
-	GPIO_SetDir(0,0x00078000,1);
-	GPIO_ClearValue(0,0x00078000);
+	GPIO_SetDir(1,0xF8000000,1);
+	//GPIO_ClearValue(1,0x80000000);
 	#if USE_WEB == 1
 	// Not a standard demo -- but also not one of mine (MTJ)
 	/* Create the uIP task.  The WEB server runs in this task. */

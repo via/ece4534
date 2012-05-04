@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 /* Scheduler include files. */
@@ -11,6 +12,9 @@
 #include "calcTask.h"
 #include "lcdTask.h"
 #include "locatelib.h"
+
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 1
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 #if PRINTF_VERSION==1
@@ -105,22 +109,24 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		if (xQueueReceive(calcPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x80000000);
+		#endif
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
+		int latDeg, lonDeg;
+		float latMin, lonMin;
 		if (calcState == 1){
 			if (msgBuffer.buf[0] == 12 && msgBuffer.buf[1] == 11){
 				picNum = msgBuffer.buf[2];
 				//convert the parsed stuff to dms_coordinate struct
 				if (picNum < 3){
-					dmsCord->latDegrees = (int8_t) msgBuffer.buf[3];
-					dmsCord->latMinutes = (double) msgBuffer.buf[4];
-					dmsCord->latMinutes = dmsCord->latMinutes * 256;
-					dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[5];
-					dmsCord->lonDegrees = (int8_t) msgBuffer.buf[6];
-					dmsCord->lonMinutes = (double) msgBuffer.buf[7];
-					dmsCord->lonMinutes = dmsCord->latMinutes * 256;
-					dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
+					sscanf((char*) msgBuffer.buf + 3, "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+					dmsCord->latDegrees = (int) latDeg;
+					dmsCord->latMinutes = (double) latMin;
+					dmsCord->lonDegrees = (int) lonDeg;
+					dmsCord->lonMinutes = (double) lonMin;
 					convertDMS_to_UTM( dmsCord, picCords[picNum] );
 					picCal[picNum] = 1;
 				}
@@ -148,18 +154,13 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDBW[2] = convert_rssi_to_db( msgBuffer.buf+2 ); //+2 when not M4
 			
 			//Take the nmea data and put it into dmsCord here
-			dmsCord->latDegrees = (int) msgBuffer.buf[3];
-			
-			dmsCord->latMinutes = (double) msgBuffer.buf[4];
-			dmsCord->latMinutes = dmsCord->latMinutes * 256;
-			dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[5];
-			
-			dmsCord->lonDegrees = (int) msgBuffer.buf[6];
-			
-			dmsCord->lonMinutes = (double) msgBuffer.buf[7];
-			dmsCord->lonMinutes = dmsCord->latMinutes * 256;
-			dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
-			
+			sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+			dmsCord->latDegrees = (int) latDeg;
+			dmsCord->latMinutes = (double) latMin;
+
+			dmsCord->lonDegrees = (int) lonDeg;
+			dmsCord->lonMinutes = (double) lonMin;
+
 			//Convert to UTM to do ?? with it
 			convertDMS_to_UTM( dmsCord, utmNmea );
 			
@@ -173,7 +174,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			for (count = 0; count < 16; count++){
 				location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
 				}
-				
+			// TODO: change later 05/01/2012 1428	
 			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -184,7 +185,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 
 			fileBuffer.buf[0] = '\xCA';
 			fileBuffer.buf[1] = '\xFE';
-			sprintf((char*)(fileBuffer.buf + 2), "%4.3f %4.3f %4.3f %4.3f",
+			sprintf((char*)(fileBuffer.buf + 2), "%7.3f %7.3f %7.3f %7.3f",
 					utmTx->eastings, utmTx->northings, utmNmea->eastings, utmNmea->northings);
 			if (fileData != NULL) {
 				fileBuffer.length = strlen((char*)(fileBuffer.buf))+1;
@@ -192,9 +193,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			
-		}
-		int a = 5;
+		}  
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x80000000);
+		#endif
 	}
 }
 

@@ -12,6 +12,9 @@
 #include "LCDtask.h"
 #include "vtI2C.h"
 
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 1
+
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the LCD operations
 #if PRINTF_VERSION==1
@@ -21,7 +24,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define lcdWRITE_RATE_BASE	( ( portTickType ) 200 )
+#define lcdWRITE_RATE_BASE	( ( portTickType ) 3000 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vLCDUpdateTask, pvParameters );
@@ -140,6 +143,7 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
@@ -152,10 +156,16 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 		}
 	}
 	else if (LCD_STATE == 3){
+		/* Ask the RTOS to delay reschduling this task for the specified time */
+		//vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
+
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x20000000);
+		#endif
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		// Decide what color and then clear the line
@@ -170,6 +180,9 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 		else {
 			counter = 0;
 		}
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x20000000);
+		#endif
 	}
 else{
 	//	Bad setting

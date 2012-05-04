@@ -18,7 +18,7 @@
 #include "lpc17xx_gpio.h"
 
 #define MILESTONE_FILE 1
-#define USE_GPIO 0
+#define USE_GPIO 1
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -28,7 +28,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 200 )
+#define taskRUN_RATE	( ( portTickType ) 1000 )
 
 static portTASK_FUNCTION_PROTO( vFileTask, pvParameters );
 static FRESULT F_Write(BYTE Msg[], UINT msg_size, TCHAR *path, int append);
@@ -111,7 +111,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		
 		#if USE_GPIO == 1
-		GPIO_ClearValue(0, 0x00080000);
+		GPIO_SetValue(1, 0x10000000);
 		#endif
 		
 		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
@@ -133,17 +133,19 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 					// write new line to file
 					FRESULT rc;			
 					rc = F_Write((BYTE*)line, strlen((char*)line), FilePath, 1);
-					/*if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+					// Clear buffer when almost full
+					if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
 						memset(data_buf, 0, sizeof(data_buf));
-					}*/
-					while( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+					}
+					// Or roll out one old line to make room for new line
+					/*while( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
 						char* pos = strchr((char*)data_buf, '\n');
 						int offset = (int)(pos - (char*)data_buf);
 						memset(temp_buf, 0, sizeof(temp_buf));
 						memcpy(temp_buf, data_buf, strlen((char*)data_buf));
 						memset(data_buf, 0, sizeof(data_buf));
 						memcpy(data_buf, temp_buf + offset + 1, strlen((char*)temp_buf) - offset - 1);
-					}
+					}*/
 					// add new line to buffer
 					strncat((char*)data_buf, (char*)line, strlen((char*)line));
 					xSemaphoreGive( xSemaphore );
@@ -157,7 +159,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			// Do nothing
 		}
 		#if USE_GPIO == 1
-		GPIO_SetValue(0, 0x00080000);
+		GPIO_ClearValue(1, 0x10000000);
 		#endif
 		#if MILESTONE_FILE == 1
 		if(j < 100){
