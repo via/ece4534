@@ -243,6 +243,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		GPIO_SetValue(2, 0x00000008);
 		#endif
 		//Do requests from PIC0 and processing of data here
+		if (vtI2CEnQ(devPtr,0x00,0x1b,sizeof(nmeaRead),nmeaRead,1) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		if (vtI2CDeQ(devPtr,1,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
 		glatDeg = 0;
@@ -324,12 +331,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				avgCount = avgCount + 1;
 			}
 			else {
-				sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", latDeg, latMin, lonDeg, lonMin);
+				//sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", latDeg, latMin, lonDeg, lonMin);
 				calcBuffer.buf[0] = 12;
 				calcBuffer.buf[1] = 11;
 				calcBuffer.buf[2] = numCal;
 					//screen triggered, do passing of things to calc
-					strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
+					calcBuffer.latDeg = latDeg;
+					calcBuffer.latMin = latMin;
+					calcBuffer.lonDeg = lonDeg;
+					calcBuffer.lonMin = lonMin;
 					if (calcData != NULL) {
 						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
@@ -371,7 +381,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		else if (i2c_State == 3){													
 			strncpy((char*) calcBuffer.buf, (const char*) PRead, 3);
-			sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", glatDeg, glatMin, glonDeg, glonMin);	
+			calcBuffer.latDeg = glatDeg;
+			calcBuffer.latMin = glatMin;
+			calcBuffer.lonDeg = glonDeg;
+			calcBuffer.lonMin = glonMin;	
 			if (calcData != NULL) {
 				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;

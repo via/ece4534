@@ -130,7 +130,7 @@ tick hook). */
 #define mainGEN_QUEUE_TASK_PRIORITY			( tskIDLE_PRIORITY)
 #define mainFLASH_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainLCD_TASK_PRIORITY				( tskIDLE_PRIORITY)
-#define mainI2CTEMP_TASK_PRIORITY			( tskIDLE_PRIORITY)
+#define mainI2CTEMP_TASK_PRIORITY			( 1)
 #define mainUSB_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainI2CMONITOR_TASK_PRIORITY		( tskIDLE_PRIORITY)
 #define mainCALC_TASK_PRIORITY				( tskIDLE_PRIORITY)
@@ -239,8 +239,8 @@ int main( void )
 	
 	// i2c initialization
 	#if USE_I2C == 1
-	//vtI2C0.devNum = 0;
-	//vtI2C0.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
+	vtI2C0.devNum = 0;
+	vtI2C0.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
 	
 	vtI2C1.devNum = 1;
 	vtI2C1.taskPriority = mainI2CMONITOR_TASK_PRIORITY;

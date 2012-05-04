@@ -17,6 +17,10 @@ typedef struct __vtCalcStruct {
 typedef struct __vtCalcMsg {
 	uint8_t	length;	 // Length of the message to be printed
 	uint8_t buf[vtCalcMLen]; // On the way in, message to be sent, on the way out, message received (if any)
+	int latDeg;
+	int lonDeg;
+	double latMin;
+	double lonMin;
 } vtCalcMsg;
 
 void vStartCalcTask( unsigned portBASE_TYPE uxPriority, vtCalcStruct *);

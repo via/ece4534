@@ -122,11 +122,11 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				picNum = msgBuffer.buf[2];
 				//convert the parsed stuff to dms_coordinate struct
 				if (picNum < 3){
-					sscanf((char*) msgBuffer.buf + 3, "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
-					dmsCord->latDegrees = (int) latDeg;
-					dmsCord->latMinutes = (double) latMin;
-					dmsCord->lonDegrees = (int) lonDeg;
-					dmsCord->lonMinutes = (double) lonMin;
+					//sscanf((char*) msgBuffer.buf + 3, "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+					dmsCord->latDegrees = (int) msgBuffer.latDeg;
+					dmsCord->latMinutes = (double) msgBuffer.latMin;
+					dmsCord->lonDegrees = (int) msgBuffer.lonDeg;
+					dmsCord->lonMinutes = (double) msgBuffer.lonMin;
 					convertDMS_to_UTM( dmsCord, picCords[picNum] );
 					picCal[picNum] = 1;
 				}
@@ -149,17 +149,17 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		else if (calcState == 2){
 			//convert PIC rssi to dBW
 			
-			picDBW[0] = convert_rssi_to_db( msgBuffer.buf );
-			picDBW[1] = convert_rssi_to_db( msgBuffer.buf+1 ); //+1 when not M4
-			picDBW[2] = convert_rssi_to_db( msgBuffer.buf+2 ); //+2 when not M4
+			picDBW[0] = convert_rssi_to_db( msgBuffer.buf[0] );
+			picDBW[1] = convert_rssi_to_db( msgBuffer.buf[1] ); //+1 when not M4
+			picDBW[2] = convert_rssi_to_db( msgBuffer.buf[2] ); //+2 when not M4
 			
 			//Take the nmea data and put it into dmsCord here
-			sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
-			dmsCord->latDegrees = (int) latDeg;
-			dmsCord->latMinutes = (double) latMin;
+			//sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+			dmsCord->latDegrees = (int) msgBuffer.latDeg;
+			dmsCord->latMinutes = (double) msgBuffer.latMin;
 
-			dmsCord->lonDegrees = (int) lonDeg;
-			dmsCord->lonMinutes = (double) lonMin;
+			dmsCord->lonDegrees = (int) msgBuffer.lonDeg;
+			dmsCord->lonMinutes = (double) msgBuffer.lonMin;
 
 			//Convert to UTM to do ?? with it
 			convertDMS_to_UTM( dmsCord, utmNmea );
