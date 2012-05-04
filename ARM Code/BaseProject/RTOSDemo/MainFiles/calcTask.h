@@ -23,6 +23,13 @@ typedef struct __vtCalcMsg {
 	double lonMin;
 } vtCalcMsg;
 
+struct location {
+  int8_t lat_degrees;
+  int8_t lon_degrees;
+  float lat_minutes;
+  float lon_minutes;
+} __attribute__((__packed__));
+
 void vStartCalcTask( unsigned portBASE_TYPE uxPriority, vtCalcStruct *);
 
 #endif

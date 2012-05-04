@@ -112,6 +112,8 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	//LCD info
 	vtLCDStruct *lcdData = param->lcdData;
 	vtLCDMsg lcdBuffer;
+	//Struct for NMEA
+	struct location loc;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = i2cREAD_RATE_BASE / portTICK_RATE_MS;
@@ -253,12 +255,22 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 
 		strncpy((char*) PRead, (const char*) tempRead, 3);
+
+		 if (vtI2CEnQ(devPtr,0x02,0x1b,sizeof(readReg1),readReg1,10) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		if (vtI2CDeQ(devPtr,10,(uint8_t *) &loc,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
-		glatDeg = 0;
-		glatMin = 0.0;
-		glonDeg = 0;
-		glonMin = 0.0;
+		glatDeg = (int) loc.lat_degrees;
+		glatMin = (double) loc.lat_minutes;
+		glonDeg = (int) loc.lon_degrees;
+		glonMin = (double) loc.lon_minutes;
 		 
 		
 		
