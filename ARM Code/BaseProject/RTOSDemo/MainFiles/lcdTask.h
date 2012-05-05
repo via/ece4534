@@ -13,6 +13,7 @@ typedef struct __vtLCDStruct {
 typedef struct __vtLCDMsg {
 	uint8_t	length;	 // Length of the message to be printed
 	uint8_t buf[vtLCDMLen]; // On the way in, message to be sent, on the way out, message received (if any)
+	uint8_t line_num;
 } vtLCDMsg;
 
 void vStartLCDTask( unsigned portBASE_TYPE uxPriority, vtLCDStruct *);
