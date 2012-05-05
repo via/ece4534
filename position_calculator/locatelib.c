@@ -43,8 +43,6 @@ convertDMS_to_UTM(struct dms_coordinate *input_coordinate,
     double lon_rads = longitude * pi / (double)180;
 
     //Calculate final constants
-    double rho = equatorial * (1 - e_squared) / pow((1 - e_squared *
-          pow(sin(lat_rads), (double)2)), 1.5);
     double nu = equatorial / pow((1 - e_squared * pow(sin(lat_rads), 
             (double)2)), 0.5);
     double p = lon_rads - long0;
@@ -59,11 +57,12 @@ convertDMS_to_UTM(struct dms_coordinate *input_coordinate,
      (5 - pow(tan(lat_rads), 2) + 9 * e_prime_squared  * pow(cos(lat_rads), 2) + 
       4 * pow(e_prime_squared, 2) * pow(cos(lat_rads), 4)) * pow(p, 4);
 
-    output_coordinate->eastings = k0 * nu * cos(lat_rads) * p + 
+    output_coordinate->eastings = (k0 * nu * cos(lat_rads) * p) + 
       (k0 * nu * pow(cos(lat_rads), 3) / 6) * 
       (1 - pow(tan(lat_rads), 2) + e_prime_squared * pow(cos(lat_rads), 2)) * 
       pow(p, 3);
 
+    output_coordinate->eastings = -1*output_coordinate->eastings + 500000;
     return;
 }
 
