@@ -8,7 +8,7 @@ struct location {
   float lon_minutes;
 };
 
-int parse_nmea(struct location *loc, const char *nmea);
+int parse_nmea(struct location *loc, char *nmea);
 
 #endif
 
