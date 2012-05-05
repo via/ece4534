@@ -3,6 +3,7 @@
 #include "my_uart.h"
 #include <string.h>
 #include "my_miwi.h"
+#include "nmeaparser.h"
 
 static uart_comm *uc_ptr;
 
@@ -45,8 +46,12 @@ void uart_send_report(void) {
 }
 
 void uart_handle_packet(char *buf, int len) {
+   struct location l;
    if (linebufpos + len > 120) {
        DEBUG1 = 1;
+       linebufpos = 0;
+       return;
+
    }
 
    memcpy((void *)linebuf + linebufpos, (void *)buf, len);

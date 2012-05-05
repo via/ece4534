@@ -2,7 +2,6 @@
 #include "maindefs.h"
 #include <stdio.h>
 #include <usart.h>
-
 #include <i2c.h>
 #include <timers.h>
 #include "interrupts.h"
@@ -18,7 +17,7 @@
 #include "WirelessProtocols/MCHP_API.h"
 
 
-#pragma config WDTEN = OFF
+#pragma config WDTEN = ON
 #pragma config WDTPS = 64 //About 1/4 second
 #pragma config OSC = HS
 #pragma config XINST = ON
@@ -111,21 +110,24 @@ void main (void)
     
     while(1) {
         /* Clear Watchdog */
+        #ifndef MOBILEUNIT
         _asm
             CLRWDT
         _endasm
+        #endif
+
 
         block_on_To_msgqueues();
         length = ToMainHigh_recvmsg(MSGLEN,&msgtype,(void *) msgbuffer);
         if (length != MSGQUEUE_EMPTY)
             switch (msgtype) {
                 case MSGT_TIMER4:
+                    _asm
+                        CLRWDT
+                    _endasm
                     uart_send_report(); /* Send miwi message with uart string */
                     break;
 #ifndef MOBILEUNIT
-                case MSGT_MIWI:
-                    handlePacket();
-                    break;
                 case MSGT_I2C_DATA:
                     last_reg_recvd = msgbuffer[0];
                     break;
@@ -134,6 +136,7 @@ void main (void)
                     start_i2c_slave_reply(length, msgbuffer);
                     break;
 #endif
+                continue;
             }
         length = ToMainLow_recvmsg(MSGLEN,&msgtype,(void *) msgbuffer);
         if (length != MSGQUEUE_EMPTY)

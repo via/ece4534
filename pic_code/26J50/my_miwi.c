@@ -5,11 +5,13 @@
 #include "messages.h"
 #include "WirelessProtocols/MCHP_API.h"
 #include "WirelessProtocols/MiWi/MiWi.h"
+#include "nmeaparser.h"
 
 static char cur_gps_string[120];
 static char final_rssi_values[3];
 static char rssi_queue[8];
 static int cur_rssi_pos = 0;
+struct location l = {0};
 
 void initMiwi() {
   
@@ -51,6 +53,7 @@ void initMiwi() {
     MIWI_STATUS = MiApp_ProtocolInit(FALSE);
 
     MiApp_SetChannel(24);
+    MiMAC_SetPower(36);
    
 
     
@@ -75,10 +78,16 @@ void handlePacket(void) {
 
 /* For whateve rreason, 0x0D is the offset into the payload of the actual payload */
         
-
+        static int txcounter = 0;
         if (MACRxPacket.Payload[0x0D] == '$') {/* This is a GPS string from Mobile Board */
-            memcpy((void*)cur_gps_string, (void*)&MACRxPacket.Payload[0x0D], MACRxPacket.PayloadLen - 0x0D);
-            record_new_rssi(MACRxPacket.RSSIValue);
+            if (MACRxPacket.PayloadLen - 0x0D < 120) {
+                memcpy((void*)cur_gps_string, (void*)&MACRxPacket.Payload[0x0D], MACRxPacket.PayloadLen - 0x0D);
+                cur_gps_string[MACRxPacket.PayloadLen - 0x0D] = '\0';
+                if (txcounter++ % 8 == 0) {
+                    parse_nmea(&l, cur_gps_string);
+                }
+                record_new_rssi(MACRxPacket.RSSIValue);
+            }
         } else if ( MACRxPacket.Payload[0x0D] == 0x00 ||
                     MACRxPacket.Payload[0x0D] == 0x01 ||
                     MACRxPacket.Payload[0x0D] == 0x02 ) {
@@ -120,4 +129,8 @@ void get_all_rssi(unsigned char* msgbuffer) {
     msgbuffer[0] = final_rssi_values[0];
     msgbuffer[1] = final_rssi_values[1];
     msgbuffer[2] = final_rssi_values[2];
+}
+
+struct location * get_location() {
+    return &l;
 }
