@@ -36,8 +36,6 @@ main()
 {
 
   struct utm_coordinate nodepos[3];
-  const struct utm_coordinate *nodepos_p[3] = 
-  { &nodepos[0], &nodepos[1], &nodepos[2] };
   struct utm_coordinate newpos;
   uint8_t rssi[3];
   int i;
@@ -76,7 +74,7 @@ main()
       *
       */
      for( i = 0; i < 10; i++) {                 
-       location_gradient_descent(nodepos_p, distances, &newpos, 0.01); 
+       location_gradient_descent(nodepos, distances, &newpos, 0.01); 
        printf("%f %f\n", newpos.eastings, newpos.northings);
      }
    }
