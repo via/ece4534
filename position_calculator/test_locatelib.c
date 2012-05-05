@@ -71,9 +71,10 @@ main()
        distances[i] = distance_to_transmitter(r_db,
            -30, 3, 3,  2400000000);
      }
-                      
-     location_gradient_descent(nodepos_p, distances, &newpos, 0.01); 
-     printf("%f %f\n", newpos.eastings, newpos.northings);
+     for( i = 0; i < 10; i++) {                 
+       location_gradient_descent(nodepos_p, distances, &newpos, 0.01); 
+       printf("%f %f\n", newpos.eastings, newpos.northings);
+     }
    }
 
    exit(EXIT_SUCCESS);
