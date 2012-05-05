@@ -69,7 +69,7 @@ main()
        double r_db;
        r_db = convert_rssi_to_db(rssi[i]);
        distances[i] = distance_to_transmitter(r_db,
-           -30, 3, 3,  2400000);
+           -30, 3, 3,  2400000000);
      }
                       
      location_gradient_descent(nodepos_p, distances, &newpos, 0.01); 
