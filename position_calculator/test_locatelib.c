@@ -4,7 +4,7 @@
 
 #include "locatelib.h"
 
-static const char *dms_coord_format = "%d %f %d %f\n";
+static const char *dms_coord_format = "%d %lf %d %lf\n";
 
 static int
 input_receiver_position(struct utm_coordinate *p)
@@ -67,7 +67,7 @@ main()
        double r_db;
        r_db = convert_rssi_to_db(rssi[i]);
        distances[i] = distance_to_transmitter(r_db,
-           0.001, 3, 3,  2400000);
+           -30, 3, 3,  2400000);
      }
                       
      location_gradient_descent(nodepos_p, distances, &newpos, 0.1); 
