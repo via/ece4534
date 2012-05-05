@@ -94,7 +94,7 @@ distance_to_transmitter(const double power_received,
 }
 
 void 
-location_gradient_descent(const struct utm_coordinate **receiver_positions, 
+location_gradient_descent(const struct utm_coordinate *receiver_positions, 
                           const double *distance_data, 
                           struct utm_coordinate *current_position, 
                           const double stepsize)
@@ -106,14 +106,14 @@ location_gradient_descent(const struct utm_coordinate **receiver_positions,
     for(i = 0; i < 3; i++)
     {
         K = sqrt(pow(current_position->eastings - 
-              receiver_positions[i]->eastings, 2) + 
+              receiver_positions[i].eastings, 2) + 
               pow(current_position->northings - 
-              receiver_positions[i]->northings,2) );
+              receiver_positions[i].northings, 2) );
 
         x_dev += (distance_data[i] - K) * (-1 / (2 * K)) * 
-          (-2 * current_position->eastings + 2 * receiver_positions[i]->eastings);
+          (-2 * current_position->eastings + 2 * receiver_positions[i].eastings);
         y_dev += (distance_data[i] - K) * (-1 / (2 * K)) * 
-          (-2 * current_position->northings + 2 * receiver_positions[i]->northings);
+          (-2 * current_position->northings + 2 * receiver_positions[i].northings);
 
         current_position->northings += 2 * y_dev * stepsize;
         current_position->eastings += 2 * x_dev * stepsize;
