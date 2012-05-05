@@ -1,5 +1,17 @@
 #include "locatelib.h"
 
+void
+distance_and_bearing( struct utm_coordinate* reference, struct utm_coordinate* target, double* distance, double* bearing)
+{
+    const double pi              = 3.14159265359;
+    double n_diff = target->northings - reference->northings;
+    double e_diff = target->eastings - reference->eastings;
+    *distance = pow( pow(n_diff,2)+pow(e_diff,2), 0.5 );
+    *bearing = (180/pi)*acos(n_diff/(*distance));
+    *bearing = (90 - *bearing);
+    *bearing += *bearing < 0 ? 360 : 0;
+}
+
 double 
 convert_rssi_to_db(uint8_t rssi_value)
 {
@@ -19,18 +31,14 @@ convertDMS_to_UTM(struct dms_coordinate *input_coordinate,
      */
     //Constants defined
     const double equatorial      = 6378137;
-    const double polar           = 6356752.3142;
-    const double flattening      = 1/298.257223563;
     const double pi              = 3.14159265359;
     const double k0              = 0.9996;
-    const double e               = 0.0818191909334;
     const double e_squared       = 0.006694380005;
     const double A               = 6367449.14594;
     const double B               = -16038.5083688;
     const double C               = 16.83222008030;
     const double D               = -0.0218007663577;
     const double e_prime_squared = 0.00673949675732;
-    const double n               = 0.00167922038994;
     const double long0           = 1.41371669412;
 
     //Convert to radians

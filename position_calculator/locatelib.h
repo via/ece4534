@@ -21,6 +21,11 @@ struct utm_coordinate {
     double  eastings;
     double  northings;
 };
+/*distance_and_bearing
+ * 
+ * Calculate the distance and bearing between two UTM coordinates
+ */
+void distance_and_bearing( struct utm_coordinate* reference, struct utm_coordinate* target, double* distance, double* bearing);
 
 /*convert_rssi_to_db
  *
