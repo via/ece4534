@@ -56,6 +56,8 @@ main()
    for (i = 0; i < 3; ++i) {
      if (input_receiver_position(&nodepos[i]) < 0)
        exit(EXIT_FAILURE);
+     /* We print out the three nodes so the graph will show them */
+     printf("%f %f\n", nodepos[i].eastings, nodepos[i].northings);
    }
 
    if (input_receiver_position(&newpos) < 0)
@@ -70,7 +72,7 @@ main()
            -30, 3, 3,  2400000);
      }
                       
-     location_gradient_descent(nodepos_p, distances, &newpos, 0.1); 
+     location_gradient_descent(nodepos_p, distances, &newpos, 0.01); 
      printf("%f %f\n", newpos.eastings, newpos.northings);
    }
 

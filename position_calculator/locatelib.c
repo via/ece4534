@@ -104,8 +104,9 @@ location_gradient_descent(const struct utm_coordinate **receiver_positions,
           (-2 * current_position->eastings + 2 * receiver_positions[i]->eastings);
         y_dev += (distance_data[i] - K) * (-1 / (2 * K)) * 
           (-2 * current_position->northings + 2 * receiver_positions[i]->northings);
+
+        current_position->northings += 2 * y_dev * stepsize;
+        current_position->eastings += 2 * x_dev * stepsize;
     }
 
-    current_position->northings += 2 * y_dev * stepsize;
-    current_position->eastings += 2 * x_dev * stepsize;
 }
