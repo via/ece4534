@@ -28,7 +28,7 @@
 #define MIWI_TX LATAbits.LATA0
 #define MIWI_STATUS LATAbits.LATA1
 
-#define BOARDNO 1
-
+#define BOARDNO 2
+//#define MOBILEUNIT
 #endif
 

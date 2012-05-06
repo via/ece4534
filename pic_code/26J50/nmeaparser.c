@@ -5,7 +5,7 @@
 #include "nmeaparser.h"
 
 /* Example NMEA string 
- * $GPGGA,152521.000,3713.9N,08025.3994,W,1,7,1.11,640.4,M,-32.8,M,,*65
+ * $GPGGA,152521.000,3713.9,N,08025.3994,W,1,7,1.11,640.4,M,-32.8,M,,*65
  */
 
 static int
@@ -69,7 +69,7 @@ parse_nmea(struct location *loc, char *nmea)
   if (*(comma2 + 1) == 'S')
     loc->lat_degrees = -loc->lat_degrees;
 
-  strncpy(lat_minutes, comma + 2, comma2 - comma);
+  strncpy(lat_minutes, comma + 2, comma2 - comma - 2);
   lat_minutes[comma2 - comma] = '\0';
 
   loc->lat_minutes = atof(lat_minutes);
@@ -83,7 +83,7 @@ parse_nmea(struct location *loc, char *nmea)
   if (*(comma2 + 1) == 'E')
     loc->lon_degrees = -loc->lon_degrees;
 
-  strncpy(lon_minutes, comma + 3, comma2 - comma);
+  strncpy(lon_minutes, comma + 3, comma2 - comma - 3);
   lon_minutes[comma2 - comma] = '\0';
 
   loc->lon_minutes = atof(lon_minutes);
@@ -91,23 +91,3 @@ parse_nmea(struct location *loc, char *nmea)
   return 0;
 
 }
-
-
-int
-main()
-{
-
-  char *string = "$GPGGA,185624.000,3713.9223,N,08025.4061,W,1,7,1.09,642.4,M,-32.8,M,,*6D";
-
-  struct location l;
-
-  if (parse_nmea(&l, string) < 0) {
-    printf("Invalid nmea string!\n");
-    exit(EXIT_FAILURE);
-  }
-
-  printf("%d %f  %d %f\n", l.lat_degrees, l.lat_minutes, l.lon_degrees, l.lon_minutes);
-
-  return 0;
-}
-

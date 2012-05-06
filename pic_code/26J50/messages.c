@@ -250,10 +250,15 @@ void block_on_To_msgqueues()
 
 	MQ_Main_Willing_to_block = 1;
 	while (1) {
+#ifndef MOBILEUNIT
         if (MiMAC_ReceivedPacket()) {
             handlePacket();
             return;
         }
+#else
+		if (MiMAC_ReceivedPacket())
+            MiMAC_DiscardPacket();
+#endif
 		if (check_msg(&ToMainHigh_MQ)) {
 			MQ_Main_Willing_to_block = 0;
 			return;

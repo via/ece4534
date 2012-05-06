@@ -4,6 +4,7 @@
 #include "messages.h"
 #include "my_miwi.h"
 #include "WirelessProtocols/MiWi/MiWi.h"
+#include "my_i2c.h"
 
 //----------------------------------------------------------------------------
 // Note: This code for processing interrupts is configured to allow for high and
@@ -125,4 +126,8 @@ void UserInterruptHandler() {
           ToMainHigh_sendmsg(0, MSGT_TIMER4, 0);
 	}
 
+    if (PIR1bits.SSP1IF) {
+        PIR1bits.SSP1IF = 0;
+        i2c_int_handler();
+    }
 }
