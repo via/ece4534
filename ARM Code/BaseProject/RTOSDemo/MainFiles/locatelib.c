@@ -7,7 +7,7 @@ distance_and_bearing( struct utm_coordinate* reference, struct utm_coordinate* t
     double n_diff = target->northings - reference->northings;
     double e_diff = target->eastings - reference->eastings;
     *distance = pow( pow(n_diff,2)+pow(e_diff,2), 0.5 );
-    *bearing = (180/pi)*acos(n_diff/(*distance));
+    *bearing = (180/pi)*asin(n_diff/(*distance));
     if( e_diff > 0 ){
         *bearing = 90 - *bearing;
     }else{

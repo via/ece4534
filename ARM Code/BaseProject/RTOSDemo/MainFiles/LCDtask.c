@@ -158,7 +158,10 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 			LCD_STATE = 3;		
 		}
 		else {
+			char buf[21];
+			sprintf(buf, "%4.6f, %4.6f", msgBuffer.tlat, msgBuffer.tlon);
 			GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+			GLCD_DisplayString(1,0,1,(unsigned char *) buf);
 		}
 	}
 	else if (LCD_STATE == 3){

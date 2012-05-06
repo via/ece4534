@@ -272,8 +272,19 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		glonDeg = (int) loc.lon_degrees;
 		glonMin = (double) loc.lon_minutes;
 		 
-		
-		
+		if(glatDeg < 30 || glatDeg > 40){
+			GPIO_SetValue(1, 0x80000000);
+			continue;
+		}
+		else if(glonDeg < 75 || glonDeg > 90){
+			GPIO_SetValue(1, 0x80000000);
+			continue;
+		}
+		else{
+		 	GPIO_ClearValue(1, 0x80000000);
+		}
+		lcdBuffer.tlat = (double) glatDeg + (glatMin / 60.0);
+		lcdBuffer.tlon = (double) glonDeg + (glonDeg / 60.0);
 		//Begin i2c state machine
 		if (i2c_State == 1){
 			//i2c read from lcd to see if interrupt triggered
@@ -317,13 +328,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					lonMin = 0.0;
 					avgCount = 0;
 					sprintf((char*)(lcdBuffer.buf),"Calibrating Node #%d", numCal);
-					if (lcdData != NULL) {
-						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-							VT_HANDLE_FATAL_ERROR(0);
-						}
-					}
+					
 				}
 
 				//clear LCD interrupt
@@ -334,6 +339,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
+			if (lcdData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
 		}
 		else if (i2c_State == 2){
 			if (avgCount < 10){

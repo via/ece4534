@@ -80,10 +80,10 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	}
 	struct utm_coordinate utmTx; //utm for transmitter
 	
-	const double pwr_tx = -60.0; //constant for power transmitted
+	const double pwr_tx = -30.0; //constant for power transmitted
 	const double rc_gain = 3.0; //constant for recieve gain
 	const double tx_gain = 3.0; //constant for transmit gain
-	const double freq = 2.4e9; //const for frequency
+	const double freq = 2.47e9; //const for frequency
 	static const double stepSize = 0.01;
 
 	// Scale the update rate to ensure it really is in ms
@@ -177,7 +177,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			distance_and_bearing(&picCords[0], &utmTx, &node0Dist, &node0Bear);
 			distance_and_bearing(utmNmea, &utmTx, &gpsDist, &gpsBear);
 
-			sprintf((char*)(lcdBuffer.buf),"%6.2f N %6.2f E", utmTx.northings, utmTx.eastings);
+			sprintf((char*)(lcdBuffer.buf),"%6d N %6d E", (int)utmTx.northings, (int)utmTx.eastings);
 			lcdBuffer.line_num = 0;
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -185,7 +185,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m", node0Bear, node0Dist);
+			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m     ", node0Bear, node0Dist);
 			lcdBuffer.line_num = 2;
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -193,7 +193,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			sprintf((char*)(lcdBuffer.buf),"%4.2f N %4.2f E", utmNmea->northings, utmNmea->eastings);
+			sprintf((char*)(lcdBuffer.buf),"%6d N %6d E", (int)utmNmea->northings, (int)utmNmea->eastings);
 			lcdBuffer.line_num = 4;
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -201,7 +201,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m", gpsBear, gpsDist);
+			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m     ", gpsBear, gpsDist);
 			lcdBuffer.line_num = 6;
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
@@ -210,16 +210,20 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				}
 			}
 
-			/*fileBuffer.buf[0] = '\xCA';
+			fileBuffer.buf[0] = '\xCA';
 			fileBuffer.buf[1] = '\xFE';
-			sprintf((char*)(fileBuffer.buf + 2), "%7.3f %7.3f %7.3f %7.3f",
-					utmTx.eastings, utmTx.northings, utmNmea->eastings, utmNmea->northings);
+			//sprintf((char*)fileBuffer.buf + 2, "%7.3f %7.3f %7.3f %7.3f",
+			//		utmTx.eastings, utmTx.northings, utmNmea->eastings, utmNmea->northings);
+			fileBuffer.e_calc = utmTx.eastings;
+			fileBuffer.n_calc = utmTx.northings;
+			fileBuffer.e_actual = utmNmea->eastings;
+			fileBuffer.n_actual = utmNmea->northings;
 			if (fileData != NULL) {
 				fileBuffer.length = strlen((char*)(fileBuffer.buf))+1;
-				if (xQueueSend(lcdData->inQ,(void *) (&fileBuffer),portMAX_DELAY) != pdTRUE) {
+				if (xQueueSend(fileData->inQ,(void *) (&fileBuffer),portMAX_DELAY) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
-			} */
+			}
 		}  
 		#if USE_GPIO == 1
 		GPIO_ClearValue(1, 0x80000000);
