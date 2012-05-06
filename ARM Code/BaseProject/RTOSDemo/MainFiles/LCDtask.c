@@ -125,6 +125,7 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	const char line_2[] = "Bearing from #0";
 	const char line_4[] = "GPS";
 	const char line_6[] = "Bearing from GPS";
+	const char line_8[] = "RSSI [0, 1, 2]";
 	int initial = 0;
 
 	// Scale the update rate to ensure it really is in ms
@@ -186,33 +187,10 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 			GLCD_DisplayString(2, 0, 1, (unsigned char *)line_2);
 			GLCD_DisplayString(4, 0, 1, (unsigned char *)line_4);
 			GLCD_DisplayString(6, 0, 1, (unsigned char *)line_6);
+			GLCD_DisplayString(8, 0, 1, (unsigned char *)line_8);
 			initial++;
 		}
-		switch(msgBuffer.line_num){
-			case(0):
-				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
-				break;
-			case(2):
-				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
-				break;
-			case(4):
-				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
-				break;
-			case(6):
-				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
-				break;
-			default:
-				break;
-		}
-		
-
-		/*if (counter <= 3){
-			counter++;	
-		}
-		else {
-			counter = 0;
-		}
-		*/
+		GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
 		#if USE_GPIO == 1
 		GPIO_ClearValue(1, 0x20000000);
 		#endif

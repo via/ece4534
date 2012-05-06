@@ -209,6 +209,14 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
+			sprintf((char*)(lcdBuffer.buf),"%d, %d, %d", msgBuffer.buf[0], msgBuffer.buf[1], msgBuffer.buf[2]);
+			lcdBuffer.line_num = 8;
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
 
 			fileBuffer.buf[0] = '\xCA';
 			fileBuffer.buf[1] = '\xFE';
