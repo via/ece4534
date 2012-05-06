@@ -13,7 +13,7 @@
 #include "vtI2C.h"
 
 #include "lpc17xx_gpio.h"
-#define USE_GPIO 1
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the LCD operations
@@ -24,7 +24,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define lcdWRITE_RATE_BASE	( ( portTickType ) 3000 )
+#define lcdWRITE_RATE_BASE	( ( portTickType ) 1000 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vLCDUpdateTask, pvParameters );
@@ -116,10 +116,16 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
 	//counter for line display
-	uint8_t counter = 0;
+	//uint8_t counter = 0;
 	/* Initialize the LCD */
 	GLCD_Init();
 	GLCD_Clear(White);
+
+	const char line_0[] = "Calc. Position";
+	const char line_2[] = "Bearing from #0";
+	const char line_4[] = "GPS";
+	const char line_6[] = "Bearing from GPS";
+	int initial = 0;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = lcdWRITE_RATE_BASE / portTICK_RATE_MS;
@@ -152,7 +158,10 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 			LCD_STATE = 3;		
 		}
 		else {
+			char buf[21];
+			sprintf(buf, "%4.6f, %4.6f", msgBuffer.tlat, msgBuffer.tlon);
 			GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+			GLCD_DisplayString(1,0,1,(unsigned char *) buf);
 		}
 	}
 	else if (LCD_STATE == 3){
@@ -172,14 +181,38 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
 
-		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
+		if(!initial){
+			GLCD_DisplayString(0, 0, 1, (unsigned char *)line_0);
+			GLCD_DisplayString(2, 0, 1, (unsigned char *)line_2);
+			GLCD_DisplayString(4, 0, 1, (unsigned char *)line_4);
+			GLCD_DisplayString(6, 0, 1, (unsigned char *)line_6);
+			initial++;
+		}
+		switch(msgBuffer.line_num){
+			case(0):
+				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
+				break;
+			case(2):
+				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
+				break;
+			case(4):
+				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
+				break;
+			case(6):
+				GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
+				break;
+			default:
+				break;
+		}
+		
 
-		if (counter <= 3){
+		/*if (counter <= 3){
 			counter++;	
 		}
 		else {
 			counter = 0;
 		}
+		*/
 		#if USE_GPIO == 1
 		GPIO_ClearValue(1, 0x20000000);
 		#endif

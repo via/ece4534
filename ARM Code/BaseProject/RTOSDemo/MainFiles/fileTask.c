@@ -17,8 +17,8 @@
 #include "webdata.h"
 #include "lpc17xx_gpio.h"
 
-#define MILESTONE_FILE 1
-#define USE_GPIO 1
+#define MILESTONE_FILE 0
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -115,11 +115,14 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		#endif
 		
 		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
-			float e_calc, n_calc, e_actual, n_actual;
+			double e_calc, n_calc, e_actual, n_actual;
 			// sscanf the values needed
-			sscanf((char*)msgBuffer.buf + 2, "%f %f %f %f", 
-					&e_calc, &n_calc, &e_actual, &n_actual);
-			
+			//sscanf((char*)msgBuffer.buf + 2, "%f %f %f %f", 
+			//		&e_calc, &n_calc, &e_actual, &n_actual);
+			e_calc = msgBuffer.e_calc;
+			n_calc = msgBuffer.n_calc;
+			e_actual = msgBuffer.e_actual;
+			n_actual = msgBuffer.n_actual;
 			// sprintf to buffer to line formatted as needed
 			BYTE line[64];
 			sprintf((char*)line, "%7.3f\t%7.3f\t%7.3f\t%7.3f\n",
@@ -129,7 +132,7 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 			//BYTE buf[64];
 			//rc = F_Read(buf, sizeof(buf), FilePath);
 			if(xSemaphore != NULL){
-				if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
+				if(xSemaphoreTake( xSemaphore, (portTickType) 50) == pdTRUE ){
 					// write new line to file
 					FRESULT rc;			
 					rc = F_Write((BYTE*)line, strlen((char*)line), FilePath, 1);

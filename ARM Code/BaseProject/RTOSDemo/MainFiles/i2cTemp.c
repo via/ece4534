@@ -27,7 +27,7 @@
 // Set the task up to run every second (need to modify this to poll more often from the adc)
 #define i2cREAD_RATE_BASE	( ( portTickType ) 1000)
 
-#define USE_GPIO 1
+#define USE_GPIO 0
 
 /* The i2cTemp task. */
 static portTASK_FUNCTION_PROTO( vi2cTempUpdateTask, pvParameters );
@@ -112,13 +112,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 	//LCD info
 	vtLCDStruct *lcdData = param->lcdData;
 	vtLCDMsg lcdBuffer;
+	//Struct for NMEA
+	struct location loc;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = i2cREAD_RATE_BASE / portTICK_RATE_MS;
 
 	/* We need to initialise xLastUpdateTime prior to the first call to vTaskDelayUntil(). */
 	xLastUpdateTime = xTaskGetTickCount();
-	
+
 	//Begin touchscreen initialization
 	if (vtI2CEnQ(tscPtr,0x01,0x41,sizeof(TSC_INIT_1),TSC_INIT_1,0) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
@@ -233,6 +235,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 							VT_HANDLE_FATAL_ERROR(0);
 						}
 					}
+
 	// Like all good tasks, this should never exit
 	for(;;)
 	{
@@ -243,15 +246,45 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		GPIO_SetValue(2, 0x00000008);
 		#endif
 		//Do requests from PIC0 and processing of data here
+		if (vtI2CEnQ(devPtr,0x02,0x1b,sizeof(readReg0),readReg0,3) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		if (vtI2CDeQ(devPtr,3,tempRead,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		strncpy((char*) PRead, (const char*) tempRead, 3);
+
+		 if (vtI2CEnQ(devPtr,0x02,0x1b,sizeof(readReg1),readReg1,10) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+		
+		if (vtI2CDeQ(devPtr,10,(uint8_t *) &loc,&rxLen,&status) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
+
+		
 		//nmeaString will be formatted later, for now sprintf the nmea into 
 		//glatDeg, glatMin, glonDeg, glonMin
-		glatDeg = 0;
-		glatMin = 0.0;
-		glonDeg = 0;
-		glonMin = 0.0;
+		glatDeg = (int) loc.lat_degrees;
+		glatMin = (double) loc.lat_minutes;
+		glonDeg = (int) loc.lon_degrees;
+		glonMin = (double) loc.lon_minutes;
 		 
-		
-		
+		if(glatDeg < 30 || glatDeg > 40){
+			GPIO_SetValue(1, 0x80000000);
+			continue;
+		}
+		else if(glonDeg < 75 || glonDeg > 90){
+			GPIO_SetValue(1, 0x80000000);
+			continue;
+		}
+		else{
+		 	GPIO_ClearValue(1, 0x80000000);
+		}
+		lcdBuffer.tlat = (double) glatDeg + (glatMin / 60.0);
+		lcdBuffer.tlon = (double) glonDeg + (glonDeg / 60.0);
 		//Begin i2c state machine
 		if (i2c_State == 1){
 			//i2c read from lcd to see if interrupt triggered
@@ -295,13 +328,7 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					lonMin = 0.0;
 					avgCount = 0;
 					sprintf((char*)(lcdBuffer.buf),"Calibrating Node #%d", numCal);
-					if (lcdData != NULL) {
-						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
-						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-							VT_HANDLE_FATAL_ERROR(0);
-						}
-					}
+					
 				}
 
 				//clear LCD interrupt
@@ -312,6 +339,13 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
+			if (lcdData != NULL) {
+						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
 		}
 		else if (i2c_State == 2){
 			if (avgCount < 10){
@@ -324,12 +358,15 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 				avgCount = avgCount + 1;
 			}
 			else {
-				sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", latDeg, latMin, lonDeg, lonMin);
+				//sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", latDeg, latMin, lonDeg, lonMin);
 				calcBuffer.buf[0] = 12;
 				calcBuffer.buf[1] = 11;
 				calcBuffer.buf[2] = numCal;
 					//screen triggered, do passing of things to calc
-					strncpy((char *)calcBuffer.buf+3, (const char *) nmeaString, 6);
+					calcBuffer.latDeg = latDeg;
+					calcBuffer.latMin = latMin;
+					calcBuffer.lonDeg = lonDeg;
+					calcBuffer.lonMin = lonMin;
 					if (calcData != NULL) {
 						// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 						calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
@@ -371,7 +408,10 @@ static portTASK_FUNCTION( vi2cTempUpdateTask, pvParameters )
 		}
 		else if (i2c_State == 3){													
 			strncpy((char*) calcBuffer.buf, (const char*) PRead, 3);
-			sprintf((char*) (calcBuffer.buf+3), "%d %4.3f %d %4.3f", glatDeg, glatMin, glonDeg, glonMin);	
+			calcBuffer.latDeg = glatDeg;
+			calcBuffer.latMin = glatMin;
+			calcBuffer.lonDeg = glonDeg;
+			calcBuffer.lonMin = glonMin;	
 			if (calcData != NULL) {
 				// Send a message to the calc task for it to print (and the calc task must be configured to receive this message)
 				calcBuffer.length = strlen((char*)(calcBuffer.buf))+1;
