@@ -59,4 +59,12 @@ ans =  23.831
 ans =  43.016
 >>> mean(pic(:,1))
 ans =  7.2690
+>>> total = csvread('./Total-Current.csv');
+>>> plot([1:2000],total([1:2000],1))
+>>> xlabel("Sample Point")
+>>> ylabel("Current Magnitude, mA")
+>>> title("Current Draw of Mobile Board, 2000 Sample Points")
+>>> print -dpng "Total-Current.png"
+>>> mean(total(:,1))
+ans =  61.544
 >>>
