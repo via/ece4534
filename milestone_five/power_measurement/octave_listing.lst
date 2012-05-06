@@ -1,0 +1,62 @@
+Starting Octave...
+GNU Octave, version 3.4.3
+Copyright (C) 2011 John W. Eaton and others.
+This is free software; see the source code for copying conditions.
+There is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  For details, type `warranty'.
+
+Octave was configured for "x86_64-redhat-linux-gnu".
+
+Additional information about Octave is available at http://www.octave.org.
+
+Please contribute if you find this software useful.
+For more information, visit http://www.octave.org/help-wanted.html
+
+Read http://www.octave.org/bugs.html to learn how to submit bug reports.
+
+For information about changes from previous versions, type `news'.
+
+>>> cd "/home/mitchd/Documents/ClassFiles/ece4534/position_calculator"
+>>> cd "/home/mitchd/Documents/ClassFiles/ece4534"
+>>> cd "/home/mitchd/Documents/ClassFiles/ece4534/milestone_five"
+>>> cd "/home/mitchd/Documents/ClassFiles/ece4534/milestone_five/power_measurem
+ent"
+>>> miwi = csvread('./MiWi-0dB-LED-10_100.csv');
+>>> clear
+>>> miwi = csvread('./MiWi-0dB-LED-10_100.csv');
+>>> plot([1:2000],miwi(:,1))
+>>> xlabel("Sample Point")
+>>> ylabel("Current Magnitude, mA")
+>>> title("Current Draw of MiWi @ 0dB and LEDs at 10% Duty Cycle, 2000 Sample P
+oints")
+>>> print -dpng "MiWi-Current.png"
+>>> pic = csvread('./PIC-20Mhz-555.csv');
+>>> plot([1:2000],pic(:,1))
+>>> xlabel("Sample Point")
+>>> ylabel("Current Magnitude, mA")
+>>> title("Current Draw of PIC18F26J50 at 20MHz and NXP 7555C Low-Current 555 T
+imer, 2000 Sample Points")
+>>> print -dpng "PIC-Current.png"
+>>> gps_run = csvread('./GPS-Running-LCD-Reset.csv');
+>>> plot([1:2000],gps_run(:,1))
+>>> xlabel("Sample Point")
+>>> ylabel("Current Magnitude, mA")
+>>> title("Current Draw of FastTrack GPS in Run Mode and LCD in Reset, 2000 Sam
+ple Points")
+>>> print -dpng "GPS-Running-Current.png"
+>>> gps = csvread('./GPS-Search-LCD-Reset.csv');
+>>> plot([1:2000],gps([1:2000],1))
+>>> xlabel("Sample Point")
+>>> ylabel("Current Magnitude, mA")
+>>> title("Current Draw of FastTrack GPS in Search Mode and LCD in Reset, 2000 
+Sample Points")
+>>> print -dpng "GPS-Search-Current.png"
+>>> mean(gps_run(:,1))
+ans =  19.099
+>>> mean(gps(:,1))
+ans =  23.831
+>>> mean(miwi(:,1))
+ans =  43.016
+>>> mean(pic(:,1))
+ans =  7.2690
+>>>
