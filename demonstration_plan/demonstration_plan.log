@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2012.4.10)  24 APR 2012 09:27
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2012.4.10)  6 MAY 2012 22:20
 entering extended mode
  %&-line parsing enabled.
 **demonstration_plan.tex
@@ -312,39 +312,71 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 )
 (/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2002/01/22 v2.2d
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/share/texmf/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2007/01/08 v0.04d Graphics/color for pdfTeX
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
 ) (./demonstration_plan.aux)
 \openout1 = `demonstration_plan.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+<Overall_Poster_BD.png, id=1, 845.40843pt x 597.73312pt>
+File: Overall_Poster_BD.png Graphic file (type png)
 
-[1
+<use Overall_Poster_BD.png>
+Overfull \hbox (77.70317pt too wide) in paragraph at lines 11--12
+[][] 
+ []
 
-{/usr/share/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(./demonstration_plan.aux) ) 
+[1{/usr/share/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+ <./Overall_Poster_BD.png>] [2] [3] (./demonstration_plan.aux) ) 
 Here is how much of TeX's memory you used:
- 1267 strings out of 256216
- 13101 string characters out of 1917072
- 64636 words of memory out of 1500000
- 4597 multiletter control sequences out of 10000+200000
- 4245 words of font info for 16 fonts, out of 1200000 for 2000
+ 1628 strings out of 256216
+ 17657 string characters out of 1917072
+ 70905 words of memory out of 1500000
+ 4933 multiletter control sequences out of 10000+200000
+ 5504 words of font info for 20 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
- 27i,4n,22p,235b,153s stack positions out of 5000i,500n,6000p,200000b,15000s
-</usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb
-></usr/share/texmf/fonts/type1/bluesky/cm/cmr10.pfb>
-Output written on demonstration_plan.pdf (1 page, 19712 bytes).
+ 27i,6n,22p,241b,244s stack positions out of 5000i,500n,6000p,200000b,15000s
+</usr/share/tex
+mf/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/c
+mr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmti10.pfb>
+Output written on demonstration_plan.pdf (3 pages, 51214 bytes).
 PDF statistics:
- 14 PDF objects out of 1000 (max. 8388607)
+ 25 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
