@@ -144,7 +144,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>(105=697,204,1366,551,0)(106=610,461,1366,768,0)(107=1036,563,1366,741,0)</Name>
+          <Name>(105=697,204,1366,551,0)(106=602,444,1358,747,0)(107=1036,563,1366,741,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -162,6 +162,38 @@
           <Name>-UM0357MBE -O974 -S8 -C0 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO3 -TC100000000 -TP21 -TDS804F -TDT0 -TDC10 -TIE1 -TIP0 -FO23 -FD10000000 -FC800 -FN1 -FF0LPC_IAP_512 -FS00 -FL080000</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>110</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>10866</Address>
+          <ByteObject>0</ByteObject>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\RTOSDemo\MainFiles/calcTask.c\110</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>127</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>11014</Address>
+          <ByteObject>0</ByteObject>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename></Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\RTOSDemo\MainFiles/calcTask.c\127</Expression>
+        </Bp>
+      </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -210,7 +242,7 @@
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>1</aSer4>
+        <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -248,8 +280,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>839</TopLine>
+      <CurrentLine>851</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Source/queue.c</PathWithFileName>
       <FilenameWithoutPath>queue.c</FilenameWithoutPath>
@@ -262,8 +294,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>1973</TopLine>
+      <CurrentLine>1984</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Source/tasks.c</PathWithFileName>
       <FilenameWithoutPath>tasks.c</FilenameWithoutPath>
@@ -295,10 +327,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>85</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>211</TopLine>
-      <CurrentLine>217</CurrentLine>
+      <TopLine>187</TopLine>
+      <CurrentLine>198</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -309,10 +341,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>42</ColumnNumber>
+      <ColumnNumber>61</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>24</TopLine>
-      <CurrentLine>28</CurrentLine>
+      <TopLine>97</TopLine>
+      <CurrentLine>106</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../vtCode/vtUtilities.c</PathWithFileName>
       <FilenameWithoutPath>vtUtilities.c</FilenameWithoutPath>
@@ -325,8 +357,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>95</TopLine>
-      <CurrentLine>95</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/ParTest.c</PathWithFileName>
       <FilenameWithoutPath>ParTest.c</FilenameWithoutPath>
@@ -335,12 +367,12 @@
       <GroupNumber>2</GroupNumber>
       <FileNumber>8</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>38</ColumnNumber>
+      <ColumnNumber>30</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>168</TopLine>
-      <CurrentLine>174</CurrentLine>
+      <TopLine>113</TopLine>
+      <CurrentLine>121</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/LCDtask.c</PathWithFileName>
       <FilenameWithoutPath>LCDtask.c</FilenameWithoutPath>
@@ -353,8 +385,8 @@
       <Focus>0</Focus>
       <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>121</TopLine>
-      <CurrentLine>129</CurrentLine>
+      <TopLine>222</TopLine>
+      <CurrentLine>222</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MainFiles/i2cTemp.c</PathWithFileName>
       <FilenameWithoutPath>i2cTemp.c</FilenameWithoutPath>
@@ -365,13 +397,13 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>7</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>108</TopLine>
+      <CurrentLine>129</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>../vtCode/vtLCD/Bg_final.c</PathWithFileName>
-      <FilenameWithoutPath>Bg_final.c</FilenameWithoutPath>
+      <PathWithFileName>.\MainFiles/calcTask.c</PathWithFileName>
+      <FilenameWithoutPath>calcTask.c</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
@@ -379,13 +411,27 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>51</ColumnNumber>
+      <ColumnNumber>50</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>40</TopLine>
-      <CurrentLine>40</CurrentLine>
+      <TopLine>146</TopLine>
+      <CurrentLine>148</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\MainFiles/calcTask.c</PathWithFileName>
-      <FilenameWithoutPath>calcTask.c</FilenameWithoutPath>
+      <PathWithFileName>.\MainFiles/fileTask.c</PathWithFileName>
+      <FilenameWithoutPath>fileTask.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>12</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\MainFiles/locatelib.c</PathWithFileName>
+      <FilenameWithoutPath>locatelib.c</FilenameWithoutPath>
     </File>
   </Group>
 
@@ -396,7 +442,7 @@
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>12</FileNumber>
+      <FileNumber>13</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -410,7 +456,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>13</FileNumber>
+      <FileNumber>14</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -424,7 +470,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>14</FileNumber>
+      <FileNumber>15</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -445,7 +491,7 @@
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>15</FileNumber>
+      <FileNumber>16</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -459,7 +505,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>16</FileNumber>
+      <FileNumber>17</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -473,7 +519,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>17</FileNumber>
+      <FileNumber>18</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -487,7 +533,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>18</FileNumber>
+      <FileNumber>19</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -501,7 +547,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>19</FileNumber>
+      <FileNumber>20</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -522,31 +568,17 @@
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>20</FileNumber>
+      <FileNumber>21</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>492</TopLine>
+      <CurrentLine>494</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/emac.c</PathWithFileName>
       <FilenameWithoutPath>emac.c</FilenameWithoutPath>
-    </File>
-    <File>
-      <GroupNumber>5</GroupNumber>
-      <FileNumber>21</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/httpd.c</PathWithFileName>
-      <FilenameWithoutPath>httpd.c</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
@@ -554,13 +586,13 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>303</TopLine>
+      <CurrentLine>305</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/httpd-cgi.c</PathWithFileName>
-      <FilenameWithoutPath>httpd-cgi.c</FilenameWithoutPath>
+      <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/httpd.c</PathWithFileName>
+      <FilenameWithoutPath>httpd.c</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
@@ -570,6 +602,20 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>238</TopLine>
+      <CurrentLine>240</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/httpd-cgi.c</PathWithFileName>
+      <FilenameWithoutPath>httpd-cgi.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>5</GroupNumber>
+      <FileNumber>24</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>40</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
@@ -578,7 +624,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>25</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -592,25 +638,25 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>25</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>177</TopLine>
+      <CurrentLine>179</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Demo/CORTEX_LPC1768_GCC_Rowley/webserver/uIP_Task.c</PathWithFileName>
       <FilenameWithoutPath>uIP_Task.c</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>27</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>30</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -620,7 +666,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>27</FileNumber>
+      <FileNumber>28</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -634,11 +680,11 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>28</FileNumber>
+      <FileNumber>29</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -648,14 +694,14 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>29</FileNumber>
+      <FileNumber>30</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>11</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>685</TopLine>
+      <CurrentLine>687</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>../FreeRTOS/Demo/Common/ethernet/uIP/uip-1.0/uip/uip.c</PathWithFileName>
       <FilenameWithoutPath>uip.c</FilenameWithoutPath>
@@ -669,7 +715,7 @@
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>30</FileNumber>
+      <FileNumber>31</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -683,7 +729,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>31</FileNumber>
+      <FileNumber>32</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -704,7 +750,7 @@
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>32</FileNumber>
+      <FileNumber>33</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -718,7 +764,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>33</FileNumber>
+      <FileNumber>34</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -732,7 +778,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>34</FileNumber>
+      <FileNumber>35</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -746,7 +792,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>35</FileNumber>
+      <FileNumber>36</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -760,7 +806,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>36</FileNumber>
+      <FileNumber>37</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -774,7 +820,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>37</FileNumber>
+      <FileNumber>38</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -790,12 +836,33 @@
 
   <Group>
     <GroupName>I2C</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
       <GroupNumber>8</GroupNumber>
-      <FileNumber>38</FileNumber>
+      <FileNumber>39</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>39</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>161</TopLine>
+      <CurrentLine>161</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../vtCode/vtI2C/vtI2C.c</PathWithFileName>
+      <FilenameWithoutPath>vtI2C.c</FilenameWithoutPath>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>fatfs</GroupName>
+    <tvExp>0</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>40</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -804,41 +871,71 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>../vtCode/vtI2C/vtI2C.c</PathWithFileName>
-      <FilenameWithoutPath>vtI2C.c</FilenameWithoutPath>
+      <PathWithFileName>../../src/diskio.c</PathWithFileName>
+      <FilenameWithoutPath>diskio.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>41</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../../src/ff.c</PathWithFileName>
+      <FilenameWithoutPath>ff.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>42</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../../src/lpc17xx_rtc.c</PathWithFileName>
+      <FilenameWithoutPath>lpc17xx_rtc.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>43</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../../src/lpc17xx_spi.c</PathWithFileName>
+      <FilenameWithoutPath>lpc17xx_spi.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>44</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>../../src/lpc17xx_uart.c</PathWithFileName>
+      <FilenameWithoutPath>lpc17xx_uart.c</FilenameWithoutPath>
     </File>
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTLCD\GLCD.H</PathWithFilename>
-    <TopLine>49</TopLine>
-    <CurrentLine>49</CurrentLine>
-    <Constant>0</Constant>
-    <WindowPosition>
-      <length>0</length>
-      <flags>0</flags>
-      <showCmd>0</showCmd>
-      <MinPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MinPosition>
-      <MaxPosition>
-        <xPos>0</xPos>
-        <yPos>0</yPos>
-      </MaxPosition>
-      <NormalPosition>
-        <Top>0</Top>
-        <Left>0</Left>
-        <Right>0</Right>
-        <Bottom>0</Bottom>
-      </NormalPosition>
-    </WindowPosition>
-  </AlienFiles>
-
-  <AlienFiles>
-    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\RTOSDemo\MAINFILES\LCDTASK.H</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>1</CurrentLine>
+    <PathWithFilename>C:\Github\ece4534\ARM Code\BaseProject\vtCode\vtI2C\vtI2C.h</PathWithFilename>
+    <TopLine>68</TopLine>
+    <CurrentLine>84</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -866,43 +963,37 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>0</ActiveTab>
+      <ActiveTab>3</ActiveTab>
       <Documents>
         <Doc>
           <Name>.\MainFiles/i2cTemp.c</Name>
           <ColumnNumber>4</ColumnNumber>
-          <TopLine>121</TopLine>
-          <CurrentLine>129</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\MainFiles/main.c</Name>
-          <ColumnNumber>85</ColumnNumber>
-          <TopLine>211</TopLine>
-          <CurrentLine>217</CurrentLine>
+          <TopLine>222</TopLine>
+          <CurrentLine>222</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/LCDtask.c</Name>
-          <ColumnNumber>38</ColumnNumber>
-          <TopLine>168</TopLine>
-          <CurrentLine>174</CurrentLine>
+          <ColumnNumber>30</ColumnNumber>
+          <TopLine>113</TopLine>
+          <CurrentLine>121</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\MainFiles/main.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>187</TopLine>
+          <CurrentLine>198</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MainFiles/calcTask.c</Name>
-          <ColumnNumber>51</ColumnNumber>
-          <TopLine>40</TopLine>
-          <CurrentLine>40</CurrentLine>
+          <ColumnNumber>7</ColumnNumber>
+          <TopLine>108</TopLine>
+          <CurrentLine>129</CurrentLine>
         </Doc>
         <Doc>
-          <Name>C:\Github\ece4534\ARM Code\BaseProject\RTOSDemo\MAINFILES\LCDTASK.H</Name>
+          <Name>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTI2C\VTI2C.H</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>1</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>C:\Github\ece4534\ARM Code\BaseProject\VTCODE\VTLCD\GLCD.H</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>49</TopLine>
-          <CurrentLine>49</CurrentLine>
+          <TopLine>68</TopLine>
+          <CurrentLine>84</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

@@ -108,6 +108,7 @@ You should read the note above.
 #include "vtI2C.h"
 #include "calcTask.h"
 #include "fileTask.h"
+#include "lpc17xx_gpio.h"
 
 /* syscalls initialization -- *must* occur first */
 #include "syscalls.h"
@@ -129,7 +130,7 @@ tick hook). */
 #define mainGEN_QUEUE_TASK_PRIORITY			( tskIDLE_PRIORITY)
 #define mainFLASH_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainLCD_TASK_PRIORITY				( tskIDLE_PRIORITY)
-#define mainI2CTEMP_TASK_PRIORITY			( tskIDLE_PRIORITY)
+#define mainI2CTEMP_TASK_PRIORITY			( 1)
 #define mainUSB_TASK_PRIORITY				( tskIDLE_PRIORITY)
 #define mainI2CMONITOR_TASK_PRIORITY		( tskIDLE_PRIORITY)
 #define mainCALC_TASK_PRIORITY				( tskIDLE_PRIORITY)
@@ -175,6 +176,7 @@ static char *pcStatusMessage = mainPASS_STATUS_MESSAGE;
 #if USE_I2C == 1
 // hold i2c device information for the I2C0 peripheral
 static vtI2CStruct vtI2C0;
+static vtI2CStruct vtI2C1;
 static i2cTempStruct DeviceParams;
 #endif
 
@@ -204,7 +206,8 @@ int main( void )
 
 	/* Configure the hardware for use by this demo. */
 	prvSetupHardware();
-
+	//GPIO_SetDir(1,0xF8000000,1);
+	//GPIO_ClearValue(1,0x80000000);
 	#if USE_WEB == 1
 	// Not a standard demo -- but also not one of mine (MTJ)
 	/* Create the uIP task.  The WEB server runs in this task. */
@@ -229,17 +232,35 @@ int main( void )
 	vtFiledata.lcdData = &vtLCDdata;
 	#endif
 	#endif
+
+	#if USE_FILE == 1 && USE_CALC == 1
+	vtCalcdata.fileData = &vtFiledata;
+	#endif
 	
 	// i2c initialization
 	#if USE_I2C == 1
 	vtI2C0.devNum = 0;
 	vtI2C0.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
+
+	
+	DeviceParams.dev0 = &vtI2C0;
+
+	int retVal2;
+	
+	if ((retVal2 = vtI2CInit(&vtI2C0,100000)) != vtI2CInitSuccess) {
+		VT_HANDLE_FATAL_ERROR(retVal2);
+	}
+	
+	vtI2C1.devNum = 1;
+	vtI2C1.taskPriority = mainI2CMONITOR_TASK_PRIORITY;
 	// Initialize I2C0 
 	int retVal;
-	if ((retVal = vtI2CInit(&vtI2C0,100000)) != vtI2CInitSuccess) {
+
+	if ((retVal = vtI2CInit(&vtI2C1,100000)) != vtI2CInitSuccess) {
 		VT_HANDLE_FATAL_ERROR(retVal);
 	}
-	DeviceParams.dev = &vtI2C0;
+
+	DeviceParams.dev1 = &vtI2C1;
 	#if USE_LCD == 1
 	DeviceParams.lcdData = &vtLCDdata;
 	#else

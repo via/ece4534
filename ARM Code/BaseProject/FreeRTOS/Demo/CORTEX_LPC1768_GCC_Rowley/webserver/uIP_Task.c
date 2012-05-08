@@ -71,6 +71,9 @@
 #include "EthDev.h"
 #include "ParTest.h"
 
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 0
+
 /*-----------------------------------------------------------*/
 
 /* How long to wait before attempting to connect the MAC again. */
@@ -224,9 +227,17 @@ extern void ( vEMAC_ISR_Wrapper )( void );
 				processing to perform.  Block for a fixed period.  If a packet
 				is received during this period we will be woken by the ISR
 				giving us the Semaphore. */
+				#if USE_GPIO == 1
+				GPIO_ClearValue(1,0x08000000);
+				GPIO_ClearValue(2,0x00000004);
+				#endif
 				xSemaphoreTake( xEMACSemaphore, configTICK_RATE_HZ / 2 );
 			}
 		}
+		#if USE_GPIO == 1
+		GPIO_SetValue(1,0x08000000);
+		GPIO_SetValue(2,0x00000004);
+		#endif
 	}
 }
 /*-----------------------------------------------------------*/

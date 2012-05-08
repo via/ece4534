@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 /* Scheduler include files. */
@@ -11,6 +12,9 @@
 #include "calcTask.h"
 #include "lcdTask.h"
 #include "locatelib.h"
+
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 #if PRINTF_VERSION==1
@@ -48,22 +52,24 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	vtCalcMsg msgBuffer;
 	vtCalcStruct *calcPtr = (vtCalcStruct *) pvParameters;
 	vtLCDStruct *lcdData = calcPtr->lcdData;
+	vtFileStruct *fileData = calcPtr->fileData;
+	vtFileMsg fileBuffer;
 	vtLCDMsg lcdBuffer;
 	
-	uint8_t calcState = 2;
+	uint8_t calcState = 1;
 	uint8_t picNum = 10;
 	uint8_t picCal[3] = { 0 }; //determine which pics are calibrated
 	
 	//Location calculation related
 	double picDBW[3] = { 0.0 };
 	double picDist[3] = { 0.0 };
-	struct utm_coordinate * picCords[3];
-	int j = 0;
+	struct utm_coordinate picCords[3];
+	/*int j = 0;
 	for(; j < 3; j++){
 		if((picCords[j] = malloc(sizeof(struct utm_coordinate))) == NULL){
 		 	// ERROR
 		}
-	}
+	}*/
 	struct dms_coordinate *dmsCord;
 	if((dmsCord = malloc(sizeof(struct dms_coordinate))) == NULL){
 	 	// ERROR
@@ -72,16 +78,13 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	if((utmNmea = malloc(sizeof(struct utm_coordinate))) == NULL){
 	 	// ERROR
 	}
-	struct utm_coordinate *utmTx; //utm for transmitter
-	if((utmTx = malloc(sizeof(struct utm_coordinate))) == NULL){
-	 	// ERROR
-	}
+	struct utm_coordinate utmTx; //utm for transmitter
 	
-	const double pwr_tx = 0.0; //constant for power transmitted
-	const double rc_gain = 0.0; //constant for recieve gain
-	const double tx_gain = 0.0; //constant for transmit gain
-	const double freq = 0.0; //const for frequency
-	static const double stepSize = 1.0;
+	const double pwr_tx = -30.0; //constant for power transmitted
+	const double rc_gain = 3.0; //constant for recieve gain
+	const double tx_gain = 3.0; //constant for transmit gain
+	const double freq = 2.47e9; //const for frequency
+	static const double stepSize = 0.01;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = taskRUN_RATE / portTICK_RATE_MS;
@@ -103,6 +106,9 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 		if (xQueueReceive(calcPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x80000000);
+		#endif
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 
@@ -111,50 +117,45 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 				picNum = msgBuffer.buf[2];
 				//convert the parsed stuff to dms_coordinate struct
 				if (picNum < 3){
-					dmsCord->latDegrees = (int8_t) msgBuffer.buf[3];
-					dmsCord->latMinutes = (double) msgBuffer.buf[4];
-					dmsCord->latMinutes = dmsCord->latMinutes * 256;
-					dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[5];
-					dmsCord->lonDegrees = (int8_t) msgBuffer.buf[6];
-					dmsCord->lonMinutes = (double) msgBuffer.buf[7];
-					dmsCord->lonMinutes = dmsCord->latMinutes * 256;
-					dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
-					convertDMS_to_UTM( dmsCord, picCords[picNum] );
+					//sscanf((char*) msgBuffer.buf + 3, "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+					dmsCord->latDegrees = (int) msgBuffer.latDeg;
+					dmsCord->latMinutes = (double) msgBuffer.latMin;
+					dmsCord->lonDegrees = (int) msgBuffer.lonDeg;
+					dmsCord->lonMinutes = (double) msgBuffer.lonMin;
+					convertDMS_to_UTM( dmsCord, &picCords[picNum] );
 					picCal[picNum] = 1;
 				}
 				
 			}
-			if (picCal[0] == 1 && picCal[1] == 1 && picCal[2] == 1)
+			if (msgBuffer.buf[0] == 0xD0 && msgBuffer.buf[1] == 0xCF && msgBuffer.buf[2] == 0x11){
+				lcdBuffer.buf[0] = 0xDE;
+				lcdBuffer.buf[1] = 0xAD;
+				lcdBuffer.buf[2] = 0xBE;
+					if (lcdData != NULL) {
+						lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+						if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+							VT_HANDLE_FATAL_ERROR(0);
+						}
+					}
 				calcState = 2;
-			
-			sprintf((char*)(lcdBuffer.buf),"Calibrating");
-			if (lcdData != NULL) {
-				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
-				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
-					VT_HANDLE_FATAL_ERROR(0);
-				}
-			}
+			 }
+
 		}
 		else if (calcState == 2){
 			//convert PIC rssi to dBW
 			
-			picDBW[0] = convert_rssi_to_db( msgBuffer.buf );
-			picDBW[1] = convert_rssi_to_db( msgBuffer.buf+1 ); //+1 when not M4
-			picDBW[2] = convert_rssi_to_db( msgBuffer.buf+2 ); //+2 when not M4
+			picDBW[0] = convert_rssi_to_db( (double) msgBuffer.buf[0] );
+			picDBW[1] = convert_rssi_to_db( (double) msgBuffer.buf[1] ); //+1 when not M4
+			picDBW[2] = convert_rssi_to_db( (double) msgBuffer.buf[2] ); //+2 when not M4
 			
 			//Take the nmea data and put it into dmsCord here
-			dmsCord->latDegrees = (int) msgBuffer.buf[3];
-			
-			dmsCord->latMinutes = (double) msgBuffer.buf[4];
-			dmsCord->latMinutes = dmsCord->latMinutes * 256;
-			dmsCord->latMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[5];
-			
-			dmsCord->lonDegrees = (int) msgBuffer.buf[6];
-			
-			dmsCord->lonMinutes = (double) msgBuffer.buf[7];
-			dmsCord->lonMinutes = dmsCord->latMinutes * 256;
-			dmsCord->lonMinutes = dmsCord->latMinutes + (double) msgBuffer.buf[8];
-			
+			//sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
+			dmsCord->latDegrees = (int) msgBuffer.latDeg;
+			dmsCord->latMinutes = (double) msgBuffer.latMin;
+
+			dmsCord->lonDegrees = (int) msgBuffer.lonDeg;
+			dmsCord->lonMinutes = (double) msgBuffer.lonMin;
+
 			//Convert to UTM to do ?? with it
 			convertDMS_to_UTM( dmsCord, utmNmea );
 			
@@ -163,18 +164,78 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			picDist[1] = distance_to_transmitter( picDBW[1], pwr_tx, rc_gain, tx_gain, freq );
 			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
 			
-			//Calculate estimated position
-			location_gradient_descent( picCords, picDist, utmTx, stepSize ); 
-			sprintf((char*)(lcdBuffer.buf),"E: %2.2f N: %2.2f", utmTx->eastings, utmTx->northings);
-			//sprintf((char*)(lcdBuffer.buf), "THIS WORKS");
-			//Do Stuff here, msgBuffer.buf for message contents
+			//Calculate estimated position, run function 16 times
+			uint8_t count;
+			for (count = 0; count < 16; count++){
+				location_gradient_descent( picCords, picDist, &utmTx, stepSize ); 
+				}
+			// TODO: change later 05/01/2012 1428	
+			double node0Dist = 0.0;
+			double node0Bear  = 0.0;
+			double gpsDist = 0.0;
+			double gpsBear = 0.0;
+			distance_and_bearing(&picCords[0], &utmTx, &node0Dist, &node0Bear);
+			distance_and_bearing(utmNmea, &utmTx, &gpsDist, &gpsBear);
+
+			sprintf((char*)(lcdBuffer.buf),"%6d N %6d E", (int)utmTx.northings, (int)utmTx.eastings);
+			lcdBuffer.line_num = 0;
 			if (lcdData != NULL) {
 				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
 				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
 					VT_HANDLE_FATAL_ERROR(0);
 				}
 			}
-		}
+			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m     ", node0Bear, node0Dist);
+			lcdBuffer.line_num = 2;
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+			sprintf((char*)(lcdBuffer.buf),"%6d N %6d E", (int)utmNmea->northings, (int)utmNmea->eastings);
+			lcdBuffer.line_num = 4;
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+			sprintf((char*)(lcdBuffer.buf),"%3.2f deg %3.2f m     ", gpsBear, gpsDist);
+			lcdBuffer.line_num = 6;
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+			sprintf((char*)(lcdBuffer.buf),"%d, %d, %d", msgBuffer.buf[0], msgBuffer.buf[1], msgBuffer.buf[2]);
+			lcdBuffer.line_num = 8;
+			if (lcdData != NULL) {
+				lcdBuffer.length = strlen((char*)(lcdBuffer.buf))+1;
+				if (xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+
+			fileBuffer.buf[0] = '\xCA';
+			fileBuffer.buf[1] = '\xFE';
+			//sprintf((char*)fileBuffer.buf + 2, "%7.3f %7.3f %7.3f %7.3f",
+			//		utmTx.eastings, utmTx.northings, utmNmea->eastings, utmNmea->northings);
+			fileBuffer.e_calc = utmTx.eastings;
+			fileBuffer.n_calc = utmTx.northings;
+			fileBuffer.e_actual = utmNmea->eastings;
+			fileBuffer.n_actual = utmNmea->northings;
+			if (fileData != NULL) {
+				fileBuffer.length = strlen((char*)(fileBuffer.buf))+1;
+				if (xQueueSend(fileData->inQ,(void *) (&fileBuffer),portMAX_DELAY) != pdTRUE) {
+					VT_HANDLE_FATAL_ERROR(0);
+				}
+			}
+		}  
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x80000000);
+		#endif
 	}
 }
 

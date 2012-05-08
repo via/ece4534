@@ -10,6 +10,10 @@
 #include "GLCD.h"
 #include "vtUtilities.h"
 #include "LCDtask.h"
+#include "vtI2C.h"
+
+#include "lpc17xx_gpio.h"
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using printf() and (b) the depth of function calls
 //   for some of the LCD operations
@@ -20,7 +24,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define lcdWRITE_RATE_BASE	( ( portTickType ) 200 )
+#define lcdWRITE_RATE_BASE	( ( portTickType ) 1000 )
 
 /* The LCD task. */
 static portTASK_FUNCTION_PROTO( vLCDUpdateTask, pvParameters );
@@ -41,12 +45,10 @@ void vStartLCDTask( unsigned portBASE_TYPE uxPriority,vtLCDStruct *ptr )
 	}
 }
 
-//#define LCD_STATE 1
 int LCD_STATE = 2;
-//#if LCD_STATE == 1
-// This include the file with the definition of the ARM bitmap
-#include "Bg_final.c"
-//#endif
+
+#include "bgclb.c"
+
 
 // Convert from HSL colormap to RGB values in this weird colormap
 // H: 0 to 360
@@ -113,13 +115,18 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtLCDMsg msgBuffer;
 	vtLCDStruct *lcdPtr = (vtLCDStruct *) pvParameters;
-
 	//counter for line display
-	uint8_t counter = 0;
-
+	//uint8_t counter = 0;
 	/* Initialize the LCD */
 	GLCD_Init();
 	GLCD_Clear(White);
+
+	const char line_0[] = "Calc. Position";
+	const char line_2[] = "Bearing from #0";
+	const char line_4[] = "GPS";
+	const char line_6[] = "Bearing from GPS";
+	const char line_8[] = "RSSI [0, 1, 2]";
+	int initial = 0;
 
 	// Scale the update rate to ensure it really is in ms
 	xUpdateRate = lcdWRITE_RATE_BASE / portTICK_RATE_MS;
@@ -135,39 +142,61 @@ static portTASK_FUNCTION( vLCDUpdateTask, pvParameters )
 	// Like all good tasks, this should never exit
 	for(;;)
 	{	
-if (LCD_STATE == 1){
+	if (LCD_STATE == 2){
 		/* Ask the RTOS to delay reschduling this task for the specified time */
 		vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
-  		/* go through a  bitmap that is really a series of bitmaps */
-		//picIndex = (picIndex + 1) % 9;
-		/* modify this to make use of drawing the axes */
-		GLCD_Bitmap(0,0,320,240,(unsigned char *) &Bg_final);
-		LCD_STATE = 2;
-	}
+		// wait for a message from another task telling us to send/recv over i2c
+		
+		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
+			VT_HANDLE_FATAL_ERROR(0);
+		}
 
-else if (LCD_STATE == 2){
+		//Log that we are processing a message
+		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
+
+		if (msgBuffer.buf[0] == 0xDE && msgBuffer.buf[1] == 0xAD && msgBuffer.buf[2] == 0xBE){
+			GLCD_Clear(White);
+			LCD_STATE = 3;		
+		}
+		else {
+			char buf[21];
+			sprintf(buf, "%4.6f, %4.6f", msgBuffer.tlat, msgBuffer.tlon);
+			GLCD_DisplayString(0,0,1,(unsigned char *)msgBuffer.buf);
+			GLCD_DisplayString(1,0,1,(unsigned char *) buf);
+		}
+	}
+	else if (LCD_STATE == 3){
+		/* Ask the RTOS to delay reschduling this task for the specified time */
+		//vTaskDelayUntil( &xLastUpdateTime, xUpdateRate );
+
 		// wait for a message from another task telling us to send/recv over i2c
 		if (xQueueReceive(lcdPtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x20000000);
+		#endif
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
 		// Decide what color and then clear the line
 		GLCD_SetTextColor(Black);
 		GLCD_SetBackColor(White);
 
-		GLCD_DisplayString(counter,0,1,(unsigned char *)msgBuffer.buf);
-
-		if (counter <= 3){
-			counter++;	
+		if(!initial){
+			GLCD_DisplayString(0, 0, 1, (unsigned char *)line_0);
+			GLCD_DisplayString(2, 0, 1, (unsigned char *)line_2);
+			GLCD_DisplayString(4, 0, 1, (unsigned char *)line_4);
+			GLCD_DisplayString(6, 0, 1, (unsigned char *)line_6);
+			GLCD_DisplayString(8, 0, 1, (unsigned char *)line_8);
+			initial++;
 		}
-		else {
-			counter = 0;
-		}
+		GLCD_DisplayString(msgBuffer.line_num + 1, 0, 1, (unsigned char *)msgBuffer.buf);
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x20000000);
+		#endif
 	}
 else{
 	//	Bad setting
 	}	
 	}
 }
-

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 /* Scheduler include files. */
 #include "FreeRTOS.h"
@@ -14,8 +15,10 @@
 #include "diskio.h"
 #include "ff.h"
 #include "webdata.h"
+#include "lpc17xx_gpio.h"
 
-#define MILESTONE_FILE 1
+#define MILESTONE_FILE 0
+#define USE_GPIO 0
 
 // I have set this to a large stack size because of (a) using ////printf() and (b) the depth of function calls
 #if printf_VERSION==1
@@ -25,7 +28,7 @@
 #endif
 
 // Set the task up to run every 200 ms
-#define taskRUN_RATE	( ( portTickType ) 200 )
+#define taskRUN_RATE	( ( portTickType ) 1000 )
 
 static portTASK_FUNCTION_PROTO( vFileTask, pvParameters );
 static FRESULT F_Write(BYTE Msg[], UINT msg_size, TCHAR *path, int append);
@@ -50,6 +53,7 @@ void vStartFileTask( unsigned portBASE_TYPE uxPriority,vtFileStruct *ptr )
 static FATFS fatfs;  // Filesystem object
 static FIL fil;   	 // File object
 static uint8_t data_buf[256];
+static uint8_t temp_buf[256];
 
 static portTASK_FUNCTION( vFileTask, pvParameters )
 {
@@ -58,12 +62,9 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 	portTickType xUpdateRate, xLastUpdateTime;
 	vtFileMsg msgBuffer;
 	vtFileStruct *filePtr = (vtFileStruct *) pvParameters;
-	vtLCDStruct *lcdData = filePtr->lcdData;
-	vtLCDMsg lcdBuffer;
+	//vtLCDStruct *lcdData = filePtr->lcdData;
+	//vtLCDMsg lcdBuffer;
 	
-
-    static BYTE buf[64];
-    BYTE Message[] = "Test message\n" ; // message's content
     TCHAR *FilePath = "0:data.txt" ; // file path
 	
 	// Scale the update rate to ensure it really is in ms
@@ -86,13 +87,17 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
     //------------------------------------
     // Like all good tasks, this should never exit
 	
+	#if MILESTONE_FILE == 1
 	// Temp, remove later on
-	sprintf((char*)msgBuffer.buf, "Data 1\t37.2\t-80.3\n");
-	msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
+	msgBuffer.buf[0] = '\xCA';
+	msgBuffer.buf[1] = '\xFE';
+	sprintf((char*)msgBuffer.buf + 2, "1111111 2222222 3333333 4444444");
+	msgBuffer.length = strlen((char*)msgBuffer.buf);
 	if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
 		VT_HANDLE_FATAL_ERROR(0);
 	}
-	int j = 2;
+	int j = 1;
+	#endif
 	for(;;)
 	{	
 		/* Ask the RTOS to delay reschduling this task for the specified time */
@@ -101,60 +106,76 @@ static portTASK_FUNCTION( vFileTask, pvParameters )
 		if (xQueueReceive(filePtr->inQ,(void *) &msgBuffer,portMAX_DELAY) != pdTRUE) {
 			VT_HANDLE_FATAL_ERROR(0);
 		}
+		
 		//Log that we are processing a message
 		vtITMu8(vtITMPortLCDMsg,msgBuffer.length);
-
-		if(msgBuffer.buf[0] == 'D'){
-			FRESULT rc; 
-			rc = F_Write(msgBuffer.buf, sizeof(msgBuffer.buf) - 1, FilePath, 1);
-			rc = F_Read(buf, sizeof(buf), FilePath);
+		
+		#if USE_GPIO == 1
+		GPIO_SetValue(1, 0x10000000);
+		#endif
+		
+		if(msgBuffer.buf[0] & 0xCA && msgBuffer.buf[1] & 0xFE){
+			double e_calc, n_calc, e_actual, n_actual;
+			// sscanf the values needed
+			//sscanf((char*)msgBuffer.buf + 2, "%f %f %f %f", 
+			//		&e_calc, &n_calc, &e_actual, &n_actual);
+			e_calc = msgBuffer.e_calc;
+			n_calc = msgBuffer.n_calc;
+			e_actual = msgBuffer.e_actual;
+			n_actual = msgBuffer.n_actual;
+			// sprintf to buffer to line formatted as needed
+			BYTE line[64];
+			sprintf((char*)line, "%7.3f\t%7.3f\t%7.3f\t%7.3f\n",
+					e_calc, n_calc, e_actual, n_actual);
+			
+			// read here for insurance in other lines if needed, not used
+			//BYTE buf[64];
+			//rc = F_Read(buf, sizeof(buf), FilePath);
 			if(xSemaphore != NULL){
-				if(xSemaphoreTake( xSemaphore, (portTickType) 20) == pdTRUE ){
-					strncat((char*)data_buf, (char*)msgBuffer.buf, strlen((char*)msgBuffer.buf));
+				if(xSemaphoreTake( xSemaphore, (portTickType) 50) == pdTRUE ){
+					// write new line to file
+					FRESULT rc;			
+					rc = F_Write((BYTE*)line, strlen((char*)line), FilePath, 1);
+					// Clear buffer when almost full
+					if( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+						memset(data_buf, 0, sizeof(data_buf));
+					}
+					// Or roll out one old line to make room for new line
+					/*while( (strlen((char*)data_buf) + strlen((char*)line) + 1) > sizeof(data_buf) ){
+						char* pos = strchr((char*)data_buf, '\n');
+						int offset = (int)(pos - (char*)data_buf);
+						memset(temp_buf, 0, sizeof(temp_buf));
+						memcpy(temp_buf, data_buf, strlen((char*)data_buf));
+						memset(data_buf, 0, sizeof(data_buf));
+						memcpy(data_buf, temp_buf + offset + 1, strlen((char*)temp_buf) - offset - 1);
+					}*/
+					// add new line to buffer
+					strncat((char*)data_buf, (char*)line, strlen((char*)line));
 					xSemaphoreGive( xSemaphore );
 				}
 			}
 			else{
-				sprintf((char*)(lcdBuffer.buf), "Semaphail");
-				lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
-				if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
-					VT_HANDLE_FATAL_ERROR(0);
-				}
+				// take semaphore failed
 			}
 		}
 		else{
 			// Do nothing
-			/*
-			sprintf((char*)(lcdBuffer.buf), "Nope");
-			lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
-			if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
-				VT_HANDLE_FATAL_ERROR(0);
-			}
-			*/
 		}
+		#if USE_GPIO == 1
+		GPIO_ClearValue(1, 0x10000000);
+		#endif
 		#if MILESTONE_FILE == 1
-		if(msgBuffer.length){
-			sprintf((char*)(lcdBuffer.buf), "MQ IN: %s", msgBuffer.buf);
-			lcdBuffer.length = strlen((char*)(lcdBuffer.buf)) + 1;
-			if(xQueueSend(lcdData->inQ,(void *) (&lcdBuffer),portMAX_DELAY) != pdTRUE){
+		if(j < 100){
+			msgBuffer.buf[0] = '\xCA';
+			msgBuffer.buf[1] = '\xFE';
+			sprintf((char*)msgBuffer.buf + 2, "1111111 2222222 3333333 4444444");		
+			j++;
+			msgBuffer.length = strlen((char*)msgBuffer.buf);
+			if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
 				VT_HANDLE_FATAL_ERROR(0);
 			}
 		}
 		#endif
-		if(j){
-			switch(j){
-			 	case 2: sprintf((char*)msgBuffer.buf, "Data 2\t37.0\t-80.0\n");
-						break;
-				case 1: sprintf((char*)msgBuffer.buf, "Invalid");			
-						break;
-				default: break;
-			}
-			msgBuffer.length = strlen((char*)msgBuffer.buf) + 1;
-			if(xQueueSend(filePtr->inQ,(void*) (&msgBuffer),portMAX_DELAY) != pdTRUE){
-				VT_HANDLE_FATAL_ERROR(0);
-			}
-			j--;
-		}
 	}
     //vTaskDelete(NULL);
 } 
@@ -167,21 +188,29 @@ FRESULT F_Write(BYTE Message[], UINT msg_size, TCHAR *filepath, int append){
     rc = f_open(&fil, filepath, FA_WRITE | FA_OPEN_ALWAYS);
     if(rc){
 		//printf("File open error = %u",rc);
+		return rc;
     }
 	
 	// Seek end if append
 	if(append){
 		rc = f_lseek(&fil, f_size(&fil));
+		if(rc){
+			f_close(&fil);
+			return rc;
+		}
 	}
 
     rc = f_write(&fil, Message, msg_size, &bw); // write file
     if(rc){
 		//printf("Write error = %u", rc);
+		f_close(&fil);
+		return rc;
     }
 
     rc = f_close(&fil);
     if(rc){
 		//printf("File close error = %u", rc);
+		return rc;
     }
 	
 	return rc;
