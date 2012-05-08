@@ -33,6 +33,7 @@ void distance_and_bearing( struct utm_coordinate* reference, struct utm_coordina
  */
 double convert_rssi_to_db( uint8_t rssi_value );
 
+double distance_to_trans(uint8_t rssi_value);
 /*convertDMS_to_UTM
  *
  *This function will convert a DMS coordinate to UTM.  It uses an algorithm

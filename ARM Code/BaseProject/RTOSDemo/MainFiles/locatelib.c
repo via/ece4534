@@ -24,6 +24,19 @@ convert_rssi_to_db(uint8_t rssi_value)
     return value*(double)55/255 - 120;
 }
 
+double 
+distance_to_trans(uint8_t rssi_value)
+{
+    //convert to a 16+ bit integer (so we don't mess up signed arithmetic)
+    const double a = 2.669037e-4;
+	const double b = -0.2025667404;
+	const double c = 30.70399832;
+	int trssi = rssi_value;
+	double rtval = a * (trssi * trssi) + b * trssi + c; 
+    //-90 dBm = 0x00 -> -120 dBW = 0x00
+    return rtval;
+}
+
 void
 convertDMS_to_UTM(struct dms_coordinate *input_coordinate,
                   struct utm_coordinate *output_coordinate)

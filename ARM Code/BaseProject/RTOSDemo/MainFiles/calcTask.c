@@ -61,7 +61,7 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	uint8_t picCal[3] = { 0 }; //determine which pics are calibrated
 	
 	//Location calculation related
-	double picDBW[3] = { 0.0 };
+	//double picDBW[3] = { 0.0 };
 	double picDist[3] = { 0.0 };
 	struct utm_coordinate picCords[3];
 	/*int j = 0;
@@ -79,11 +79,12 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 	 	// ERROR
 	}
 	struct utm_coordinate utmTx; //utm for transmitter
-	
+	/*
 	const double pwr_tx = -30.0; //constant for power transmitted
 	const double rc_gain = 3.0; //constant for recieve gain
 	const double tx_gain = 3.0; //constant for transmit gain
 	const double freq = 2.47e9; //const for frequency
+	*/
 	static const double stepSize = 0.01;
 
 	// Scale the update rate to ensure it really is in ms
@@ -142,12 +143,6 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 
 		}
 		else if (calcState == 2){
-			//convert PIC rssi to dBW
-			
-			picDBW[0] = convert_rssi_to_db( (double) msgBuffer.buf[0] );
-			picDBW[1] = convert_rssi_to_db( (double) msgBuffer.buf[1] ); //+1 when not M4
-			picDBW[2] = convert_rssi_to_db( (double) msgBuffer.buf[2] ); //+2 when not M4
-			
 			//Take the nmea data and put it into dmsCord here
 			//sscanf((char*) (msgBuffer.buf+3), "%d %f %d %f", &latDeg, &latMin, &lonDeg, &lonMin);
 			dmsCord->latDegrees = (int) msgBuffer.latDeg;
@@ -160,9 +155,9 @@ static portTASK_FUNCTION( vCalcUpdateTask, pvParameters )
 			convertDMS_to_UTM( dmsCord, utmNmea );
 			
 			//Get distances to each transmitter
-			picDist[0] = distance_to_transmitter( picDBW[0], pwr_tx, rc_gain, tx_gain, freq );
-			picDist[1] = distance_to_transmitter( picDBW[1], pwr_tx, rc_gain, tx_gain, freq );
-			picDist[2] = distance_to_transmitter( picDBW[2], pwr_tx, rc_gain, tx_gain, freq );
+			picDist[0] = distance_to_trans( msgBuffer.buf[0]);
+			picDist[1] = distance_to_trans( msgBuffer.buf[1]);
+			picDist[2] = distance_to_trans( msgBuffer.buf[2]);
 			
 			//Calculate estimated position, run function 16 times
 			uint8_t count;
