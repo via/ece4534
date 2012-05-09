@@ -1,0 +1,11 @@
+GPIO pins used to check tasks
+Pins go high when task begins work after MQ receive
+Pins go low when done with task and it gets back to the blocking call of waiting for MQ
+
+Screenshot key:
+- :0 is the filetask happens after calculation task
+- :1 is LCD task happens after calculation
+- :2 is I2C task first task to happen in any cycle, calculation task should follow
+- :3 is Calculation task, happens after I2C and before File
+
+It's kind of hard to see the tasks, I probably should've taken better screenshots.
