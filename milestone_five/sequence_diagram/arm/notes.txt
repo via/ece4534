@@ -8,4 +8,6 @@ Screenshot key:
 - :2 is I2C task first task to happen in any cycle, calculation task should follow
 - :3 is Calculation task, happens after I2C and before File
 
+2 - 3 - 0/1
+
 It's kind of hard to see the tasks, I probably should've taken better screenshots.
